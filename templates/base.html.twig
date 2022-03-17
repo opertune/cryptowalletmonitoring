@@ -17,9 +17,15 @@
     <body class="bg-dark">
         <nav>
             <a href="{{path("home")}}">Home</a>
-            <a href="{{path("login")}}">Login</a>
-            <a href="{{path("register")}}">Register</a>
-            <a href="{{path("logout")}}">Logout</a>
+            <a href="{{path("guide")}}">Guide</a>
+            <a href="{{path("contact")}}">Contact</a>
+            {% if app.user %}
+                <a href="{{path("wallet")}}">Wallet</a>
+                <a href="{{path("logout")}}">Logout</a>
+            {% else %}
+                <a href="{{path("login")}}">Login</a>
+                <a href="{{path("register")}}">Register</a>
+            {% endif %}
         </nav>
         {% block body %}{% endblock %}
     </body>
