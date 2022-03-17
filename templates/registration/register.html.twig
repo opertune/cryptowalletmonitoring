@@ -3,10 +3,10 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    {% for flash_error in app.flashes('verify_email_error') %}
+    {% for flash_error in app.flashes('flash_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
-    {% for flash_success in app.flashes('verify_email_success') %}
+    {% for flash_success in app.flashes('flash_success') %}
         <div class="alert alert-success" role="success">{{ flash_success }}</div>
     {% endfor %}
     <h1 class="text-white">Register</h1>
@@ -17,7 +17,7 @@
             label: 'Password'
         }) }}
         {{ form_row(registrationForm.agreeTerms) }}
-
+        <div class="g-recaptcha" data-sitekey="{{google_recaptcha_site_key}}"></div>
         <button type="submit" class="btn btn-primary">Register</button>
     {{ form_end(registrationForm) }}
 {% endblock %}

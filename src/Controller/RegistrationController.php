@@ -14,6 +14,7 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use App\Service\Captcha;
 
 class RegistrationController extends AbstractController
 {
@@ -34,30 +35,36 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
-            $user->setRoles(array("ROLE_USER"));
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $captcha = new Captcha($_POST['g-recaptcha-response']);
+            if (!$captcha->captchaIsValid()) {
+                // return $this->redirectToRoute('register');
+                $this->addFlash('flash_error', 'Captcha invalide !');
+            } else {
+                // encode the plain password
+                $user->setPassword(
+                    $userPasswordHasher->hashPassword(
+                        $user,
+                        $form->get('plainPassword')->getData()
+                    )
+                );
+                $user->setRoles(array("ROLE_USER"));
+                $entityManager->persist($user);
+                $entityManager->flush();
 
-            // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation(
-                'app_verify_email',
-                $user,
-                (new TemplatedEmail())
-                    ->from(new Address('cwmvalidator@gmail.com', 'cwm validator bot'))
-                    ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
-            );
-            // do anything else you need here, like send an email
-            $this->addFlash('verify_email_success', 'Verify your email Click on link in your email box !');
-            return $this->redirectToRoute('register');
+                // generate a signed url and email it to the user
+                $this->emailVerifier->sendEmailConfirmation(
+                    'app_verify_email',
+                    $user,
+                    (new TemplatedEmail())
+                        ->from(new Address('cwmvalidator@gmail.com', 'cwm validator bot'))
+                        ->to($user->getEmail())
+                        ->subject('Please Confirm your Email')
+                        ->htmlTemplate('registration/confirmation_email.html.twig')
+                );
+                // do anything else you need here, like send an email
+                $this->addFlash('flash_success', 'Verify your email Click on link in your email box !');
+                return $this->redirectToRoute('register');
+            }
         }
 
         return $this->render('registration/register.html.twig', [
@@ -76,7 +83,7 @@ class RegistrationController extends AbstractController
         try {
             $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
         } catch (VerifyEmailExceptionInterface $exception) {
-            $this->addFlash('verify_email_error', $exception->getReason());
+            $this->addFlash('flash_error', $exception->getReason());
 
             return $this->redirectToRoute('register');
         }

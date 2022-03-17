@@ -58,6 +58,9 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
+                'row_attr' => [
+                    'class' => 'text-danger'
+                ],
             ]);
     }
 
