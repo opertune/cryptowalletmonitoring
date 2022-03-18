@@ -45,6 +45,11 @@ class ResetPasswordController extends AbstractController
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
 
+        // If user is logged in auto complete email field
+        if ($this->getUser()) {
+            $form->get('email')->setData($this->getUser()->getUserIdentifier());
+        }
+
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->processSendingPasswordResetEmail(
                 $form->get('email')->getData(),

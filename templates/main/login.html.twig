@@ -19,7 +19,7 @@
     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
     <label class="text-white" for="inputPassword">Password</label>
     <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-    <a href="/reset-password" class="text-white">Forgot password ?</a>
+    <a href="/reset-password" class="link-primary">Forgot password ?</a>
 
     <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}">
