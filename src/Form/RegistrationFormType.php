@@ -7,8 +7,10 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -19,6 +21,21 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Email field can\'t be empty'
+                    ]),
+                    new Email([
+                        'message' => 'The email "{{ value }}" is not a valid email.'
+                    ]),
+                    new Length([
+                        'min' => 6,
+                        'minMessage' => 'Your email should be at least {{ limit }} characters',
+                        // max length allowed by Symfony for security reasons
+                        'max' => 50,
+                        'maxMessage' => 'Your email should be at least {{ limit }} characters',
+                    ])
+                ],
                 'label_attr' => [
                     'class' => 'text-white'
                 ],
@@ -26,26 +43,41 @@ class RegistrationFormType extends AbstractType
                     'class' => 'text-danger'
                 ],
             ])
-            ->add('agreeTerms', CheckboxType::class, [
+            // ->add('agreeTerms', CheckboxType::class, [
+            //     'mapped' => false,
+            //     'constraints' => [
+            //         new IsTrue([
+            //             'message' => 'You should agree to our terms.',
+            //         ]),
+            //     ],
+            //     'label_attr' => [
+            //         'class' => 'text-white'
+            //     ],
+            //     'row_attr' => [
+            //         'class' => 'text-danger'
+            //     ],
+            // ])
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
                 'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
+                'invalid_message' => 'The password fields must match.',
+                'options' => [
+                    'attr' => [
+                        'class' => 'password-field'
+                    ],
+                    'row_attr' => [
+                        'class' => 'text-danger'
+                    ],
+                    'label_attr' => [
+                        'class' => 'text-white'
+                    ],
                 ],
-                'label_attr' => [
-                    'class' => 'text-white'
-                ]
-            ])
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
-                'attr' => [
-                    'autocomplete' => 'new-password'
+                'required' => true,
+                'first_options' => [
+                    'label' => 'Password',
                 ],
-                'label_attr' => [
-                    'class' => 'text-white'
+                'second_options' => [
+                    'label' => 'Repeat Password',
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -55,12 +87,10 @@ class RegistrationFormType extends AbstractType
                         'min' => 6,
                         'minMessage' => 'Your password should be at least {{ limit }} characters',
                         // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
-                ],
-                'row_attr' => [
-                    'class' => 'text-danger'
-                ],
+                        'max' => 16,
+                        'maxMessage' => 'Your password should be at least {{ limit }} characters'
+                    ])
+                ]
             ]);
     }
 
