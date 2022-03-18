@@ -18,6 +18,9 @@ class ChangePasswordFormType extends AbstractType
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'options' => [
+                    'attr' => [
+                        'class' => 'password-field'
+                    ],
                     'row_attr' => [
                         'class' => 'text-danger'
                     ],
@@ -27,17 +30,6 @@ class ChangePasswordFormType extends AbstractType
                 ],
                 'first_options' => [
                     'attr' => ['autocomplete' => 'new-password'],
-                    'constraints' => [
-                        new NotBlank([
-                            'message' => 'Please enter a password',
-                        ]),
-                        new Length([
-                            'min' => 6,
-                            'minMessage' => 'Your password should be at least {{ limit }} characters',
-                            // max length allowed by Symfony for security reasons
-                            'max' => 4096,
-                        ]),
-                    ],
                     'label' => 'New password',
                 ],
                 'second_options' => [
@@ -48,6 +40,18 @@ class ChangePasswordFormType extends AbstractType
                 // Instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please enter a password',
+                    ]),
+                    new Length([
+                        'min' => 6,
+                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        // max length allowed by Symfony for security reasons
+                        'max' => 16,
+                        'maxMessage' => 'Your password should be at least {{ limit }} characters'
+                    ])
+                ]
             ]);
     }
 
