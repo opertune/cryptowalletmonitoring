@@ -16,6 +16,6 @@
         {{ form_row(registrationForm.password) }}
         {# {{ form_row(registrationForm.agreeTerms) }} #}
         <div class="g-recaptcha" data-sitekey="{{google_recaptcha_site_key}}"></div>
-        <button type="submit" class="btn btn-primary">Register</button>
+        {{ form_row(registrationForm.save) }}
     {{ form_end(registrationForm) }}
 {% endblock %}
