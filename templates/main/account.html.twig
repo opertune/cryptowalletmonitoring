@@ -6,13 +6,23 @@
 <h3 class="text-white">Current email address : {{ app.user.username }}</h3>
 <a href="/reset-password" class="link-primary">Reset my password</a>
 
-<h1 class="text-white">Edit my email address</h1>
 {% for flash_success in app.flashes('flash_success') %}
     <div class="alert alert-success" role="success">{{ flash_success }}</div>
 {% endfor %}
+{% for flash_error in app.flashes('flash_error') %}
+    <div class="alert alert-danger" role="error">{{ flash_error }}</div>
+{% endfor %}
 
-{{ form_start(form) }}
-    {{ form_row(form.new_email)}}
-    {{ form_row(form.save) }}
-{{ form_end(form) }}
+{{ form_start(formEditEmail) }}
+<h1 class="text-white">Edit my email address</h1>
+    {{ form_row(formEditEmail.new_email)}}
+    {{ form_row(formEditEmail.save) }}
+{{ form_end(formEditEmail) }}
+
+{{ form_start(formEditPW) }}
+<h1 class="text-white">Edit my password</h1>
+    {{ form_row(formEditPW.old_password) }}
+    {{ form_row(formEditPW.new_password) }}
+    {{ form_row(formEditPW.save ) }}
+{{ form_end(formEditPW) }}
 {% endblock %}
