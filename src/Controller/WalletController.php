@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\addWallet;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +15,11 @@ class WalletController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('main/wallet.html.twig', []);
+        $addWalletForm = $this->createForm(addWallet::class);
+
+        return $this->render('main/wallet.html.twig', [
+            'AddWalletForm' => $addWalletForm->createView()
+        ]);
     }
 
 

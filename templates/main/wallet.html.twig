@@ -3,4 +3,12 @@
 
 {% block body %}
 <h1 class="text-white">Wallet</h1>
+
+{{ form_start(AddWalletForm) }}
+<h1 class="text-white">Add new wallet</h1>
+    {{ form_row(AddWalletForm.name) }}
+    {{ form_row(AddWalletForm.apiKey) }}
+    {{ form_row(AddWalletForm.secretKey) }}
+    {{ form_row(AddWalletForm.save) }}
+{{ form_end(AddWalletForm) }}
 {% endblock %}

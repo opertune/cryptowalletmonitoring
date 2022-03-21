@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -41,6 +43,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="boolean")
      */
     private $isVerified = false;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Wallet::class, mappedBy="account", orphanRemoval=true)
+     */
+    private $wallet;
+
+    public function __construct()
+    {
+        $this->wallet = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -139,6 +151,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Wallet>
+     */
+    public function getWallet(): Collection
+    {
+        return $this->wallet;
+    }
+
+    public function addWallet(Wallet $wallet): self
+    {
+        if (!$this->wallet->contains($wallet)) {
+            $this->wallet[] = $wallet;
+            $wallet->setAccount($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWallet(Wallet $wallet): self
+    {
+        if ($this->wallet->removeElement($wallet)) {
+            // set the owning side to null (unless already changed)
+            if ($wallet->getAccount() === $this) {
+                $wallet->setAccount(null);
+            }
+        }
 
         return $this;
     }
