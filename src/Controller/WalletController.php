@@ -38,6 +38,7 @@ class WalletController extends AbstractController
         if ($addWalletForm->isSubmitted() && $addWalletForm->isValid()) {
             $this->addWallet($addWalletForm);
         }
+
         return $this->render('main/wallet.html.twig', [
             'AddWalletForm' => $addWalletForm->createView(),
             'wallets' => $user->getWallet(),
@@ -75,7 +76,12 @@ class WalletController extends AbstractController
         $wallet->setAccount($this->getUser())
             ->setName($addWalletForm->get('name')->getData())
             ->setApiKey($addWalletForm->get('apiKey')->getData())
-            ->setSecretKey($addWalletForm->get('secretKey')->getData());
+            ->setSecretKey($addWalletForm->get('secretKey')->getData())
+            ->setDataJson([
+                'email' => $this->getUser()->getUserIdentifier(),
+                'apiKey' => $addWalletForm->get('apiKey')->getData()
+            ]);
+
         $this->entityManager->persist($wallet);
         $this->entityManager->flush();
         $this->addFlash('flash_success', 'Wallet successfully added');

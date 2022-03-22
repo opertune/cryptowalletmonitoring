@@ -4,13 +4,15 @@
 {% block body %}
 <h1 class="text-white">Wallet</h1>
 
-{{ form_start(AddWalletForm) }}
 {% for flash_success in app.flashes('flash_success') %}
     <div class="alert alert-success" role="success">{{ flash_success }}</div>
 {% endfor %}
 {% for flash_error in app.flashes('flash_error') %}
     <div class="alert alert-danger" role="error">{{ flash_error }}</div>
 {% endfor %}
+
+{# Form for adding new wallet #}
+{{ form_start(AddWalletForm) }}
 <h1 class="text-white">Add new wallet</h1>
     {{ form_row(AddWalletForm.name) }}
     {{ form_row(AddWalletForm.apiKey) }}
@@ -18,12 +20,21 @@
     {{ form_row(AddWalletForm.save) }}
 {{ form_end(AddWalletForm) }}
 
-<br>
-<br>
-
 {# Display all wallet name, apiKey and secretKey #}
 {% for wallet in wallets %}
-    <p class="text-white">{{ wallet.name }} {{ wallet.apiKey }} {{wallet.secretKey}}</p>
+    <h3 class="text-white">Wallet name: {{ wallet.name }}</h3>
+    {# Display json data #}
+    <div class="border">
+        <h4 class="text-danger">JSON DATA</h4>
+        {# Solution 1 pour parcourir la table dataJson #}
+        {% for key, data in wallet.dataJson %}
+            <p class="text-white">Key: {{key}} Data: {{data}}</p>
+        {% endfor %}
+        {# Solution 2 pour sélectionner des données par leur index #}
+        <p class="text-white">Email: {{wallet.dataJson.email}}</p>
+        <p class="text-white">ApiKey: {{wallet.dataJson.apiKey}}</p>
+    </div>
+
     <a class="btn btn-danger" href="{{ path('removeWallet', {'id': wallet.id }) }}">Remove wallet</a>
 {% endfor %}
 {% endblock %}
