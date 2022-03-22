@@ -5,10 +5,25 @@
 <h1 class="text-white">Wallet</h1>
 
 {{ form_start(AddWalletForm) }}
+{% for flash_success in app.flashes('flash_success') %}
+    <div class="alert alert-success" role="success">{{ flash_success }}</div>
+{% endfor %}
+{% for flash_error in app.flashes('flash_error') %}
+    <div class="alert alert-danger" role="error">{{ flash_error }}</div>
+{% endfor %}
 <h1 class="text-white">Add new wallet</h1>
     {{ form_row(AddWalletForm.name) }}
     {{ form_row(AddWalletForm.apiKey) }}
     {{ form_row(AddWalletForm.secretKey) }}
     {{ form_row(AddWalletForm.save) }}
 {{ form_end(AddWalletForm) }}
+
+<br>
+<br>
+
+{# Display all wallet name, apiKey and secretKey #}
+{% for wallet in wallets %}
+    <p class="text-white">{{ wallet.name }} {{ wallet.apiKey }} {{wallet.secretKey}}</p>
+    <a class="btn btn-danger" href="{{ path('removeWallet', {'id': wallet.id }) }}">Remove wallet</a>
+{% endfor %}
 {% endblock %}

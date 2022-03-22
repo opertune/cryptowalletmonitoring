@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
-{% block title %}{{title}}{% endblock %}
+{% block title %}Show more{% endblock %}
 
 {% block body %}
-<h1 class="text-white">{{exchange}}</h1>
+<h1 class="text-white">{{wallet.name}}</h1>
+<h1 class="text-white">{{wallet.apiKey}}</h1>
+<h1 class="text-white">{{wallet.secretKey}}</h1>
 {% endblock %}
