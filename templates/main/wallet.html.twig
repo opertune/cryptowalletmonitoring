@@ -2,8 +2,8 @@
 {% block title %}Wallet{% endblock %}
 
 {% block body %}
-<h1 class="text-white">Wallet</h1>
 
+<h1 class="text-white">Wallet</h1>
 {% for flash_success in app.flashes('flash_success') %}
     <div class="alert alert-success" role="success">{{ flash_success }}</div>
 {% endfor %}
@@ -13,11 +13,8 @@
 
 {# Form for adding new wallet #}
 {{ form_start(AddWalletForm) }}
-<h1 class="text-white">Add new wallet</h1>
-    {{ form_row(AddWalletForm.name) }}
-    {{ form_row(AddWalletForm.apiKey) }}
-    {{ form_row(AddWalletForm.secretKey) }}
-    {{ form_row(AddWalletForm.save) }}
+    <h1 class="text-white">Add new wallet</h1>
+    {{ form_widget(AddWalletForm) }}
 {{ form_end(AddWalletForm) }}
 
 {# Display all wallet name, apiKey and secretKey #}
@@ -37,4 +34,16 @@
 
     <a class="btn btn-danger" href="{{ path('removeWallet', {'id': wallet.id }) }}">Remove wallet</a>
 {% endfor %}
+
+<script>
+    $(document).ready(function () {
+        $('#add_wallet_name').change(function () {
+            if ($('#add_wallet_name').val() == 'FTX' || $('#add_wallet_name').val() == 'Coinbase') {
+                $('#add_wallet_secretKey').hide();
+            } else {
+                $('#add_wallet_secretKey').show();
+            }
+        });
+    });
+</script>
 {% endblock %}

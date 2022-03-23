@@ -84,6 +84,7 @@ class WalletController extends AbstractController
 
         $this->entityManager->persist($wallet);
         $this->entityManager->flush();
+
         $this->addFlash('flash_success', 'Wallet successfully added');
         return $this->redirectToRoute('wallet');
     }
