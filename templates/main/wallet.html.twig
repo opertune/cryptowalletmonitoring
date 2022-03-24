@@ -25,11 +25,11 @@
         <h4 class="text-danger">JSON DATA</h4>
         {# Solution 1 pour parcourir la table dataJson #}
         {% for key, data in wallet.dataJson %}
-            <p class="text-white">Key: {{key}} Data: {{data}}</p>
+            <p class="text-white">Name: {{data.asset}} Amount: {{data.free}}</p>
         {% endfor %}
         {# Solution 2 pour sélectionner des données par leur index #}
-        <p class="text-white">Email: {{wallet.dataJson.email}}</p>
-        <p class="text-white">ApiKey: {{wallet.dataJson.apiKey}}</p>
+        {# <p class="text-white">Name: {{wallet.dataJson.0.asset}}</p>
+        <p class="text-white">Amount: {{wallet.dataJson.0.free}}</p> #}
     </div>
 
     <a class="btn btn-danger" href="{{ path('removeWallet', {'id': wallet.id }) }}">Remove wallet</a>
