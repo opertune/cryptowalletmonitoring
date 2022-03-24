@@ -37,8 +37,6 @@ class WalletController extends AbstractController
         // Add new wallet in db
         if ($addWalletForm->isSubmitted() && $addWalletForm->isValid()) {
             $this->addWallet($addWalletForm);
-            $this->addFlash('flash_success', 'Wallet successfully added');
-            return $this->redirect($request->getUri());
         }
 
         return $this->render('main/wallet.html.twig', [
@@ -86,6 +84,9 @@ class WalletController extends AbstractController
 
         $this->entityManager->persist($wallet);
         $this->entityManager->flush();
+
+        $this->addFlash('flash_success', 'Wallet successfully added');
+        return $this->redirectToRoute('wallet');
     }
 
     /**
