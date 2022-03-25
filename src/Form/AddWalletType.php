@@ -24,9 +24,9 @@ class addWallet extends AbstractType
                 'placeholder' => 'Chose your exchange',
                 'choices' => [
                     'Binance' => 'Binance', // Left (key) = Label, Right = value
-                    'FTX' => 'FTX',
-                    'Kucoin' => 'Kucoin',
                     'Gate.io' => 'Gate.io',
+                    'Kucoin' => 'Kucoin',
+                    'FTX' => 'FTX',
                     'Coinbase' => 'Coinbase',
                 ],
                 'row_attr' => [
@@ -51,7 +51,8 @@ class addWallet extends AbstractType
                     ]),
                 ],
                 'required' => true,
-                'mapped' => false
+                'mapped' => false,
+                'attr' => ['autocomplete' => 'disabled']
             ])
             ->add('secretKey', TextType::class, [
                 'row_attr' => [
@@ -62,7 +63,8 @@ class addWallet extends AbstractType
                     'class' => 'text-white',
                 ],
                 'required' => false,
-                'mapped' => false
+                'mapped' => false,
+                'attr' => ['autocomplete' => 'disabled']
             ])
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
                 // Get all form field data
@@ -88,6 +90,7 @@ class addWallet extends AbstractType
                                 'message' => 'Please enter your secret key.'
                             ]),
                         ],
+                        'attr' => ['autocomplete' => 'disabled']
                     ]);
                 }
             })

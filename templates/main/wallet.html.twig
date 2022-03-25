@@ -25,7 +25,7 @@
         <h4 class="text-danger">JSON DATA</h4>
         {# Solution 1 pour parcourir la table dataJson #}
         {% for key, data in wallet.dataJson %}
-            <p class="text-white">Name: {{data.asset}} Amount: {{data.free}}</p>
+            <p class="text-white">Name: {{data.asset}} Amount: {{data.quantity}}</p>
         {% endfor %}
         {# Solution 2 pour sélectionner des données par leur index #}
         {# <p class="text-white">Name: {{wallet.dataJson.0.asset}}</p>

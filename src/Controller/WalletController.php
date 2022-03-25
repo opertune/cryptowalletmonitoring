@@ -8,7 +8,6 @@ use App\Repository\UserRepository;
 use App\Repository\WalletRepository;
 use App\Service\Binance\Binance;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpParser\Node\Stmt\Break_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -81,20 +80,20 @@ class WalletController extends AbstractController
             ->setApiKey($addWalletForm->get('apiKey')->getData())
             ->setSecretKey($addWalletForm->get('secretKey')->getData());
 
-        // Set wallet daja relative to selected exchange
+        // Set wallet data relative to selected exchange
         switch ($addWalletForm->get('name')->getData()) {
             case 'Binance':
                 // get binance balances and set it in wallet entity
                 $binance = new Binance($addWalletForm->get('apiKey')->getData(), $addWalletForm->get('secretKey')->getData());
                 $wallet->setDataJson($binance->getBinanceBalances());
                 break;
-            case 'FTX':
+            case 'Gate.io':
 
                 break;
             case 'Kucoin':
 
                 break;
-            case 'Gate.io':
+            case 'FTX':
 
                 break;
             case 'Coinbase':
