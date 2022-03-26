@@ -7,6 +7,7 @@ use App\Form\addWallet;
 use App\Repository\UserRepository;
 use App\Repository\WalletRepository;
 use App\Service\Binance\Binance;
+use App\Service\Gate\Gate;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -88,7 +89,9 @@ class WalletController extends AbstractController
                 $wallet->setDataJson($binance->getBinanceBalances());
                 break;
             case 'Gate.io':
-
+                $gate = new Gate('c5cd5b43f7c85367d1d9c7ceeddb3d44', '9400c9c10f8ab87b6b9a92713ab2b638ba5247e7022f3a887ec7f0ec2534f954');
+                // dd($gate->getGateBalances());
+                $wallet->setDataJson($gate->getGateBalances());
                 break;
             case 'Kucoin':
 
