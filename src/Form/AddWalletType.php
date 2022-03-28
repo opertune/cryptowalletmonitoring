@@ -84,27 +84,27 @@ class addWallet extends AbstractType
                 $form = $event->getForm();
 
                 // If selected exchange is not ftx or coinbase we need secret key
-                if ($data['name'] != 'Coinbase') {
-                    // Override secretKey row with constraint
-                    $form->add('secretKey', TextType::class, [
-                        'row_attr' => [
-                            'class' => 'text-danger',
-                            'id' => 'add_wallet_secretKey'
-                        ],
-                        'label_attr' => [
-                            'class' => 'text-white',
-                        ],
-                        'required' => true,
-                        'mapped' => false,
-                        'required' => false,
-                        'constraints' => [
-                            new NotBlank([
-                                'message' => 'Please enter your secret key.'
-                            ]),
-                        ],
-                        'attr' => ['autocomplete' => 'disabled']
-                    ]);
-                }
+                // if ($data['name'] != 'Coinbase') {
+                //     // Override secretKey row with constraint
+                //     $form->add('secretKey', TextType::class, [
+                //         'row_attr' => [
+                //             'class' => 'text-danger',
+                //             'id' => 'add_wallet_secretKey'
+                //         ],
+                //         'label_attr' => [
+                //             'class' => 'text-white',
+                //         ],
+                //         'required' => true,
+                //         'mapped' => false,
+                //         'required' => false,
+                //         'constraints' => [
+                //             new NotBlank([
+                //                 'message' => 'Please enter your secret key.'
+                //             ]),
+                //         ],
+                //         'attr' => ['autocomplete' => 'disabled']
+                //     ]);
+                // }
 
                 if ($data['name'] == 'Kucoin') {
                     $form->add('passPhrase', TextType::class, [

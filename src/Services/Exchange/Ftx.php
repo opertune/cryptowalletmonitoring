@@ -13,7 +13,7 @@ class Ftx
         $this->secretKey = $secretKey;
     }
 
-    public function getFtxBalance()
+    public function getFtxBalance(): ?array
     {
         $url = 'https://ftx.com/api/wallet/balances';
         $timestamp = time() * 1000;

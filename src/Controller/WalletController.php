@@ -7,6 +7,7 @@ use App\Form\addWallet;
 use App\Repository\UserRepository;
 use App\Repository\WalletRepository;
 use App\Service\Binance\Binance;
+use App\Service\Coinbase\Coinbase;
 use App\Service\Ftx\Ftx;
 use App\Service\Gate\Gate;
 use App\Service\Kucoin\Kucoin;
@@ -105,7 +106,8 @@ class WalletController extends AbstractController
                 $wallet->setDataJson($ftx->getFtxBalance());
                 break;
             case 'Coinbase':
-
+                $coinbase = new Coinbase($addWalletForm->get('apiKey')->getData(), $addWalletForm->get('secretKey')->getData());
+                dd($coinbase->getCoinbaseBalance());
                 break;
         }
 
