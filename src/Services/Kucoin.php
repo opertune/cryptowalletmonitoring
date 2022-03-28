@@ -15,7 +15,7 @@ class Kucoin
         $this->passPhrase = $passPhrase;
     }
 
-    public function getKucoinBalance()
+    public function getKucoinBalance(): ?array
     {
         $url = 'https://api.kucoin.com/api/v1/accounts';
         $timestamp = time() * 1000;
@@ -24,6 +24,7 @@ class Kucoin
         $signature = base64_encode(hash_hmac('sha256', $signatureString, $this->secretKey, true));
 
         $headers = array(
+            "Accept: application/json",
             "Content-Type: application/json",
             "KC-API-KEY: $this->apiKey",
             "KC-API-SIGN: $signature",
@@ -42,8 +43,8 @@ class Kucoin
 
         // Get coins with balance greater than 0 and put it in array
         $coins = [];
-        foreach ($datas[0]['data'] as $key => $currency) {
-            if ($datas[0]['data'][$key]['balance'] > 00.00000000) {
+        foreach ($datas[0]['data'] as $currency) {
+            if ($currency['balance'] > 00.00000000) {
                 array_push($coins, array(
                     'asset' => $currency['currency'],
                     'quantity' => $currency['balance']

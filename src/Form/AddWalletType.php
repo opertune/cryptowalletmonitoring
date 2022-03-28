@@ -84,7 +84,7 @@ class addWallet extends AbstractType
                 $form = $event->getForm();
 
                 // If selected exchange is not ftx or coinbase we need secret key
-                if ($data['name'] != 'FTX' && $data['name'] != 'Coinbase') {
+                if ($data['name'] != 'Coinbase') {
                     // Override secretKey row with constraint
                     $form->add('secretKey', TextType::class, [
                         'row_attr' => [

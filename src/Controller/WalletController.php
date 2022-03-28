@@ -7,6 +7,7 @@ use App\Form\addWallet;
 use App\Repository\UserRepository;
 use App\Repository\WalletRepository;
 use App\Service\Binance\Binance;
+use App\Service\Ftx\Ftx;
 use App\Service\Gate\Gate;
 use App\Service\Kucoin\Kucoin;
 use Doctrine\ORM\EntityManagerInterface;
@@ -100,7 +101,8 @@ class WalletController extends AbstractController
                 $wallet->setDataJson($kucoin->getKucoinBalance());
                 break;
             case 'FTX':
-
+                $ftx = new Ftx($addWalletForm->get('apiKey')->getData(), $addWalletForm->get('secretKey')->getData());
+                $wallet->setDataJson($ftx->getFtxBalance());
                 break;
             case 'Coinbase':
 
@@ -109,9 +111,6 @@ class WalletController extends AbstractController
 
         $this->entityManager->persist($wallet);
         $this->entityManager->flush();
-
-        // $this->addFlash('flash_success', 'Wallet successfully added');
-        // return $this->redirectToRoute('wallet');
     }
 
     /**
