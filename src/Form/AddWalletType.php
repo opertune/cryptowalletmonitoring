@@ -66,6 +66,18 @@ class addWallet extends AbstractType
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'disabled']
             ])
+            ->add('passPhrase', TextType::class, [
+                'row_attr' => [
+                    'class' => 'text-danger',
+                    'id' => 'add_wallet_passPhrase'
+                ],
+                'label_attr' => [
+                    'class' => 'text-white',
+                ],
+                'required' => false,
+                'mapped' => false,
+                'attr' => ['autocomplete' => 'disabled']
+            ])
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
                 // Get all form field data
                 $data = $event->getData();
@@ -85,6 +97,26 @@ class addWallet extends AbstractType
                         'required' => true,
                         'mapped' => false,
                         'required' => false,
+                        'constraints' => [
+                            new NotBlank([
+                                'message' => 'Please enter your secret key.'
+                            ]),
+                        ],
+                        'attr' => ['autocomplete' => 'disabled']
+                    ]);
+                }
+
+                if ($data['name'] == 'Kucoin') {
+                    $form->add('passPhrase', TextType::class, [
+                        'row_attr' => [
+                            'class' => 'text-danger',
+                            'id' => 'add_wallet_passPhrase'
+                        ],
+                        'label_attr' => [
+                            'class' => 'text-white',
+                        ],
+                        'required' => true,
+                        'mapped' => false,
                         'constraints' => [
                             new NotBlank([
                                 'message' => 'Please enter your secret key.'

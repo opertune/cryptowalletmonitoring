@@ -15,7 +15,7 @@ class Gate
         $this->secretKey = $secretKey;
     }
 
-    public function getGateBalances()
+    public function getGateBalances(): ?array
     {
         $timestamp = time();
         $hashedPayload = hash("sha512", "");
@@ -43,7 +43,7 @@ class Gate
 
         $urlRequest = 'https://api.gateio.ws/api/v4/wallet/total_balance?currency=USDT';
         $querry = curl_init($urlRequest);
-        curl_setopt($querry, CURLINFO_HEADER_OUT, true);
+        // curl_setopt($querry, CURLINFO_HEADER_OUT, true);
         curl_setopt($querry, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($querry, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($querry, CURLOPT_FOLLOWLOCATION, 1);
@@ -51,6 +51,7 @@ class Gate
         $datas = array(json_decode(curl_exec($querry), true));
         // $h = curl_getinfo($querry, CURLINFO_HEADER_OUT);
         curl_close($querry);
+
         $total = [];
         array_push($total, array(
             'asset' => $datas[0]['total']['currency'],

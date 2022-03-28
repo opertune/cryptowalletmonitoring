@@ -43,6 +43,11 @@ class Wallet
      */
     private $dataJson = [];
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $passPhrase;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +109,18 @@ class Wallet
     public function setDataJson(?array $dataJson): self
     {
         $this->dataJson = $dataJson;
+
+        return $this;
+    }
+
+    public function getPassPhrase(): ?string
+    {
+        return $this->passPhrase;
+    }
+
+    public function setPassPhrase(?string $passPhrase): self
+    {
+        $this->passPhrase = $passPhrase;
 
         return $this;
     }

@@ -39,6 +39,8 @@ class WalletController extends AbstractController
         // Add new wallet in db
         if ($addWalletForm->isSubmitted() && $addWalletForm->isValid()) {
             $this->addWallet($addWalletForm);
+            $this->addFlash('flash_success', 'Wallet successfully added');
+            return $this->redirect($request->getUri());
         }
 
         return $this->render('main/wallet.html.twig', [
@@ -79,8 +81,8 @@ class WalletController extends AbstractController
         $wallet->setAccount($this->getUser())
             ->setName($addWalletForm->get('name')->getData())
             ->setApiKey($addWalletForm->get('apiKey')->getData())
-            ->setSecretKey($addWalletForm->get('secretKey')->getData());
-
+            ->setSecretKey($addWalletForm->get('secretKey')->getData())
+            ->setPassPhrase($addWalletForm->get('passPhrase')->getData());
         // Set wallet data relative to selected exchange
         switch ($addWalletForm->get('name')->getData()) {
             case 'Binance':
@@ -107,8 +109,8 @@ class WalletController extends AbstractController
         $this->entityManager->persist($wallet);
         $this->entityManager->flush();
 
-        $this->addFlash('flash_success', 'Wallet successfully added');
-        return $this->redirectToRoute('wallet');
+        // $this->addFlash('flash_success', 'Wallet successfully added');
+        // return $this->redirectToRoute('wallet');
     }
 
     /**

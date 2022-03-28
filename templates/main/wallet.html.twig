@@ -43,6 +43,12 @@
             } else {
                 $('#add_wallet_secretKey').show();
             }
+
+            if ($('#add_wallet_name').val() == 'Kucoin'){
+                $('#add_wallet_passPhrase').show();
+            }else{
+                $('#add_wallet_passPhrase').hide();
+            }
         });
     });
 </script>
