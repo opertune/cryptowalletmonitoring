@@ -17,7 +17,7 @@ class Coinbase
     {
         $url = 'https://api.coinbase.com/v2/accounts';
         $timestamp = time();
-        $signatureString = $timestamp . 'GET' . '/accounts';
+        $signatureString = $timestamp . 'GET' . '/v2/accounts';
         $signature = hash_hmac('sha256', $signatureString, $this->secretKey);
 
         $headers = array(
@@ -26,6 +26,7 @@ class Coinbase
             "CB-ACCESS-KEY: $this->apiKey",
             "CB-ACCESS-SIGN: $signature",
             "CB-ACCESS-TIMESTAMP: $timestamp",
+            "CB-VERSION: 2015-04-08",
         );
 
         $querry = curl_init($url);
@@ -36,6 +37,16 @@ class Coinbase
         $datas = array(json_decode(curl_exec($querry), true));
         curl_close($querry);
 
-        return $datas;
+        $coins = [];
+        foreach ($datas[0]['data'] as $currency) {
+            if ($currency['balance']['amount'] > 0.000) {
+                array_push($coins, array(
+                    'asset' => $currency['balance']['currency'],
+                    'quantity' => $currency['balance']['amount']
+                ));
+            }
+        }
+
+        return $coins;
     }
 }

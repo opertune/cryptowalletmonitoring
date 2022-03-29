@@ -107,7 +107,7 @@ class WalletController extends AbstractController
                 break;
             case 'Coinbase':
                 $coinbase = new Coinbase($addWalletForm->get('apiKey')->getData(), $addWalletForm->get('secretKey')->getData());
-                dd($coinbase->getCoinbaseBalance());
+                $wallet->setDataJson($coinbase->getCoinbaseBalance());
                 break;
         }
 
