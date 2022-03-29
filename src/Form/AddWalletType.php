@@ -62,6 +62,11 @@ class addWallet extends AbstractType
                 'label_attr' => [
                     'class' => 'text-white',
                 ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please enter your secret key.'
+                    ]),
+                ],
                 'required' => true,
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'disabled']
