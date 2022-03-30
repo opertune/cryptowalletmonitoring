@@ -17,6 +17,8 @@
     {{ form_widget(AddWalletForm) }}
 {{ form_end(AddWalletForm) }}
 
+<a href="{{ path('test')}}" class="btn btn-outline-info">Update Wallet Price</a>
+
 {# Display all wallet name, apiKey and secretKey #}
 {% for wallet in wallets %}
     <h3 class="text-white">Wallet name: {{ wallet.name }}</h3>

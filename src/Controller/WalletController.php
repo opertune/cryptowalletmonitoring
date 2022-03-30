@@ -13,6 +13,7 @@ use App\Service\Gate\Gate;
 use App\Service\Kucoin\Kucoin;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -86,6 +87,7 @@ class WalletController extends AbstractController
             ->setApiKey($addWalletForm->get('apiKey')->getData())
             ->setSecretKey($addWalletForm->get('secretKey')->getData())
             ->setPassPhrase($addWalletForm->get('passPhrase')->getData());
+
         // Set wallet data relative to selected exchange
         switch ($addWalletForm->get('name')->getData()) {
             case 'Binance':
@@ -139,5 +141,36 @@ class WalletController extends AbstractController
         }
 
         return $this->redirectToRoute('wallet');
+    }
+
+    /**
+     * @Route("/test", name="test")
+     */
+    public function test()
+    {
+        $page = 1;
+        $client = HttpClient::create();
+        $result = [];
+        do {
+            $response = $client->request('GET', 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=' . $page . '&sparkline=false');
+            $response = $response->toArray();
+            foreach ($response as $val) {
+                array_push($result, array('symbol' => $val['symbol'], 'price' => $val['current_price']));
+            }
+            $page++;
+        } while ($response[249]['market_cap'] > 100000);
+
+        // Init new wallet
+        // $wallet = new Wallet();
+        // $wallet->setAccount($this->getUser())
+        //     ->setName('Coingecko')
+        //     ->setApiKey('')
+        //     ->setSecretKey('')
+        //     ->setDataJson($result);
+
+        // $this->entityManager->persist($wallet);
+        // $this->entityManager->flush();
+        // return $this->redirectToRoute('wallet');
+        dd($result);
     }
 }
