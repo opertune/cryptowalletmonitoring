@@ -17,7 +17,7 @@
     {{ form_widget(AddWalletForm) }}
 {{ form_end(AddWalletForm) }}
 
-<a href="{{ path('test')}}" class="btn btn-outline-info">Update Wallet Price</a>
+<a href="{{ path('getAllCoinsPrice')}}" class="btn btn-outline-info">Get All Coins Price</a>
 
 {# Display all wallet name, apiKey and secretKey #}
 {% for wallet in wallets %}
@@ -27,10 +27,10 @@
         <h4 class="text-danger">JSON DATA</h4>
         {# Solution 1 pour parcourir la table dataJson #}
         {% for key, data in wallet.dataJson %}
-            <p class="text-white">Name: {{data.asset}} Amount: {{data.quantity}}</p>
+            <p class="text-white">Name: {{data.symbol}} Amount: {{data.quantity}}</p>
         {% endfor %}
         {# Solution 2 pour sélectionner des données par leur index #}
-        {# <p class="text-white">Name: {{wallet.dataJson.0.asset}}</p>
+        {# <p class="text-white">Name: {{wallet.dataJson.0.symbol}}</p>
         <p class="text-white">Amount: {{wallet.dataJson.0.free}}</p> #}
     </div>
 

@@ -46,7 +46,7 @@ class Kucoin
         foreach ($datas[0]['data'] as $currency) {
             if ($currency['balance'] > 00.00000000) {
                 array_push($coins, array(
-                    'asset' => $currency['currency'],
+                    'symbol' => $currency['currency'],
                     'quantity' => $currency['balance']
                 ));
             }

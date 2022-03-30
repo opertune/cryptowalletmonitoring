@@ -41,7 +41,7 @@ class Coinbase
         foreach ($datas[0]['data'] as $currency) {
             if ($currency['balance']['amount'] > 0.000) {
                 array_push($coins, array(
-                    'asset' => $currency['balance']['currency'],
+                    'symbol' => $currency['balance']['currency'],
                     'quantity' => $currency['balance']['amount']
                 ));
             }

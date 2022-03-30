@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Price;
 use App\Entity\Wallet;
 use App\Form\addWallet;
+use App\Repository\PriceRepository;
 use App\Repository\UserRepository;
 use App\Repository\WalletRepository;
 use App\Service\Binance\Binance;
@@ -144,33 +146,31 @@ class WalletController extends AbstractController
     }
 
     /**
-     * @Route("/test", name="test")
+     * @Route("/getAllCoinsPrice", name="getAllCoinsPrice")
      */
-    public function test()
+    public function getAllCoinsPrice()
     {
         $page = 1;
         $client = HttpClient::create();
-        $result = [];
+
+        // Deleted all content in price table
+        $this->entityManager->getConnection()->prepare('TRUNCATE TABLE price')->executeQuery();
+
         do {
-            $response = $client->request('GET', 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=' . $page . '&sparkline=false');
+            $response = $client->request('GET', 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=' . $page . '&sparkline=false&price_change_percentage=true');
             $response = $response->toArray();
             foreach ($response as $val) {
-                array_push($result, array('symbol' => $val['symbol'], 'price' => $val['current_price']));
+                $price = new Price();
+                $price->setSymbol($val['symbol'])
+                    ->setPrice($val['current_price']);
+                $this->entityManager->persist($price);
+                $this->entityManager->flush();
+                $this->entityManager->clear();
             }
             $page++;
         } while ($response[249]['market_cap'] > 100000);
 
-        // Init new wallet
-        // $wallet = new Wallet();
-        // $wallet->setAccount($this->getUser())
-        //     ->setName('Coingecko')
-        //     ->setApiKey('')
-        //     ->setSecretKey('')
-        //     ->setDataJson($result);
-
-        // $this->entityManager->persist($wallet);
-        // $this->entityManager->flush();
-        // return $this->redirectToRoute('wallet');
-        dd($result);
+        $this->addFlash('flash_success', 'Geted all coins price successfully');
+        return $this->redirectToRoute('wallet');
     }
 }

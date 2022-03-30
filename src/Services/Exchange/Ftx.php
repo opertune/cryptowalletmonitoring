@@ -42,7 +42,7 @@ class Ftx
         foreach ($datas[0]['result'] as $currency) {
             if ($currency['total'] > 0.0) {
                 array_push($coins, array(
-                    'asset' => $currency['coin'],
+                    'symbol' => $currency['coin'],
                     'quantity' => $currency['total'],
                     'value' => $currency['usdValue']
                 ));

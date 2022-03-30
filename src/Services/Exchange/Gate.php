@@ -54,7 +54,7 @@ class Gate
 
         $total = [];
         array_push($total, array(
-            'asset' => $datas[0]['total']['currency'],
+            'symbol' => $datas[0]['total']['currency'],
             'quantity' => $datas[0]['total']['amount']
         ));
         return $total;

@@ -47,7 +47,7 @@ class Binance
         foreach ($datas[0]['balances'] as $data) {
             if ($data['free'] > 0.00000000 || $data['locked'] > 0.00000000) {
                 array_push($coins, array(
-                    'asset' => $data['asset'],
+                    'symbol' => $data['asset'],
                     'quantity' => $data['free'] + $data['locked']
                 ));
             }
