@@ -35,7 +35,12 @@ class addWallet extends AbstractType
                 'label_attr' => [
                     'class' => 'text-white'
                 ],
-                'required' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Pleace select an exchange.'
+                    ]),
+                ],
+                'required' => false,
                 'mapped' => false
             ])
             ->add('apiKey', TextType::class, [

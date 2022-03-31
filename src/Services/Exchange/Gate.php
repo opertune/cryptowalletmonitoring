@@ -48,14 +48,15 @@ class Gate
         curl_setopt($querry, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($querry, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($querry, CURLOPT_URL, $urlRequest);
-        $datas = array(json_decode(curl_exec($querry), true));
+        $datas = json_decode(curl_exec($querry), true);
         // $h = curl_getinfo($querry, CURLINFO_HEADER_OUT);
         curl_close($querry);
 
         $total = [];
         array_push($total, array(
-            'symbol' => $datas[0]['total']['currency'],
-            'quantity' => $datas[0]['total']['amount']
+            'symbol' => $datas['total']['currency'],
+            'quantity' => number_format($datas['total']['amount'], 2, '.', ','),
+            'value' => number_format($datas['total']['amount'], 2, '.', ','),
         ));
         return $total;
     }

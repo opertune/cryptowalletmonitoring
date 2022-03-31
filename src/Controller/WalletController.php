@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Price;
+use App\Entity\User;
 use App\Entity\Wallet;
 use App\Form\addWallet;
 use App\Repository\PriceRepository;
@@ -45,7 +46,6 @@ class WalletController extends AbstractController
         // Add new wallet in db
         if ($addWalletForm->isSubmitted() && $addWalletForm->isValid()) {
             $this->addWallet($addWalletForm);
-            $this->addFlash('flash_success', 'Wallet successfully added');
             return $this->redirect($request->getUri());
         }
 
@@ -114,9 +114,10 @@ class WalletController extends AbstractController
                 $wallet->setDataJson($coinbase->getCoinbaseBalance());
                 break;
         }
-
+        $name = $wallet->getName();
         $this->entityManager->persist($wallet);
         $this->entityManager->flush();
+        $this->addFlash('flash_success', "$name wallet successfully added");
     }
 
     /**
@@ -147,6 +148,7 @@ class WalletController extends AbstractController
 
     /**
      * @Route("/getAllCoinsPrice", name="getAllCoinsPrice")
+     * Get all coin price from coingecko
      */
     public function getAllCoinsPrice()
     {
@@ -168,9 +170,48 @@ class WalletController extends AbstractController
                 $this->entityManager->clear();
             }
             $page++;
-        } while ($response[249]['market_cap'] > 100000);
+        } while ($response[249]['market_cap'] > 10000);
 
         $this->addFlash('flash_success', 'Geted all coins price successfully');
         return $this->redirectToRoute('wallet');
+    }
+
+    /**
+     * @Route("/updateWalletPrice", name="updateWalletPrice")
+     */
+    public function updateWalletPrice(UserRepository $userRepo, PriceRepository $priceRepo)
+    {
+        $user = $userRepo->findOneByEmail($this->getUser()->getUserIdentifier());
+        // Get user wallet
+        foreach ($user->getWallet() as $wallet) {
+            // FTX and Gate.io already have the value included
+            if ($wallet->getName() != 'FTX' && $wallet->getName() != 'Gate.io') {
+                $arr = [];
+                // Get all coin quantity and name in the wallet
+                foreach ($wallet->getDataJson() as $val) {
+                    // Find price relative to the name
+                    $price = $priceRepo->findBySymbol(strtolower($val['symbol']));
+                    // If the coin market cap is less than 100000, $price == null, therefore we don't have the price
+                    $price != null ? $value = number_format($price->getPrice() * $val['quantity'], 2, '.', ',') : $value = 0;
+                    array_push($arr, array(
+                        'symbol' => $val['symbol'],
+                        'quantity' => $val['quantity'],
+                        'value' => $value
+                    ));
+                }
+                // Update user wallet in database
+                $wallet->setDataJson($arr);
+                $this->entityManager->persist($wallet);
+                $this->entityManager->flush();
+            }
+        }
+        $this->entityManager->clear();
+        $this->addFlash('flash_success', 'Price updated successfully');
+        return $this->redirectToRoute('wallet');
+
+        // Faire en sorte que getallcoinsprice se déclanche tout les x temps sans que l'utilisateur ai à le faire de lui même
+        // Faire le calcul et ajouter le montant en usdt dans le dataJson de chaque wallet (à l'ajout du wallet)
+
+        // Faire un bouton update qui permet à l'utilisateur d'update ses wallet avec le nouveau prix retourné par getallcoinprince et d'update le contenu de ses wallet
     }
 }

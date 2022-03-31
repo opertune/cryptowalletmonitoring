@@ -63,7 +63,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
-     * @Return User from its email address
+     * @return User from its email address
      */
     public function findOneByEmail($value): ?User
     {

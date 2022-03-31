@@ -38,16 +38,17 @@ class Kucoin
         curl_setopt($querry, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($querry, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($querry, CURLOPT_URL, $url);
-        $datas = array(json_decode(curl_exec($querry), true));
+        $datas = json_decode(curl_exec($querry), true);
         curl_close($querry);
 
         // Get coins with balance greater than 0 and put it in array
         $coins = [];
-        foreach ($datas[0]['data'] as $currency) {
+        foreach ($datas['data'] as $currency) {
             if ($currency['balance'] > 00.00000000) {
                 array_push($coins, array(
                     'symbol' => $currency['currency'],
-                    'quantity' => $currency['balance']
+                    'quantity' => $currency['balance'],
+                    'value' => null,
                 ));
             }
         }

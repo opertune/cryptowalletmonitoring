@@ -46,7 +46,7 @@ class PriceRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Price[] Returns an array of Price objects
+     * @return Price from it's symbol
      */
     public function findBySymbol($value): ?Price
     {

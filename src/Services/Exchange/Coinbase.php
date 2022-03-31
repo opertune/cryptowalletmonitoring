@@ -34,15 +34,16 @@ class Coinbase
         curl_setopt($querry, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($querry, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($querry, CURLOPT_URL, $url);
-        $datas = array(json_decode(curl_exec($querry), true));
+        $datas = json_decode(curl_exec($querry), true);
         curl_close($querry);
 
         $coins = [];
-        foreach ($datas[0]['data'] as $currency) {
+        foreach ($datas['data'] as $currency) {
             if ($currency['balance']['amount'] > 0.000) {
                 array_push($coins, array(
                     'symbol' => $currency['balance']['currency'],
-                    'quantity' => $currency['balance']['amount']
+                    'quantity' => $currency['balance']['amount'],
+                    'value' => null,
                 ));
             }
         }
