@@ -2,6 +2,7 @@
 
 namespace App\Service\Gate;
 
+use App\Service\Utils\Utils;
 use Symfony\Component\HttpFoundation\Request;
 
 class Gate
@@ -41,23 +42,14 @@ class Gate
             "Timestamp: $timestamp",
         );
 
-        $urlRequest = 'https://api.gateio.ws/api/v4/wallet/total_balance?currency=USDT';
-        $querry = curl_init($urlRequest);
-        // curl_setopt($querry, CURLINFO_HEADER_OUT, true);
-        curl_setopt($querry, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($querry, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($querry, CURLOPT_FOLLOWLOCATION, 1);
-        curl_setopt($querry, CURLOPT_URL, $urlRequest);
-        $datas = json_decode(curl_exec($querry), true);
-        // $h = curl_getinfo($querry, CURLINFO_HEADER_OUT);
-        curl_close($querry);
+        $url = 'https://api.gateio.ws/api/v4/wallet/total_balance?currency=USDT';
+        $datas = Utils::curlRequest($url, $headers);
 
-        $total = [];
-        array_push($total, array(
+        $coins = [];
+        array_push($coins, array(
             'symbol' => $datas['total']['currency'],
             'quantity' => number_format($datas['total']['amount'], 2, '.', ','),
-            'value' => number_format($datas['total']['amount'], 2, '.', ','),
         ));
-        return $total;
+        return $coins;
     }
 }

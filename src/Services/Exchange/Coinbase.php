@@ -2,6 +2,8 @@
 
 namespace App\Service\Coinbase;
 
+use App\Service\Utils\Utils;
+
 class Coinbase
 {
     private $apiKey;
@@ -29,13 +31,7 @@ class Coinbase
             "CB-VERSION: 2015-04-08",
         );
 
-        $querry = curl_init($url);
-        curl_setopt($querry, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($querry, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($querry, CURLOPT_FOLLOWLOCATION, 1);
-        curl_setopt($querry, CURLOPT_URL, $url);
-        $datas = json_decode(curl_exec($querry), true);
-        curl_close($querry);
+        $datas = Utils::curlRequest($url, $headers);
 
         $coins = [];
         foreach ($datas['data'] as $currency) {
@@ -43,7 +39,6 @@ class Coinbase
                 array_push($coins, array(
                     'symbol' => $currency['balance']['currency'],
                     'quantity' => $currency['balance']['amount'],
-                    'value' => null,
                 ));
             }
         }

@@ -170,6 +170,7 @@ class WalletController extends AbstractController
         return $this->redirectToRoute('wallet');
 
         // Faire en sorte que getallcoinsprice se déclanche tout les x temps sans que l'utilisateur ai à le faire de lui même
+        // https://symfony.com/doc/current/the-fast-track/fr/24-cron.html
     }
 
 

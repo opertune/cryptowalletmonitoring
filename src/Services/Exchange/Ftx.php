@@ -2,6 +2,8 @@
 
 namespace App\Service\Ftx;
 
+use App\Service\Utils\Utils;
+
 class Ftx
 {
     private $apiKey;
@@ -29,13 +31,7 @@ class Ftx
             "FTX-SIGN: $signature",
         );
 
-        $querry = curl_init($url);
-        curl_setopt($querry, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($querry, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($querry, CURLOPT_FOLLOWLOCATION, 1);
-        curl_setopt($querry, CURLOPT_URL, $url);
-        $datas = json_decode(curl_exec($querry), true);
-        curl_close($querry);
+        $datas = Utils::curlRequest($url, $headers);
 
         // Get coins with balance greater than 0 and put it in array
         $coins = [];
@@ -44,7 +40,6 @@ class Ftx
                 array_push($coins, array(
                     'symbol' => $currency['coin'],
                     'quantity' => $currency['total'],
-                    'value' => number_format($currency['usdValue'], 2, '.', ',')
                 ));
             }
         }

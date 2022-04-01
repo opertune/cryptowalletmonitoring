@@ -3,19 +3,14 @@
 namespace App\Service\Utils;
 
 use App\Entity\User;
-use App\Entity\Wallet;
 use App\Repository\PriceRepository;
-use App\Repository\UserRepository;
-use App\Service\Binance\Binance;
-use App\Service\Coinbase\Coinbase;
-use App\Service\Ftx\Ftx;
-use App\Service\Gate\Gate;
-use App\Service\Kucoin\Kucoin;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Form\Form;
 
 class Utils
 {
+    /**
+     * Update column dataJson for each wallet with total value for each coin (coin quantity * coin price)
+     */
     public static function updateWalletPrice(User $user, PriceRepository $priceRepo, EntityManagerInterface $entityManager)
     {
         foreach ($user->getWallet() as $wallet) {
@@ -43,11 +38,33 @@ class Utils
                     'value' => $value
                 ));
             }
+
+            // Array sort relative to 'value' column
+            $col = array_column($arr, 'value');
+            array_multisort($col, SORT_DESC, $arr);
+
             // Update user wallet in database
             $wallet->setDataJson($arr);
             $entityManager->persist($wallet);
             $entityManager->flush();
         }
         $entityManager->clear();
+    }
+
+    /**
+     * Curl request for exchange api
+     * return an array with user wallet data
+     */
+    public static function curlRequest(string $url, array $headers): ?array
+    {
+        $querry = curl_init($url);
+        curl_setopt($querry, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($querry, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($querry, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($querry, CURLOPT_URL, $url);
+        $datas = json_decode(curl_exec($querry), true);
+        curl_close($querry);
+
+        return $datas;
     }
 }

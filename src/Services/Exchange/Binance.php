@@ -2,6 +2,8 @@
 
 namespace App\Service\Binance;
 
+use App\Service\Utils\Utils;
+
 class Binance
 {
     private $apiKey;
@@ -25,24 +27,21 @@ class Binance
             'timestamp' => time() * 1000,
             'recvWindow' => 60000
         ], '', '&');
+
         $signature = hash_hmac('sha256', $params, $this->secretKey);
 
         $url = 'https://api.binance.com/api/v3/account?' . $params . '&signature=' . $signature;
-
+        $headers = array(
+            "Accept: application/json",
+            "Content-Type: application/json",
+            'X-MBX-APIKEY:' . $this->apiKey,
+        );
         /**
          * Binance api request with curl
-         * Return json array with balances data
          */
-        $querry = curl_init($url);
-        curl_setopt($querry, CURLOPT_HTTPHEADER, array('X-MBX-APIKEY:' . $this->apiKey));
-        curl_setopt($querry, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($querry, CURLOPT_FOLLOWLOCATION, 1);
-        curl_setopt($querry, CURLOPT_URL, $url);
-        $datas = json_decode(curl_exec($querry), true);
-        curl_close($querry);
+        $datas = Utils::curlRequest($url, $headers);
 
-
-        // Put coins > 0 in array with name, (Added locked coins with free coins)
+        // Put coins > 0 in array
         $coins = [];
         foreach ($datas['balances'] as $data) {
             if ($data['free'] > 0.00000000 || $data['locked'] > 0.00000000) {
@@ -53,15 +52,10 @@ class Binance
                 array_push($coins, array(
                     'symbol' => $data['asset'],
                     'quantity' => $data['free'] + $data['locked'],
-                    'value' => null,
                 ));
             }
         }
 
-        // Array sort relative to 'free' column
-        // $col = array_column($coins, 'free');
-        // array_multisort($col, SORT_ASC, $coins);
-        // dd($datas);
         return $coins;
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Service\Kucoin;
 
+use App\Service\Utils\Utils;
+
 class Kucoin
 {
     private $apiKey;
@@ -33,13 +35,7 @@ class Kucoin
             "KC-API-KEY-VERSION: 1"
         );
 
-        $querry = curl_init($url);
-        curl_setopt($querry, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($querry, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($querry, CURLOPT_FOLLOWLOCATION, 1);
-        curl_setopt($querry, CURLOPT_URL, $url);
-        $datas = json_decode(curl_exec($querry), true);
-        curl_close($querry);
+        $datas = Utils::curlRequest($url, $headers);
 
         // Get coins with balance greater than 0 and put it in array
         $coins = [];
@@ -48,7 +44,6 @@ class Kucoin
                 array_push($coins, array(
                     'symbol' => $currency['currency'],
                     'quantity' => $currency['balance'],
-                    'value' => null,
                 ));
             }
         }
