@@ -2,6 +2,7 @@
 
 namespace App\Service\Kucoin;
 
+use App\Repository\PriceRepository;
 use App\Service\Utils\Utils;
 
 class Kucoin
@@ -17,7 +18,7 @@ class Kucoin
         $this->passPhrase = $passPhrase;
     }
 
-    public function getKucoinBalance(): ?array
+    public function getBalance(PriceRepository $priceRepository): ?array
     {
         $url = 'https://api.kucoin.com/api/v1/accounts';
         $timestamp = time() * 1000;
@@ -41,12 +42,17 @@ class Kucoin
         $coins = [];
         foreach ($datas['data'] as $currency) {
             if ($currency['balance'] > 00.00000000) {
+                $price = $priceRepository->findBySymbol(strtolower($currency['currency']));
+                $price != null ? $value = number_format($price->getPrice() * $currency['balance'], 2, '.', ',') : $value = 0;
                 array_push($coins, array(
                     'symbol' => $currency['currency'],
                     'quantity' => $currency['balance'],
+                    'value' => $value,
                 ));
             }
         }
-        return $coins;
+
+        // Return sorted array in the value column with symbol, quantity and value
+        return Utils::sortArray($coins, 'value', SORT_DESC);
     }
 }

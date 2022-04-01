@@ -2,6 +2,7 @@
 
 namespace App\Service\Binance;
 
+use App\Repository\PriceRepository;
 use App\Service\Utils\Utils;
 
 class Binance
@@ -15,7 +16,7 @@ class Binance
         $this->secretKey = $secretKey;
     }
 
-    public function getBinanceBalances(): ?array
+    public function getBalance(PriceRepository $priceRepository): ?array
     {
         /**
          * This api requires signed endpoint.
@@ -36,6 +37,7 @@ class Binance
             "Content-Type: application/json",
             'X-MBX-APIKEY:' . $this->apiKey,
         );
+
         /**
          * Binance api request with curl
          */
@@ -43,19 +45,23 @@ class Binance
 
         // Put coins > 0 in array
         $coins = [];
-        foreach ($datas['balances'] as $data) {
-            if ($data['free'] > 0.00000000 || $data['locked'] > 0.00000000) {
+        foreach ($datas['balances'] as $currency) {
+            if ($currency['free'] > 0.00000000 || $currency['locked'] > 0.00000000) {
                 // Binance return wrong name (and Binance don't return id...)
-                if ($data['asset'] == 'DATA') {
-                    $data['asset'] = 'XDATA';
+                if ($currency['asset'] == 'DATA') {
+                    $currency['asset'] = 'XDATA';
                 }
+
+                $price = $priceRepository->findBySymbol(strtolower($currency['asset']));
+                $price != null ? $value = number_format($price->getPrice() * ($currency['free'] + $currency['locked']), 2, '.', ',') : $value = 0;
                 array_push($coins, array(
-                    'symbol' => $data['asset'],
-                    'quantity' => $data['free'] + $data['locked'],
+                    'symbol' => $currency['asset'],
+                    'quantity' => $currency['free'] + $currency['locked'],
+                    'value' => $value
                 ));
             }
         }
-
-        return $coins;
+        // Return sorted array in the value column with symbol, quantity and value
+        return Utils::sortArray($coins, 'value', SORT_DESC);
     }
 }

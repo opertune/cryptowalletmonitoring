@@ -2,6 +2,7 @@
 
 namespace App\Service\Coinbase;
 
+use App\Repository\PriceRepository;
 use App\Service\Utils\Utils;
 
 class Coinbase
@@ -15,7 +16,7 @@ class Coinbase
         $this->secretKey = $secretKey;
     }
 
-    public function getCoinbaseBalance()
+    public function getBalance(PriceRepository $priceRepository): ?array
     {
         $url = 'https://api.coinbase.com/v2/accounts';
         $timestamp = time();
@@ -36,13 +37,18 @@ class Coinbase
         $coins = [];
         foreach ($datas['data'] as $currency) {
             if ($currency['balance']['amount'] > 0.000) {
+                $price = $priceRepository->findBySymbol(strtolower($currency['balance']['currency']));
+                $price != null ? $value = number_format($price->getPrice() * $currency['balance']['amount'], 2, '.', ',') : $value = 0;
+
                 array_push($coins, array(
                     'symbol' => $currency['balance']['currency'],
                     'quantity' => $currency['balance']['amount'],
+                    'value' => $value,
                 ));
             }
         }
 
-        return $coins;
+        // Return sorted array in the value column with symbol, quantity and value
+        return Utils::sortArray($coins, 'value', SORT_DESC);
     }
 }

@@ -100,32 +100,27 @@ class WalletController extends AbstractController
         switch ($addWalletForm->get('name')->getData()) {
             case 'Binance':
                 // get binance balances and set it in wallet entity
-                $binance = new Binance($addWalletForm->get('apiKey')->getData(), $addWalletForm->get('secretKey')->getData());
-                $wallet->setDataJson($binance->getBinanceBalances());
+                $coinArray = new Binance($addWalletForm->get('apiKey')->getData(), $addWalletForm->get('secretKey')->getData());
                 break;
             case 'Gate.io':
-                $gate = new Gate($addWalletForm->get('apiKey')->getData(), $addWalletForm->get('secretKey')->getData());
-                $wallet->setDataJson($gate->getGateBalances());
+                $coinArray = new Gate($addWalletForm->get('apiKey')->getData(), $addWalletForm->get('secretKey')->getData());
                 break;
             case 'Kucoin':
-                $kucoin = new Kucoin($addWalletForm->get('apiKey')->getData(), $addWalletForm->get('secretKey')->getData(), $addWalletForm->get('passPhrase')->getData());
-                $wallet->setDataJson($kucoin->getKucoinBalance());
+                $coinArray = new Kucoin($addWalletForm->get('apiKey')->getData(), $addWalletForm->get('secretKey')->getData(), $addWalletForm->get('passPhrase')->getData());
                 break;
             case 'FTX':
-                $ftx = new Ftx($addWalletForm->get('apiKey')->getData(), $addWalletForm->get('secretKey')->getData());
-                $wallet->setDataJson($ftx->getFtxBalance());
+                $coinArray = new Ftx($addWalletForm->get('apiKey')->getData(), $addWalletForm->get('secretKey')->getData());
                 break;
             case 'Coinbase':
-                $coinbase = new Coinbase($addWalletForm->get('apiKey')->getData(), $addWalletForm->get('secretKey')->getData());
-                $wallet->setDataJson($coinbase->getCoinbaseBalance());
+                $coinArray = new Coinbase($addWalletForm->get('apiKey')->getData(), $addWalletForm->get('secretKey')->getData());
                 break;
         }
+        $wallet->setDataJson($coinArray->getBalance($this->priceRepository));
         // Add new wallet in database
         $this->entityManager->persist($wallet);
         $this->entityManager->flush();
 
         // Update new wallet with total value for each coin
-        Utils::updateWalletPrice($this->userRepository->findOneByEmail($this->getUser()->getUserIdentifier()), $this->priceRepository, $this->entityManager);
         $name = $wallet->getName();
         $this->addFlash('flash_success', "$name wallet successfully added");
     }
@@ -163,8 +158,44 @@ class WalletController extends AbstractController
     {
         // Get current user
         $user = $this->userRepository->findOneByEmail($this->getUser()->getUserIdentifier());
-        // Update user dataJson with total for each coin
-        Utils::updateWalletPrice($user, $this->priceRepository, $this->entityManager);
+        // Update user dataJson with total value for each coin
+        foreach ($user->getWallet() as $wallet) {
+            $arr = [];
+            $total = 0;
+            // Get all coin quantity and name in the wallet
+            foreach ($wallet->getDataJson() as $val) {
+                // Find price relative to the name
+                $price = $this->priceRepository->findBySymbol(strtolower($val['symbol']));
+                // If the coin market cap is less than 10000, $price == 0
+                $price != null ? $value = number_format($price->getPrice() * $val['quantity'], 2, '.', ',') : $value = 0;
+
+                // coingecko doesn't take usd
+                if ($val['symbol'] == 'USD') {
+                    $value = number_format($val['quantity'], 2, '.', ',');
+                }
+
+                // Total wallet value
+                $total += $value;
+
+                // Update datajson array with total and coin value
+                array_push($arr, array(
+                    'symbol' => $val['symbol'],
+                    'quantity' => $val['quantity'],
+                    'value' => $value
+                ));
+            }
+
+            // Array sort relative to 'value' column
+            $col = array_column($arr, 'value');
+            array_multisort($col, SORT_DESC, $arr);
+
+            // Update user wallet in database
+            $wallet->setDataJson($arr);
+            $this->entityManager->persist($wallet);
+            $this->entityManager->flush();
+        }
+        $this->entityManager->clear();
+
         // redirect with success message
         $this->addFlash('flash_success', 'Price updated successfully');
         return $this->redirectToRoute('wallet');

@@ -2,8 +2,8 @@
 
 namespace App\Service\Gate;
 
+use App\Repository\PriceRepository;
 use App\Service\Utils\Utils;
-use Symfony\Component\HttpFoundation\Request;
 
 class Gate
 {
@@ -16,7 +16,7 @@ class Gate
         $this->secretKey = $secretKey;
     }
 
-    public function getGateBalances(): ?array
+    public function getBalance(PriceRepository $priceRepository): ?array
     {
         $timestamp = time();
         $hashedPayload = hash("sha512", "");
@@ -46,10 +46,15 @@ class Gate
         $datas = Utils::curlRequest($url, $headers);
 
         $coins = [];
+        $price = $priceRepository->findBySymbol(strtolower($datas['total']['currency']));
+        $price != null ? $value = number_format($price->getPrice() * $datas['total']['amount'], 2, '.', ',') : $value = 0;
         array_push($coins, array(
             'symbol' => $datas['total']['currency'],
             'quantity' => number_format($datas['total']['amount'], 2, '.', ','),
+            'value' => $value,
         ));
-        return $coins;
+
+        // Return sorted array in the value column with symbol, quantity and value
+        return Utils::sortArray($coins, 'value', SORT_DESC);
     }
 }

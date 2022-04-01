@@ -2,6 +2,7 @@
 
 namespace App\Service\Ftx;
 
+use App\Repository\PriceRepository;
 use App\Service\Utils\Utils;
 
 class Ftx
@@ -15,7 +16,7 @@ class Ftx
         $this->secretKey = $secretKey;
     }
 
-    public function getFtxBalance(): ?array
+    public function getBalance(PriceRepository $priceRepository): ?array
     {
         $url = 'https://ftx.com/api/wallet/balances';
         $timestamp = time() * 1000;
@@ -37,13 +38,24 @@ class Ftx
         $coins = [];
         foreach ($datas['result'] as $currency) {
             if ($currency['total'] > 0.0) {
+                // coingecko doesn't take usd
+                $price = $priceRepository->findBySymbol(strtolower($currency['coin']));
+                $price != null ? $value = number_format($price->getPrice() * $currency['total'], 2, '.', ',') : $value = 0;
+
+                // coingecko doesn't take usd
+                if ($currency['coin'] == 'USD') {
+                    $value = number_format($currency['total'], 2, '.', ',');
+                }
+
                 array_push($coins, array(
                     'symbol' => $currency['coin'],
                     'quantity' => $currency['total'],
+                    'value' => $value,
                 ));
             }
         }
 
-        return $coins;
+        // Return sorted array in the value column with symbol, quantity and value
+        return Utils::sortArray($coins, 'value', SORT_DESC);
     }
 }
