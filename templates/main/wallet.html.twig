@@ -3,7 +3,6 @@
 
 {% block body %}
 
-<h1 class="text-white">Wallet</h1>
 {% for flash_success in app.flashes('flash_success') %}
     <div class="alert alert-success" role="success">{{ flash_success }}</div>
 {% endfor %}
@@ -20,11 +19,15 @@
 <a href="{{ path('getAllCoinsPrice')}}" class="btn btn-outline-info">Get All Coins Price</a>
 <a href="{{ path('updateWalletPrice')}}" class="btn btn-outline-info">Update wallet price</a>
 
-{# Display all wallet name, apiKey and secretKey #}
-{% for wallet in wallets %}
-    <h3 class="text-white">Wallet name: {{ wallet.name }}</h3>
+{# All wallet total value #}
+<h1 class="text-primary">All Wallet Total: {{allWalletTotal}}</h1>
+{# Display all wallet name and dataJson #}
+{% for key, wallet in wallets %}
     {# Display json data #}
     <div class="border">
+        <h3 class="text-white">Wallet name: {{ wallet.name }}</h3>
+        {# Wallet total value #}
+        <h3 class="text-success">Total: {{eachWalletTotal[key]}}</h3>
         <h4 class="text-danger">JSON DATA</h4>
         {# Solution 1 pour parcourir la table dataJson #}
         {% for data in wallet.dataJson %}

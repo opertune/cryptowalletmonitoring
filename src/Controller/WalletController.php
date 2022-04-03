@@ -55,9 +55,23 @@ class WalletController extends AbstractController
             return $this->redirect($request->getUri());
         }
 
+        // Get all wallet total value and each wallet total value
+        $allWalletTotal = 0;
+        $eachWalletTotal = [];
+        foreach ($user->getWallet() as $wallet) {
+            $walletTotal = 0;
+            foreach ($wallet->getDataJson() as $data) {
+                $allWalletTotal += $data['value'];
+                $walletTotal += $data['value'];
+            }
+            array_push($eachWalletTotal, $walletTotal);
+        }
+
         return $this->render('main/wallet.html.twig', [
             'AddWalletForm' => $addWalletForm->createView(),
             'wallets' => $user->getWallet(),
+            'allWalletTotal' => $allWalletTotal,
+            'eachWalletTotal' => $eachWalletTotal,
         ]);
     }
 
@@ -199,9 +213,6 @@ class WalletController extends AbstractController
         // redirect with success message
         $this->addFlash('flash_success', 'Price updated successfully');
         return $this->redirectToRoute('wallet');
-
-        // Faire en sorte que getallcoinsprice se déclanche tout les x temps sans que l'utilisateur ai à le faire de lui même
-        // https://symfony.com/doc/current/the-fast-track/fr/24-cron.html
     }
 
 
@@ -241,3 +252,11 @@ class WalletController extends AbstractController
         return $this->redirectToRoute('wallet');
     }
 }
+
+
+// Faire en sorte que getallcoinsprice se déclanche tout les x temps sans que l'utilisateur ai à le faire de lui même
+// https://symfony.com/doc/current/the-fast-track/fr/24-cron.html
+
+// Ajouter le total de chaque wallet
+
+// Ajouter le total des wallets
