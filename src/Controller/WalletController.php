@@ -214,12 +214,6 @@ class WalletController extends AbstractController
 // Faire en sorte que getallcoinsprice se déclanche tout les x temps sans que l'utilisateur ai à le faire de lui même
 // https://symfony.com/doc/current/the-fast-track/fr/24-cron.html
 
-// Crypter toutes les données sauf l'email
+// Crypter toutes les données sauf l'email || https://symfony.com/doc/current/configuration/secrets.html
 
 // Ajouter des test
-// Ajouter de fixture (ajout de donnée random pour les test)
-
-
-// RÉSOLU AVEC LA METHODE apiCall DANS UTILS -> je l'utilise dans addWallet et updateWallet
-// Problème: Si l'utilisateur achète ou vend une crypto elle n'est pas ajouté dans les wallet
-// Solution: Sur le boutton Update wallet price ajouter un update des wallet des quantité / nom

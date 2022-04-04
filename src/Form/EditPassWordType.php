@@ -59,10 +59,10 @@ class EditPassWordType extends AbstractType
                 ],
                 'required' => true,
                 'first_options' => [
-                    'label' => 'Password',
+                    'label' => 'New password',
                 ],
                 'second_options' => [
-                    'label' => 'Repeat Password',
+                    'label' => 'Repeat new password',
                 ],
                 'constraints' => [
                     new NotBlank([
