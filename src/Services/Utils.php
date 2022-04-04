@@ -2,6 +2,13 @@
 
 namespace App\Service\Utils;
 
+use App\Repository\PriceRepository;
+use App\Service\Binance\Binance;
+use App\Service\Coinbase\Coinbase;
+use App\Service\Ftx\Ftx;
+use App\Service\Gate\Gate;
+use App\Service\Kucoin\Kucoin;
+
 class Utils
 {
     /**
@@ -24,10 +31,37 @@ class Utils
     /**
      * Sort an array
      */
-    public static function sortArray(array $array, string $col, $method)
+    public static function sortArray(array $array, string $col, $method): ?array
     {
         $col = array_column($array, $col);
         array_multisort($col, $method, $array);
         return $array;
+    }
+
+    /**
+     * Call api and return an array with balance of selected wallet
+     */
+    public static function apiCall(string $walletName, string $apiKey, string $secretKey, string $passPhrase = null, PriceRepository $priceRepository): ?array
+    {
+        switch ($walletName) {
+            case 'Binance':
+                // get binance balances and set it in wallet entity
+                $coinArray = new Binance($apiKey, $secretKey);
+                break;
+            case 'Gate.io':
+                $coinArray = new Gate($apiKey, $secretKey);
+                break;
+            case 'Kucoin':
+                $coinArray = new Kucoin($apiKey, $secretKey, $passPhrase);
+                break;
+            case 'FTX':
+                $coinArray = new Ftx($apiKey, $secretKey);
+                break;
+            case 'Coinbase':
+                $coinArray = new Coinbase($apiKey, $secretKey);
+                break;
+        }
+
+        return $coinArray->getBalance($priceRepository);
     }
 }

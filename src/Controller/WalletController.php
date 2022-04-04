@@ -15,6 +15,7 @@ use App\Service\Gate\Gate;
 use App\Service\Kucoin\Kucoin;
 use App\Service\Utils\Utils;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpParser\Node\Stmt\Break_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
@@ -111,25 +112,8 @@ class WalletController extends AbstractController
             ->setPassPhrase($addWalletForm->get('passPhrase')->getData());
 
         // Set wallet data relative to selected exchange
-        switch ($addWalletForm->get('name')->getData()) {
-            case 'Binance':
-                // get binance balances and set it in wallet entity
-                $coinArray = new Binance($addWalletForm->get('apiKey')->getData(), $addWalletForm->get('secretKey')->getData());
-                break;
-            case 'Gate.io':
-                $coinArray = new Gate($addWalletForm->get('apiKey')->getData(), $addWalletForm->get('secretKey')->getData());
-                break;
-            case 'Kucoin':
-                $coinArray = new Kucoin($addWalletForm->get('apiKey')->getData(), $addWalletForm->get('secretKey')->getData(), $addWalletForm->get('passPhrase')->getData());
-                break;
-            case 'FTX':
-                $coinArray = new Ftx($addWalletForm->get('apiKey')->getData(), $addWalletForm->get('secretKey')->getData());
-                break;
-            case 'Coinbase':
-                $coinArray = new Coinbase($addWalletForm->get('apiKey')->getData(), $addWalletForm->get('secretKey')->getData());
-                break;
-        }
-        $wallet->setDataJson($coinArray->getBalance($this->priceRepository));
+        $data = Utils::apiCall($addWalletForm->get('name')->getData(), $addWalletForm->get('apiKey')->getData(), $addWalletForm->get('secretKey')->getData(), $addWalletForm->get('passPhrase')->getData(), $this->priceRepository);
+        $wallet->setDataJson($data);
         // Add new wallet in database
         $this->entityManager->persist($wallet);
         $this->entityManager->flush();
@@ -174,37 +158,8 @@ class WalletController extends AbstractController
         $user = $this->userRepository->findOneByEmail($this->getUser()->getUserIdentifier());
         // Update user dataJson with total value for each coin
         foreach ($user->getWallet() as $wallet) {
-            $arr = [];
-            $total = 0;
-            // Get all coin quantity and name in the wallet
-            foreach ($wallet->getDataJson() as $val) {
-                // Find price relative to the name
-                $price = $this->priceRepository->findBySymbol(strtolower($val['symbol']));
-                // If the coin market cap is less than 10000, $price == 0
-                $price != null ? $value = number_format($price->getPrice() * $val['quantity'], 2, '.', ',') : $value = 0;
-
-                // coingecko doesn't take usd
-                if ($val['symbol'] == 'USD') {
-                    $value = number_format($val['quantity'], 2, '.', ',');
-                }
-
-                // Total wallet value
-                $total += $value;
-
-                // Update datajson array with total and coin value
-                array_push($arr, array(
-                    'symbol' => $val['symbol'],
-                    'quantity' => $val['quantity'],
-                    'value' => $value
-                ));
-            }
-
-            // Array sort relative to 'value' column
-            $col = array_column($arr, 'value');
-            array_multisort($col, SORT_DESC, $arr);
-
-            // Update user wallet in database
-            $wallet->setDataJson($arr);
+            $data = Utils::apiCall($wallet->getName(), $wallet->getApiKey(), $wallet->getSecretKey(), $wallet->getPassPhrase(), $this->priceRepository);
+            $wallet->setDataJson($data);
             $this->entityManager->persist($wallet);
             $this->entityManager->flush();
         }
@@ -248,6 +203,14 @@ class WalletController extends AbstractController
             $page++;
         } while ($response[249]['market_cap'] > 10000);
 
+        // Add usd price manually because coingecko does not propose it
+        $usd = new Price();
+        $usd->setSymbol('usd')
+            ->setPrice(1);
+        $this->entityManager->persist($usd);
+        $this->entityManager->flush();
+        $this->entityManager->clear();
+
         $this->addFlash('flash_success', 'Geted all coins price successfully');
         return $this->redirectToRoute('wallet');
     }
@@ -257,6 +220,12 @@ class WalletController extends AbstractController
 // Faire en sorte que getallcoinsprice se déclanche tout les x temps sans que l'utilisateur ai à le faire de lui même
 // https://symfony.com/doc/current/the-fast-track/fr/24-cron.html
 
-// Ajouter le total de chaque wallet
+// Crypter toutes les données sauf l'email
 
-// Ajouter le total des wallets
+// Ajouter des test
+// Ajouter de fixture (ajout de donnée random pour les test)
+
+
+// RÉSOLU AVEC LA METHODE apiCall DANS UTILS -> je l'utilise dans addWallet et updateWallet
+// Problème: Si l'utilisateur achète ou vend une crypto elle n'est pas ajouté dans les wallet
+// Solution: Sur le boutton Update wallet price ajouter un update des wallet des quantité / nom
