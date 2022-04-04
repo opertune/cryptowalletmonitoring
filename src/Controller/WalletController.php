@@ -8,14 +8,8 @@ use App\Form\addWallet;
 use App\Repository\PriceRepository;
 use App\Repository\UserRepository;
 use App\Repository\WalletRepository;
-use App\Service\Binance\Binance;
-use App\Service\Coinbase\Coinbase;
-use App\Service\Ftx\Ftx;
-use App\Service\Gate\Gate;
-use App\Service\Kucoin\Kucoin;
 use App\Service\Utils\Utils;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpParser\Node\Stmt\Break_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
@@ -156,7 +150,7 @@ class WalletController extends AbstractController
     {
         // Get current user
         $user = $this->userRepository->findOneByEmail($this->getUser()->getUserIdentifier());
-        // Update user dataJson with total value for each coin
+        // Update user data column with total value for each coin
         foreach ($user->getWallet() as $wallet) {
             $data = Utils::apiCall($wallet->getName(), $wallet->getApiKey(), $wallet->getSecretKey(), $wallet->getPassPhrase(), $this->priceRepository);
             $wallet->setDataJson($data);
@@ -185,8 +179,8 @@ class WalletController extends AbstractController
     public function getAllCoinsPrice()
     {
         $page = 1;
-        $client = HttpClient::create();
 
+        $client = HttpClient::create();
         // Deleted all content in price table
         $this->entityManager->getConnection()->prepare('TRUNCATE TABLE price')->executeQuery();
         do {
