@@ -61,7 +61,7 @@ class GetAllCoinsPriceCommand extends Command
 
             $output->writeln([
                 '======================================',
-                '| Geted all coins price successfully |',
+                '| <bg=green>Geted all coins price successfully</> |',
                 '======================================',
             ]);
         } catch (Exception $e) {

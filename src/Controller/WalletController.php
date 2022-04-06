@@ -167,6 +167,6 @@ class WalletController extends AbstractController
 
 
 // Faire en sorte que getallcoinsprice se déclanche tout les x temps sans que l'utilisateur ai à le faire de lui même
-// https://symfony.com/doc/current/the-fast-track/fr/24-cron.html
+// Utilisation de crontab sur linux à configurer au moment du passage sur un hebergeur.
 
 // Crypter toutes les données sauf l'email || https://symfony.com/doc/current/configuration/secrets.html
