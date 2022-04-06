@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Price;
 use App\Entity\Wallet;
-use App\Form\addWallet;
+use App\Form\AddWalletType;
 use App\Repository\PriceRepository;
 use App\Repository\UserRepository;
 use App\Repository\WalletRepository;
@@ -41,7 +41,7 @@ class WalletController extends AbstractController
         $user = $this->userRepository->findOneByEmail($this->getUser()->getUserIdentifier());
 
         // Create add wallet form
-        $addWalletForm = $this->createForm(addWallet::class);
+        $addWalletForm = $this->createForm(AddWalletType::class);
         $addWalletForm->handleRequest($request);
 
         // Add new wallet in db
@@ -163,51 +163,6 @@ class WalletController extends AbstractController
         $this->addFlash('flash_success', 'Price updated successfully');
         return $this->redirectToRoute('wallet');
     }
-
-
-
-
-
-
-
-
-
-    /**
-     * @Route("/getAllCoinsPrice", name="getAllCoinsPrice")
-     * Get all coin price from coingecko
-     */
-    public function getAllCoinsPrice()
-    {
-        $page = 1;
-
-        $client = HttpClient::create();
-        // Deleted all content in price table
-        $this->entityManager->getConnection()->prepare('TRUNCATE TABLE price')->executeQuery();
-        do {
-            $response = $client->request('GET', 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=' . $page . '&sparkline=false&price_change_percentage=true');
-            $response = $response->toArray();
-            foreach ($response as $val) {
-                $price = new Price();
-                $price->setSymbol($val['symbol'])
-                    ->setPrice($val['current_price']);
-                $this->entityManager->persist($price);
-                $this->entityManager->flush();
-                $this->entityManager->clear();
-            }
-            $page++;
-        } while ($response[249]['market_cap'] > 10000);
-
-        // Add usd price manually because coingecko does not propose it
-        $usd = new Price();
-        $usd->setSymbol('usd')
-            ->setPrice(1);
-        $this->entityManager->persist($usd);
-        $this->entityManager->flush();
-        $this->entityManager->clear();
-
-        $this->addFlash('flash_success', 'Geted all coins price successfully');
-        return $this->redirectToRoute('wallet');
-    }
 }
 
 
@@ -215,5 +170,3 @@ class WalletController extends AbstractController
 // https://symfony.com/doc/current/the-fast-track/fr/24-cron.html
 
 // Crypter toutes les données sauf l'email || https://symfony.com/doc/current/configuration/secrets.html
-
-// Ajouter des test

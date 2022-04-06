@@ -51,7 +51,7 @@ class AccountController extends AbstractController
                 // Set current user new password
                 $user->setPassword($encodedPassword);
                 $entityManager->flush();
-
+                $entityManager->clear();
                 $this->addFlash('flash_success', 'Old password successfully edited');
             } else {
                 $this->addFlash('flash_error', 'Invalid old password');

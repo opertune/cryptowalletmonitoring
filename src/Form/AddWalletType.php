@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Wallet;
-use App\Subscriber\AddWalletSubscriber\AddWalletSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -13,8 +12,9 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
 
-class addWallet extends AbstractType
+class AddWalletType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -39,6 +39,9 @@ class addWallet extends AbstractType
                     new NotBlank([
                         'message' => 'Pleace select an exchange.'
                     ]),
+                    new NotNull([
+                        'message' => 'Please enter your secret key.'
+                    ])
                 ],
                 'required' => false,
                 'mapped' => false
@@ -54,6 +57,9 @@ class addWallet extends AbstractType
                     new NotBlank([
                         'message' => 'Please enter your api key.'
                     ]),
+                    new NotNull([
+                        'message' => 'Please enter your secret key.'
+                    ])
                 ],
                 'required' => true,
                 'mapped' => false,
@@ -71,6 +77,9 @@ class addWallet extends AbstractType
                     new NotBlank([
                         'message' => 'Please enter your secret key.'
                     ]),
+                    new NotNull([
+                        'message' => 'Please enter your secret key.'
+                    ])
                 ],
                 'required' => true,
                 'mapped' => false,
@@ -108,6 +117,9 @@ class addWallet extends AbstractType
                             new NotBlank([
                                 'message' => 'Please enter your secret key.'
                             ]),
+                            new NotNull([
+                                'message' => 'Please enter your secret key.'
+                            ])
                         ],
                         'attr' => ['autocomplete' => 'disabled']
                     ]);
