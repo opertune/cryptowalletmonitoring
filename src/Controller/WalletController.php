@@ -2,16 +2,14 @@
 
 namespace App\Controller;
 
-use App\Entity\Price;
 use App\Entity\Wallet;
 use App\Form\AddWalletType;
 use App\Repository\PriceRepository;
 use App\Repository\UserRepository;
 use App\Repository\WalletRepository;
-use App\Service\Utils\Utils;
+use App\Service\Utils;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

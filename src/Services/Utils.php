@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Service\Utils;
+namespace App\Service;
 
 use App\Repository\PriceRepository;
-use App\Service\Binance\Binance;
-use App\Service\Coinbase\Coinbase;
-use App\Service\Ftx\Ftx;
-use App\Service\Gate\Gate;
-use App\Service\Kucoin\Kucoin;
+use App\Service\Exchange\Binance;
+use App\Service\Exchange\Coinbase;
+use App\Service\Exchange\Ftx;
+use App\Service\Exchange\Gate;
+use App\Service\Exchange\Kucoin;
 
 class Utils
 {

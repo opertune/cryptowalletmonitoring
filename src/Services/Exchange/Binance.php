@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Service\Binance;
+namespace App\Service\Exchange;
 
 use App\Repository\PriceRepository;
-use App\Service\Utils\Utils;
+use App\Service\Utils;
 
 class Binance
 {
