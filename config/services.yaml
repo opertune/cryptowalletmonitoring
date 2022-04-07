@@ -4,7 +4,9 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-
+    # Key for apikey, secretkey, passphrase and datajson database encryption
+    encryption_key: '%env(ENCRYPTION_KEY)%'
+    initialization_vector: '%env(INITIALIZATION_VECTOR)%'
 services:
     # default configuration for services in *this* file
     _defaults:

@@ -14,6 +14,9 @@ class EncryptionKeyGeneratorCommand extends Command
     {
     }
 
+    /**
+     * Generate encryption key (32 bytes) and Initialization vector (26 bytes) for open_ssl encrypt and decrypt
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $encryptionKey = $this->randomChar(32);
