@@ -29,10 +29,10 @@ class EncryptionKeyGeneratorCommand extends Command
 
     private function randomChar(int $bytes)
     {
-        $string = '1234567890abcdefghijklmnopqrstuvxyz!@#$%^&*()_+:;.,<>/?\|{[]}'; //<- 60
+        $string = '1234567890abcdefghijklmnopqrstuvxyz!@#$%^&*()_+:;.,<>/?\|{[]}';
         $randomString = '';
         for ($i = 0; $i < $bytes; $i++) {
-            $randomString .= $string[rand(1, 60)];
+            $randomString .= $string[rand(0, 60)];
         }
 
         return $randomString;
