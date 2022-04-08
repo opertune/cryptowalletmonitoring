@@ -64,4 +64,20 @@ class Utils
 
         return $coinArray->getBalance($priceRepository);
     }
+
+    /**
+     * Encrypting a message with openssl_encrypt
+     */
+    public static function encrypt(string $encryptionKey, string $initializationVector, string $data): string
+    {
+        return openssl_encrypt($data, 'AES-256-CBC', $encryptionKey, 0, $initializationVector);
+    }
+
+    /**
+     * Decrypting a message with openssl_decrypt
+     */
+    public static function decrypt(string $encryptionKey, string $initializationVector, string $data): string
+    {
+        return openssl_decrypt($data, 'AES-256-CBC', $encryptionKey, 0, $initializationVector);
+    }
 }
