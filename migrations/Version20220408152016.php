@@ -20,7 +20,6 @@ final class Version20220408152016 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $this->addSql('ALTER TABLE wallet CHANGE data_json wallet_data LONGTEXT');
-        // $this->addSql('ALTER TABLE wallet MODIFY wallet_data LONGTEXT');
     }
 
     public function down(Schema $schema): void
