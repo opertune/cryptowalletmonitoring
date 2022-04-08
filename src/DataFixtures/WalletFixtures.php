@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\User;
 use App\Entity\Wallet;
+use App\Service\Utils;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -11,9 +12,14 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class WalletFixtures extends Fixture
 {
     private $userPasswordHasher;
-    public function __construct(UserPasswordHasherInterface $userPasswordHasherInterface)
+    private $encryptionKey;
+    private $initializationVector;
+
+    public function __construct(UserPasswordHasherInterface $userPasswordHasherInterface, $encryptionKey, $initializationVector)
     {
         $this->userPasswordHasher = $userPasswordHasherInterface;
+        $this->encryptionKey = $encryptionKey;
+        $this->initializationVector = $initializationVector;
     }
 
     public function load(ObjectManager $manager): void
@@ -50,7 +56,11 @@ class WalletFixtures extends Fixture
                         'value' => rand(1, 100)
                     ));
                 }
-
+                $fakeData = Utils::encrypt(
+                    $this->encryptionKey,
+                    $this->initializationVector,
+                    $fakeData
+                );
                 $wallet = new Wallet();
                 $wallet->setAccount($user)
                     ->setName($walletName[$j])
