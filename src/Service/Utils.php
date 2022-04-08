@@ -68,16 +68,16 @@ class Utils
     /**
      * Encrypting a message with openssl_encrypt
      */
-    public static function encrypt(string $encryptionKey, string $initializationVector, string $data): string
+    public static function encrypt(string $encryptionKey, string $initializationVector, $data): string
     {
-        return openssl_encrypt($data, 'AES-256-CBC', $encryptionKey, 0, $initializationVector);
+        return openssl_encrypt(serialize($data), 'AES-256-CBC', $encryptionKey, 0, $initializationVector);
     }
 
     /**
      * Decrypting a message with openssl_decrypt
      */
-    public static function decrypt(string $encryptionKey, string $initializationVector, string $data): string
+    public static function decrypt(string $encryptionKey, string $initializationVector, $data)
     {
-        return openssl_decrypt($data, 'AES-256-CBC', $encryptionKey, 0, $initializationVector);
+        return unserialize(openssl_decrypt($data, 'AES-256-CBC', $encryptionKey, 0, $initializationVector));
     }
 }

@@ -48,21 +48,32 @@ class WalletController extends AbstractController
             return $this->redirect($request->getUri());
         }
 
-        // Get all wallet total value and each wallet total value
-        $allWalletTotal = 0;
+        // Decrypt all wallet data and get all wallet total value and each wallet total value
+        $eachWallet = [];
         $eachWalletTotal = [];
+        $allWalletTotal = 0;
+
         foreach ($user->getWallet() as $wallet) {
+            // decrypt each wallet data
+            $decryptedData = Utils::decrypt($this->getParameter('encryption_key'), $this->getParameter('initialization_vector'), $wallet->getDataJson());
+            array_push($eachWallet, [
+                'id' => $wallet->getId(),
+                'name' => $wallet->getName(),
+                'data' => $decryptedData,
+            ]);
+
+            // added each coin value and each wallet value for total value
             $walletTotal = 0;
-            foreach ($wallet->getDataJson() as $data) {
-                $allWalletTotal += $data['value'];
-                $walletTotal += $data['value'];
+            foreach ($decryptedData as $value) {
+                $allWalletTotal += $value['value'];
+                $walletTotal += $value['value'];
             }
             array_push($eachWalletTotal, $walletTotal);
         }
 
         return $this->render('main/wallet.html.twig', [
             'AddWalletForm' => $addWalletForm->createView(),
-            'wallets' => $user->getWallet(),
+            'data' => $eachWallet,
             'allWalletTotal' => $allWalletTotal,
             'eachWalletTotal' => $eachWalletTotal,
         ]);
@@ -99,12 +110,22 @@ class WalletController extends AbstractController
         $wallet = new Wallet();
         $wallet->setAccount($this->getUser())
             ->setName($addWalletForm->get('name')->getData())
-            ->setApiKey($addWalletForm->get('apiKey')->getData())
-            ->setSecretKey($addWalletForm->get('secretKey')->getData())
-            ->setPassPhrase($addWalletForm->get('passPhrase')->getData());
+            ->setApiKey(Utils::encrypt($this->getParameter('encryption_key'), $this->getParameter('initialization_vector'), $addWalletForm->get('apiKey')->getData()))
+            ->setSecretKey(Utils::encrypt($this->getParameter('encryption_key'), $this->getParameter('initialization_vector'), $addWalletForm->get('secretKey')->getData()))
+            ->setPassPhrase(Utils::encrypt($this->getParameter('encryption_key'), $this->getParameter('initialization_vector'), $addWalletForm->get('passPhrase')->getData()));
 
         // Set wallet data relative to selected exchange
-        $data = Utils::apiCall($addWalletForm->get('name')->getData(), $addWalletForm->get('apiKey')->getData(), $addWalletForm->get('secretKey')->getData(), $addWalletForm->get('passPhrase')->getData(), $this->priceRepository);
+        $data = Utils::encrypt(
+            $this->getParameter('encryption_key'),
+            $this->getParameter('initialization_vector'),
+            Utils::apiCall(
+                $addWalletForm->get('name')->getData(),
+                $addWalletForm->get('apiKey')->getData(),
+                $addWalletForm->get('secretKey')->getData(),
+                $addWalletForm->get('passPhrase')->getData(),
+                $this->priceRepository
+            )
+        );
         $wallet->setDataJson($data);
         // Add new wallet in database
         $this->entityManager->persist($wallet);
@@ -150,7 +171,18 @@ class WalletController extends AbstractController
         $user = $this->userRepository->findOneByEmail($this->getUser()->getUserIdentifier());
         // Update user data column with total value for each coin
         foreach ($user->getWallet() as $wallet) {
-            $data = Utils::apiCall($wallet->getName(), $wallet->getApiKey(), $wallet->getSecretKey(), $wallet->getPassPhrase(), $this->priceRepository);
+            $data = Utils::encrypt(
+                $this->getParameter('encryption_key'),
+                $this->getParameter('initialization_vector'),
+                Utils::apiCall(
+                    $wallet->getName(),
+                    Utils::decrypt($this->getParameter('encryption_key'), $this->getParameter('initialization_vector'), $wallet->getApiKey()),
+                    Utils::decrypt($this->getParameter('encryption_key'), $this->getParameter('initialization_vector'), $wallet->getSecretKey()),
+                    Utils::decrypt($this->getParameter('encryption_key'), $this->getParameter('initialization_vector'), $wallet->getPassPhrase()),
+                    $this->priceRepository
+                )
+            );
+
             $wallet->setDataJson($data);
             $this->entityManager->persist($wallet);
             $this->entityManager->flush();
@@ -166,6 +198,3 @@ class WalletController extends AbstractController
 
 // Faire en sorte que getallcoinsprice se déclanche tout les x temps sans que l'utilisateur ai à le faire de lui même
 // Utilisation de crontab sur linux à configurer au moment du passage sur un hebergeur.
-
-// Encryption key & iv ajouté dans le secret vault
-// ajouter class utils pour crypter apikey, secretkey, passphrase, datajson au moment de l'ajout et décrypter quand besoin de lire.

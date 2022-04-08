@@ -37,7 +37,6 @@ class Kucoin
         );
 
         $datas = Utils::curlRequest($url, $headers);
-
         // Get coins with balance greater than 0 and put it in array
         $coins = [];
         foreach ($datas['data'] as $currency) {

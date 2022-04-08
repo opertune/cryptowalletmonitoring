@@ -19,31 +19,25 @@
 
 {# All wallet total value #}
 <h1 class="text-primary">All Wallet Total: {{allWalletTotal}}$</h1>
-{# Display all wallet name and dataJson #}
-{% for key, wallet in wallets %}
-    {# Display json data #}
-    <div class="border">
-        <h3 class="text-white">Wallet name: {{ wallet.name }}</h3>
-        {# Wallet total value #}
-        <h3 class="text-success">Total: {{eachWalletTotal[key]}}$</h3>
-        <h4 class="text-danger">JSON DATA</h4>
-        {# Solution 1 pour parcourir la table dataJson #}
-        {% for data in wallet.dataJson %}
-            <p class="text-white">
-                Name: {{data.symbol}} Quantity: {{data.quantity}} 
-                {% if data.value != '0' %}
-                    Value: {{data.value}}$
-                {% else %}
-                    Value: Can't find price
-                {% endif %}
-            </p>
+{# Display all wallet name and data #}
+{% for key, wallets in data %}
+<div class="border">
+    {# Wallet name #}
+    <h3 class="text-danger">{{wallets['name']}}</h3>
+    <div class="text-success">
+        {# Wallet value #}
+        <h3 class="text-warning">Total: {{eachWalletTotal[key]}}$</h3>
+        {# each coin symbol, quantity, value for each wallet #}
+        {% for d in data[key]['data'] %}
+            <p>Symbol: {{d.symbol}}
+            Quantity: {{d.quantity}}
+            Value: {{d.value}}</p>
         {% endfor %}
-        {# Solution 2 pour sélectionner des données par leur index #}
-        {# <p class="text-white">Name: {{wallet.dataJson.0.symbol}}</p> #}
-        {# <p class="text-white">Amount: {{wallet.dataJson.0.quantity}}</p> #}
     </div>
-
-    <a class="btn btn-danger" href="{{ path('removeWallet', {'id': wallet.id }) }}">Remove wallet</a>
+    {# Button for removing selected wallet #}
+    <a class="btn btn-danger" href="{{ path('removeWallet', {'id': data[key]['id'] }) }}">Remove wallet</a>
+</div>
+<br>
 {% endfor %}
 
 <script>

@@ -4,6 +4,7 @@ namespace App\Service\Exchange;
 
 use App\Repository\PriceRepository;
 use App\Service\Utils;
+use Exception;
 
 class Binance
 {
@@ -42,7 +43,6 @@ class Binance
          * Binance api request with curl
          */
         $datas = Utils::curlRequest($url, $headers);
-
         // Put coins > 0 in array
         $coins = [];
         foreach ($datas['balances'] as $currency) {
@@ -61,6 +61,7 @@ class Binance
                 ));
             }
         }
+
         // Return sorted array in the value column with symbol, quantity and value
         return Utils::sortArray($coins, 'value', SORT_DESC);
     }

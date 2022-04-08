@@ -39,9 +39,9 @@ class Wallet
     private $secretKey;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
-    private $dataJson = [];
+    private $dataJson;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -101,12 +101,12 @@ class Wallet
         return $this;
     }
 
-    public function getDataJson(): ?array
+    public function getDataJson(): ?string
     {
         return $this->dataJson;
     }
 
-    public function setDataJson(?array $dataJson): self
+    public function setDataJson(?string $dataJson): self
     {
         $this->dataJson = $dataJson;
 
