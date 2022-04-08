@@ -55,7 +55,7 @@ class WalletController extends AbstractController
 
         foreach ($user->getWallet() as $wallet) {
             // decrypt each wallet data
-            $decryptedData = Utils::decrypt($this->getParameter('encryption_key'), $this->getParameter('initialization_vector'), $wallet->getDataJson());
+            $decryptedData = Utils::decrypt($this->getParameter('encryption_key'), $this->getParameter('initialization_vector'), $wallet->getWalletData());
             array_push($eachWallet, [
                 'id' => $wallet->getId(),
                 'name' => $wallet->getName(),
@@ -126,7 +126,7 @@ class WalletController extends AbstractController
                 $this->priceRepository
             )
         );
-        $wallet->setDataJson($data);
+        $wallet->setWalletData($data);
         // Add new wallet in database
         $this->entityManager->persist($wallet);
         $this->entityManager->flush();
@@ -183,7 +183,7 @@ class WalletController extends AbstractController
                 )
             );
 
-            $wallet->setDataJson($data);
+            $wallet->setWalletData($data);
             $this->entityManager->persist($wallet);
             $this->entityManager->flush();
         }

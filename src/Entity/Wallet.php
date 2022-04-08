@@ -41,7 +41,7 @@ class Wallet
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    private $dataJson;
+    private $walletData;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -101,14 +101,14 @@ class Wallet
         return $this;
     }
 
-    public function getDataJson(): ?string
+    public function getWalletData(): ?string
     {
-        return $this->dataJson;
+        return $this->walletData;
     }
 
-    public function setDataJson(?string $dataJson): self
+    public function setWalletData(?string $walletData): self
     {
-        $this->dataJson = $dataJson;
+        $this->walletData = $walletData;
 
         return $this;
     }
