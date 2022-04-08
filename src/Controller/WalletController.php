@@ -167,7 +167,5 @@ class WalletController extends AbstractController
 // Faire en sorte que getallcoinsprice se déclanche tout les x temps sans que l'utilisateur ai à le faire de lui même
 // Utilisation de crontab sur linux à configurer au moment du passage sur un hebergeur.
 
-// Crypter la connection à la db, le mailer et les key de google avec https://symfony.com/doc/current/configuration/secrets.html
-// (Voir aussi pour l'encryption key et l'iv)
-
-// Crypter toutes les données sauf l'email
+// Encryption key & iv ajouté dans le secret vault
+// ajouter class utils pour crypter apikey, secretkey, passphrase, datajson au moment de l'ajout et décrypter quand besoin de lire.
