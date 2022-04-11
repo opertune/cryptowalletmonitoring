@@ -1,6 +1,10 @@
 {% extends 'base.html.twig'%}
 {% block title %}Wallet{% endblock %}
 
+{# {% block stylesheets %} #}
+{# {{ encore_entry_link_tags('custom') }} #}
+{# {% endblock %} #}
+
 {% block body %}
 {% for flash_success in app.flashes('flash_success') %}
     <div class="alert alert-success" role="success">{{ flash_success }}</div>
