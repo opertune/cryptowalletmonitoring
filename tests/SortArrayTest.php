@@ -2,10 +2,10 @@
 
 namespace App\Tests;
 
+use App\Service\Utils;
 use PHPUnit\Framework\TestCase;
-use App\Service\Utils\Utils;
 
-require __DIR__ . "/../src/Services/Utils.php";
+require __DIR__ . "/../src/Service/Utils.php";
 
 class SortArrayTest extends TestCase
 {

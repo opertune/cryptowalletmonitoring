@@ -23,6 +23,6 @@ class PriceRepositoryTest extends KernelTestCase
             ->getRepository(Price::class)
             ->findBySymbol('btc');
 
-        $this->assertSame(46075, $priceBySymbol->getPrice());
+        $this->assertSame(46075, (int)$priceBySymbol->getPrice());
     }
 }

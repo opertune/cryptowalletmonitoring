@@ -48,7 +48,7 @@ class AddWalletType extends AbstractType
             ])
             ->add('apiKey', TextType::class, [
                 'row_attr' => [
-                    'class' => 'text-danger'
+                    'class' => 'text-danger',
                 ],
                 'label_attr' => [
                     'class' => 'text-white'
@@ -63,7 +63,7 @@ class AddWalletType extends AbstractType
                 ],
                 'required' => true,
                 'mapped' => false,
-                'attr' => ['autocomplete' => 'disabled']
+                'attr' => ['autocomplete' => 'off']
             ])
             ->add('secretKey', TextType::class, [
                 'row_attr' => [
@@ -83,7 +83,7 @@ class AddWalletType extends AbstractType
                 ],
                 'required' => true,
                 'mapped' => false,
-                'attr' => ['autocomplete' => 'disabled']
+                'attr' => ['autocomplete' => 'off']
             ])
             ->add('passPhrase', TextType::class, [
                 'row_attr' => [
@@ -95,7 +95,7 @@ class AddWalletType extends AbstractType
                 ],
                 'required' => false,
                 'mapped' => false,
-                'attr' => ['autocomplete' => 'disabled']
+                'attr' => ['autocomplete' => 'off']
             ])
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
                 // Get all form field data
@@ -121,7 +121,7 @@ class AddWalletType extends AbstractType
                                 'message' => 'Please enter your secret key.'
                             ])
                         ],
-                        'attr' => ['autocomplete' => 'disabled']
+                        'attr' => ['autocomplete' => 'off']
                     ]);
                 }
             })

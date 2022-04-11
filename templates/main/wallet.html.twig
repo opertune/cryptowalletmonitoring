@@ -31,7 +31,12 @@
         {% for d in data[key]['data'] %}
             <p>Symbol: {{d.symbol}}
             Quantity: {{d.quantity}}
-            Value: {{d.value}}</p>
+            {% if d.value != 0 %}
+                Value: {{d.value}}</p>
+            {% else %}
+                Value: Can't find value
+            {% endif %}
+
         {% endfor %}
     </div>
     {# Button for removing selected wallet #}
