@@ -199,6 +199,4 @@ class WalletController extends AbstractController
 // Faire en sorte que getallcoinsprice se déclanche tout les x temps sans que l'utilisateur ai à le faire de lui même
 // Utilisation de crontab sur linux à configurer au moment du passage sur un hebergeur.
 
-// Ajouter google api key / secret key dans le vault et les utilisers avec le bind dans service.yaml
-
 // Commencer le front
