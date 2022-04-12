@@ -1,7 +1,12 @@
 controllers:
-    resource: ../../src/Controller/
+    resource: '../../src/Controller/'
     type: annotation
-
+    prefix:
+        en: '/en'
+        fr: '/fr'
+    requirements:
+        _locale: '%app_supported_locales%'
+    
 kernel:
     resource: ../../src/Kernel.php
     type: annotation

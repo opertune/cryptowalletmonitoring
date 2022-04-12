@@ -4,7 +4,6 @@ namespace App\Service\Exchange;
 
 use App\Repository\PriceRepository;
 use App\Service\Utils;
-use Exception;
 
 class Binance
 {
@@ -25,9 +24,11 @@ class Binance
          * The signature is a keyed HMAC SHA 256 and secretKey.
          * SecretKey is key and params is value for hmac operation.
          */
+        $timestamp = round(microtime(true) * 1000);
+        $recvWindow = 60000;
         $params = http_build_query([
-            'timestamp' => time() * 1000,
-            'recvWindow' => 60000
+            'timestamp' => $timestamp,
+            'recvWindow' => $recvWindow
         ], '', '&');
 
         $signature = hash_hmac('sha256', $params, $this->secretKey);
@@ -42,7 +43,10 @@ class Binance
         /**
          * Binance api request with curl
          */
+        // if ($timestamp < (time() + 1000) && (time() - $timestamp) <= $recvWindow) {
         $datas = Utils::curlRequest($url, $headers);
+        dd($datas);
+
         // Put coins > 0 in array
         $coins = [];
         foreach ($datas['balances'] as $currency) {
@@ -64,5 +68,8 @@ class Binance
 
         // Return sorted array in the value column with symbol, quantity and value
         return Utils::sortArray($coins, 'value', SORT_DESC);
+        // } else {
+        //     return null;
+        // }
     }
 }

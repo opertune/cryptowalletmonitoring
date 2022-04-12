@@ -63,12 +63,14 @@ class WalletController extends AbstractController
             ]);
 
             // added each coin value and each wallet value for total value
-            $walletTotal = 0;
-            foreach ($decryptedData as $value) {
-                $allWalletTotal += $value['value'];
-                $walletTotal += $value['value'];
+            if ($decryptedData != null) {
+                $walletTotal = 0;
+                foreach ($decryptedData as $value) {
+                    $allWalletTotal += $value['value'];
+                    $walletTotal += $value['value'];
+                }
+                array_push($eachWalletTotal, $walletTotal);
             }
-            array_push($eachWalletTotal, $walletTotal);
         }
 
         return $this->render('main/wallet.html.twig', [
