@@ -13,3 +13,6 @@ import './bootstrap';
 
 // import bootstrap javascript
 import bootstrap from 'bootstrap';
+
+// Navbar style change
+import './controllers/navbar';

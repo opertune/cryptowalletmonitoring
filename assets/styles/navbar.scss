@@ -38,3 +38,17 @@ $navbar-dark-color: white;
 #logoutButton {
     font-weight: 700;
 }
+
+// hamburger navbar style while
+.navbar.expanded {
+
+    // clear loginButton background while expanded
+    #loginButton {
+        background-color: transparent;
+        border-color: transparent;
+    }
+}
+
+// .navbar.expanded .navbar-collapse {
+//     background-color: blue;
+// }
