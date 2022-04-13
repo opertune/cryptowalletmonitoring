@@ -1,28 +1,24 @@
 {% extends 'base.html.twig' %}
-{% block title %}My Account{% endblock %}
+{% block title %}My Account
+{% endblock %}
 
 {% block body %}
-<h1 class="text-white">My Account</h1>
-<h3 class="text-white">Current email address : {{ app.user.username }}</h3>
-<a href="/reset-password" class="link-primary">Reset my password</a>
+	<h1 class="text-white">My Account</h1>
+	<h3 class="text-white">Current email address :
+		{{ app.user.username }}</h3>
+	<a href="/reset-password" class="link-primary">Reset my password</a>
 
-{% for flash_success in app.flashes('flash_success') %}
-    <div class="alert alert-success" role="success">{{ flash_success }}</div>
-{% endfor %}
-{% for flash_error in app.flashes('flash_error') %}
-    <div class="alert alert-danger" role="error">{{ flash_error }}</div>
-{% endfor %}
+	{% for flash_success in app.flashes('flash_success') %}
+		<div class="alert alert-success" role="success">{{ flash_success }}</div>
+	{% endfor %}
+	{% for flash_error in app.flashes('flash_error') %}
+		<div class="alert alert-danger" role="error">{{ flash_error }}</div>
+	{% endfor %}
 
-{{ form_start(formEditEmail) }}
-<h1 class="text-white">Edit my email address</h1>
-    {{ form_row(formEditEmail.new_email)}}
-    {{ form_row(formEditEmail.save) }}
-{{ form_end(formEditEmail) }}
-
-{{ form_start(formEditPW) }}
-<h1 class="text-white">Edit my password</h1>
-    {{ form_row(formEditPW.old_password) }}
-    {{ form_row(formEditPW.new_password) }}
-    {{ form_row(formEditPW.save ) }}
-{{ form_end(formEditPW) }}
+	{{ form_start(formEditPW) }}
+	<h1 class="text-white">Edit my password</h1>
+	{{ form_row(formEditPW.old_password) }}
+	{{ form_row(formEditPW.new_password) }}
+	{{ form_row(formEditPW.save ) }}
+	{{ form_end(formEditPW) }}
 {% endblock %}

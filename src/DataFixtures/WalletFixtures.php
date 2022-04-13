@@ -66,7 +66,7 @@ class WalletFixtures extends Fixture
                     ->setName($walletName[$j])
                     ->setApiKey($faker->sha256)
                     ->setSecretKey($faker->sha256)
-                    ->setPassPhrase($faker->sentence(3))
+                    ->setPassPhrase(Utils::encrypt($this->encryptionKey, $this->initializationVector, $faker->sentence(3)))
                     ->setWalletData($fakeData);
                 $manager->persist($wallet);
             }

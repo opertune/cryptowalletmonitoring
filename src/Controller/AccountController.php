@@ -22,20 +22,6 @@ class AccountController extends AbstractController
         // Get current user by email
         $user = $userRepository->findOneByEmail($this->getUser()->getUserIdentifier());
 
-        // Form for edit email account
-        $formEditEmail = $this->createForm(EditEmailType::class);
-        $formEditEmail->handleRequest($request);
-
-        // Edit email account
-        if ($formEditEmail->isSubmitted() && $formEditEmail->isValid()) {
-            // Set current user new email address
-            $user->setEmail($formEditEmail->get('new_email')->getData());
-            $entityManager->flush();
-
-            $this->addFlash('flash_success', 'Email change successfully');
-            return $this->redirectToRoute('account');
-        }
-
         // Form for edit password
         $formEditPW = $this->createForm(EditPassWordType::class);
         $formEditPW->handleRequest($request);
@@ -59,7 +45,6 @@ class AccountController extends AbstractController
         }
 
         return $this->render('main/account.html.twig', [
-            'formEditEmail' => $formEditEmail->createView(),
             'formEditPW' => $formEditPW->createView(),
         ]);
     }

@@ -1,8 +1,30 @@
 {% extends 'base.html.twig' %}
-{% block title %} Home {% endblock %}
+{% block title %}
+	{{ 'title'|trans({}, 'home')}}
+{% endblock %}
 {% block body %}
+	<div class="container-fluid">
+		<h1 class="text-white">{{ 'welcomeMessage'|trans({}, 'home')}}
+			Crypto Wallet Monitoring !</h1>
+		<div class="row">
+			<div class="col">
+				<img class="img-fluid" src="{{asset('images/icons/binance_logo.png')}}" alt="Binance-logo">
+			</div>
+			<div class="col">
+				<img class="img-fluid" src="{{asset('images/icons/coinbase-logo.png')}}" alt="Coinbase-logo">
+			</div>
+			<div class="col">
+				<img class="img-fluid" src="{{asset('images/icons/ftx-logo.png')}}" alt="FTX-logo">
+			</div>
+			<div class="col">
+				<img class="img-fluid" src="{{asset('images/icons/kucoin-logo.png')}}" alt="Kucoin-logo">
+			</div>
+			<div class="col">
+				<img class="img-fluid" src="{{asset('images/icons/gate-io-logo.png')}}" alt="Gate_io-logo">
+			</div>
+		</div>
+	</div>
+{% endblock %}
 
-<h1 class="text-white">{% trans %}home{% endtrans %}</h1>
 {# Translation depuis un fichier autre que messages.fr_FR.yaml #}
 {# <h1 class="text-danger">{{ 'my message'|trans({}, 'home', 'fr')}}</h1> #}
-{% endblock %}

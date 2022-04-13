@@ -5,7 +5,8 @@ controllers:
         en: '/en'
         fr: '/fr'
     requirements:
-        _locale: '%app_supported_locales%'
+        _locale: 'en|fr'
+    trailing_slash_on_root: false
     
 kernel:
     resource: ../../src/Kernel.php

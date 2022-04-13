@@ -6,3 +6,8 @@ home:
   path: /
   controller: App\Controller\HomeController::index
   prefix: /_locale
+
+resetPasswordRequest:
+  path: /reset-password
+  controller: App\Controller\ResetPasswordController::request
+  prefix: /_locale
