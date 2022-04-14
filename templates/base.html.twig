@@ -13,6 +13,9 @@
 	{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 	{% block stylesheets %}
 		{{ encore_entry_link_tags('app') }}
+		<style>
+
+		</style>
 	{% endblock %}
 
 	{% block javascripts %}
@@ -22,19 +25,19 @@
 	{% endblock %}
 </head>
 
-<body class="d-flex h-100 text-center text-white bg-dark">
-	<div class="cover-container d-flex w-75 h-100 p-3 mx-auto flex-column">
-		<header class="mb-auto">
+<body class="d-flex flex-column h-100 text-white bg-dark">
+	<div class="min-vh-100 d-flex w-75 h-100 p-3 mx-auto flex-column">
+		<header>
 			<div>
-				<nav class="navbar nav-masthead navbar-expand-lg navbar-dark">
+				<nav class="navbar nav-masthead navbar-expand-lg navbar-dark border-bottom py-3">
 					<div class="container">
 						<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#myNavBar" aria-controls="myNavBar" aria-expanded="false" aria-label="Toggle navigation" id="hamburger">
 							<span class="navbar-toggler-icon"></span>
 						</button>
-						<div class="collapse navbar-collapse border-bottom pb-2" id="myNavBar">
+						<div class="collapse navbar-collapse" id="myNavBar">
 							<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 								<li class="nav-item">
-									<a class="nav-link {% if route == 'home' %}active{% endif %}" href="{{path("home")}}">Home</a>
+									<a class="nav-link {% if route == 'home' %}active{% endif %}" href="{{path("home")}}">{{ 'navbar.home'|trans({}, 'base')}}</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link {% if route == 'guide' %}active{% endif %}" href="{{path("guide")}}">Guide</a>
@@ -44,19 +47,19 @@
 								</li>
 								{% if app.user %}
 									<li class="nav-item">
-										<a class="nav-link {% if route == 'wallet' %}active{% endif %}" href="{{path("wallet")}}">Wallet</a>
+										<a class="nav-link {% if route == 'wallet' %}active{% endif %}" href="{{path("wallet")}}">{{ 'navbar.wallet'|trans({}, 'base')}}</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link {% if route == 'account' %}active{% endif %}" href="{{path("account")}}">My Account</a>
+										<a class="nav-link {% if route == 'account' %}active{% endif %}" href="{{path("account")}}">{{ 'navbar.account'|trans({}, 'base')}}</a>
 									</li>
 								{% endif %}
 							</ul>
 							<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 								{% if app.user %}
-										<a class="btn btn-danger" href="{{path("logout")}}" id="logoutButton">Logout</a>
+										<a class="btn btn-danger" href="{{path("logout")}}" id="logoutButton">{{ 'navbar.logout'|trans({}, 'base')}}</a>
 								{% else %}
-										<a class="btn btn-success me-2" href="{{path("login")}}" id="loginButton">Login</a>
-										<a class="btn btn-primary" href="{{path("register")}}" id="registerButton">Register</a>
+										<a class="btn btn-success me-2" href="{{path("login")}}" id="loginButton">{{ 'navbar.login'|trans({}, 'base')}}</a>
+										<a class="btn btn-primary" href="{{path("register")}}" id="registerButton">{{ 'navbar.register'|trans({}, 'base')}}</a>
 								{% endif %}
 							</ul>
 						</div>
@@ -64,15 +67,16 @@
 				</nav>
 			</div>
 		</header>
-		<main>
+		<main class="flex-shrink-0">
 			{% block body %}{% endblock %}
 		</main>
-		{# <footer class="mt-auto d-flex flex-wrap justify-content-between align-items-center py-2 border-top">
-			<p>Cover template for
-				<a href="https://getbootstrap.com/" class="text-white">Bootstrap</a>, by
-				<a href="https://twitter.com/mdo" class="text-white">@mdo</a>.
-			</p>
-		</footer> #}
+		<footer class="footer mt-auto border-top py-2">
+			<div class="container">
+				<p>
+					{{ 'footer'|trans({}, 'base')}}
+				</p>
+			</div>
+		</footer>
 	</div>
 </body>
 </html>

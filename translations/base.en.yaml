@@ -1,0 +1,8 @@
+footer: Website made by Romain with Symfony 5 and bootstrap 5.
+navbar:
+  home: Home
+  wallet: Wallet
+  account: My Account
+  logout: Logout
+  login: Login
+  register: Register

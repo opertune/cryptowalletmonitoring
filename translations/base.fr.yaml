@@ -1,0 +1,8 @@
+footer: Site web créé par Romain avec symfony 5 et bootstrap 5
+navbar:
+  home: Accueil
+  wallet: Portefeuille
+  account: Mon compte
+  logout: Se déconnecter
+  login: Se connecter
+  register: S'inscrire
