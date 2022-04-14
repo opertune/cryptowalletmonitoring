@@ -2,29 +2,33 @@
 {% block title %}
 	{{ 'title'|trans({}, 'home')}}
 {% endblock %}
+
 {% block body %}
 	<div class="container-fluid">
-		<h1 class="text-white text-center">{{ 'welcomeMessage'|trans({}, 'home')}}
-			Crypto Wallet Monitoring !</h1>
-		<div class="row">
-			<div class="col">
-				<img class="img-fluid" src="{{asset('images/icons/binance_logo.png')}}" alt="Binance-logo">
-			</div>
-			<div class="col">
-				<img class="img-fluid" src="{{asset('images/icons/coinbase-logo.png')}}" alt="Coinbase-logo">
-			</div>
-			<div class="col">
-				<img class="img-fluid" src="{{asset('images/icons/ftx-logo.png')}}" alt="FTX-logo">
-			</div>
-			<div class="col">
-				<img class="img-fluid" src="{{asset('images/icons/kucoin-logo.png')}}" alt="Kucoin-logo">
-			</div>
-			<div class="col">
-				<img class="img-fluid" src="{{asset('images/icons/gate-io-logo.png')}}" alt="Gate_io-logo">
+		<h1 class="text-white text-center pt-6">{{ 'welcomeMessage'|trans({}, 'home')}} Crypto Wallet Monitoring !</h1>
+
+		<div class="container d-flex justify-content-center w-50 text-center">
+			<p class="display-6 fs-2 mt-5">{{ 'description'|trans({}, 'home')}}</p>
+		</div>
+		
+		<div class="container mt-7 mb-3">
+			<div class="row">
+				<div class="col">
+					<img class="responsiveMinSize img-fluid h-75" src="{{asset('images/icons/binance_logo.png')}}" alt="Binance-logo">
+				</div>
+				<div class="col">
+					<img class="responsiveMinSize img-fluid h-75" src="{{asset('images/icons/coinbase-logo.png')}}" alt="Coinbase-logo">
+				</div>
+				<div class="col">
+					<img class="responsiveMinSize img-fluid h-75" src="{{asset('images/icons/ftx-logo.png')}}" alt="FTX-logo">
+				</div>
+				<div class="col">
+					<img class="responsiveMinSize img-fluid h-75" src="{{asset('images/icons/kucoin-logo.png')}}" alt="Kucoin-logo">
+				</div>
+				<div class="col">
+					<img class="responsiveMinSize img-fluid h-75" src="{{asset('images/icons/gate-io-logo.png')}}" alt="Gate_io-logo">
+				</div>
 			</div>
 		</div>
 	</div>
 {% endblock %}
-
-{# Translation depuis un fichier autre que messages.fr_FR.yaml #}
-{# <h1 class="text-danger">{{ 'my message'|trans({}, 'home', 'fr')}}</h1> #}

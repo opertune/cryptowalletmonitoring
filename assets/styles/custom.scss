@@ -1,5 +1,26 @@
 // background color
 $dark: #202020;
 
+// Position custom value
+$position-values: (0: 0,
+    25: 25%,
+    40: 40%,
+    50: 50%,
+    70: 70%,
+    80: 80%,
+    100: 100%);
+
+// Spacing custom value
+$spacer: 1rem;
+$spacers: (0: 0,
+    1: $spacer * .25,
+    2: $spacer * .5,
+    3: $spacer,
+    4: $spacer * 1.5,
+    5: $spacer * 3,
+    6: $spacer * 6,
+    7: $spacer * 12,
+);
+
 // npm run watch or npm run build
 // doc https://getbootstrap.com/docs/5.0/customize/sass/
