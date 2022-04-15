@@ -1,10 +1,14 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}{{ 'title'|trans({}, 'login')}}{% endblock %}
-
 {% block body %}
+	{# Captcha submit #}
+	<script>
+		function onSubmit(token) {
+			document.getElementById("loginForm").submit();
+		}
+	</script>
 	<div class="container mt-5">
-		<form method="post" class="customForm">
+		<form method="post" class="customForm" id="loginForm">
 			<h1 class="h3 mb-3 text-white">{{ 'formTitle'|trans({}, 'login')}}</h1>
 
 			{% if error %}
@@ -25,10 +29,10 @@
 
 			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 	
-			<button class="w-100 btn btn-lg btn-warning mb-2" type="submit">
+			<button class="g-recaptcha w-100 btn btn-lg btn-warning mb-2" data-sitekey="{{ app.request.server.get('GOOGLE_RECAPTCHAv3_SITE_KEY') }}"
+				data-callback='onSubmit' data-action='submit'>
 				{{ 'submitButton'|trans({}, 'login')}}
 			</button>
-			<div class="g-recaptcha" data-sitekey="{{google_recaptcha_site_key}}"></div>
 		</form>
 		<a href="/reset-password" class="link-primary">{{ 'forgotPassword'|trans({}, 'login')}}</a>
 	</div>

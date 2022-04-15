@@ -37,7 +37,6 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         if (!$captcha->captchaIsValid()) {
             throw new CustomUserMessageAuthenticationException('Captcha invalide !');
         }
-
         $email = $request->request->get('email', '');
 
         $request->getSession()->set(Security::LAST_USERNAME, $email);

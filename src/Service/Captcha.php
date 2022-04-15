@@ -11,7 +11,7 @@ class Captcha
     function __construct($response)
     {
         $this->response = $response;
-        $this->secret = $_ENV['GOOGLE_RECAPTCHA_SECRET_KEY'];
+        $this->secret = $_ENV['GOOGLE_RECAPTCHAv3_SECRET_KEY'];
     }
 
     public function captchaIsValid()

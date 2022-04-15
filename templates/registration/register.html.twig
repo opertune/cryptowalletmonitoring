@@ -3,19 +3,25 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
+	{# Captcha submit #}
+	<script>
+		function onSubmit(token) {
+			document.getElementById("registerForm").submit();
+		}
+	</script>
     {% for flash_error in app.flashes('flash_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
+
     {% for flash_success in app.flashes('flash_success') %}
         <div class="alert alert-success" role="success">{{ flash_success }}</div>
     {% endfor %}
+    
     <h1 class="text-white">Register</h1>
 
-    {{ form_start(registrationForm) }}
+    {{ form_start(registrationForm, {'attr': {'id':'registerForm'}}) }}
         {{ form_row(registrationForm.email) }}
         {{ form_row(registrationForm.password) }}
-        {# {{ form_row(registrationForm.agreeTerms) }} #}
-        <div class="g-recaptcha" data-sitekey="{{google_recaptcha_site_key}}"></div>
         {{ form_row(registrationForm.save) }}
     {{ form_end(registrationForm) }}
 {% endblock %}

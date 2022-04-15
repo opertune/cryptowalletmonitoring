@@ -43,7 +43,7 @@ class RegistrationController extends AbstractController
             $captcha = new Captcha($_POST['g-recaptcha-response']);
             if (!$captcha->captchaIsValid()) {
                 // return $this->redirectToRoute('register');
-                $this->addFlash('flash_error', 'Captcha invalide !');
+                $this->addFlash('flash_error', 'Captcha invalid !');
             } else {
                 // encode the plain password
                 $user->setPassword(

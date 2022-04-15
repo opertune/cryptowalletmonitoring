@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -12,7 +11,6 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -44,20 +42,6 @@ class RegistrationFormType extends AbstractType
                     'class' => 'text-danger'
                 ],
             ])
-            // ->add('agreeTerms', CheckboxType::class, [
-            //     'mapped' => false,
-            //     'constraints' => [
-            //         new IsTrue([
-            //             'message' => 'You should agree to our terms.',
-            //         ]),
-            //     ],
-            //     'label_attr' => [
-            //         'class' => 'text-white'
-            //     ],
-            //     'row_attr' => [
-            //         'class' => 'text-danger'
-            //     ],
-            // ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'mapped' => false,
@@ -95,7 +79,10 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('save', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-primary'
+                    'class' => 'g-recaptcha w-100 btn btn-lg btn-warning mb-2',
+                    'data-sitekey' => $_ENV['GOOGLE_RECAPTCHAv3_SITE_KEY'],
+                    'data-callback' => 'onSubmit',
+                    'data-action' => 'submit'
                 ],
                 'label' => 'Register'
             ]);
