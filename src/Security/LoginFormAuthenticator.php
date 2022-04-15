@@ -36,18 +36,19 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         $captcha = new Captcha($_POST['g-recaptcha-response']);
         if (!$captcha->captchaIsValid()) {
             throw new CustomUserMessageAuthenticationException('Captcha invalide !');
+        } else {
+            $email = $request->request->get('email', '');
+
+            $request->getSession()->set(Security::LAST_USERNAME, $email);
+
+            return new Passport(
+                new UserBadge($email),
+                new PasswordCredentials($request->request->get('password', '')),
+                [
+                    new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
+                ]
+            );
         }
-        $email = $request->request->get('email', '');
-
-        $request->getSession()->set(Security::LAST_USERNAME, $email);
-
-        return new Passport(
-            new UserBadge($email),
-            new PasswordCredentials($request->request->get('password', '')),
-            [
-                new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
-            ]
-        );
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
