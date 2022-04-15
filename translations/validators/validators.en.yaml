@@ -1,0 +1,9 @@
+# Register form error message
+emailNotBlank: Email field can't be empty
+emailFormat: The email "{{ value }}" is not a valid email.
+emailMinLength: Your email should be at least {{ limit }} characters
+emailMaxLength: Your email should be at least {{ limit }} characters
+passwordNotBlank: Please enter a password
+passwordMinLength: Your password should be at least {{ limit }} characters
+passwordMaxLength: Your password should be at least {{ limit }} characters
+passwordRepeatNotMatch: The password fields must match.

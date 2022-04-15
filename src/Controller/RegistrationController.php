@@ -15,6 +15,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use App\Service\Captcha;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegistrationController extends AbstractController
 {
@@ -28,7 +29,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="register")
      */
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, TranslatorInterface $translatorInterface): Response
     {
         // Redirect to home page if user is already connect
         if ($this->getUser()) {
@@ -43,7 +44,7 @@ class RegistrationController extends AbstractController
             $captcha = new Captcha($_POST['g-recaptcha-response']);
             if (!$captcha->captchaIsValid()) {
                 // return $this->redirectToRoute('register');
-                $this->addFlash('flash_error', 'Captcha invalid !');
+                $this->addFlash('flash_error', $translatorInterface->trans('captcha', [], 'register'));
             } else {
                 // encode the plain password
                 $user->setPassword(
@@ -67,7 +68,7 @@ class RegistrationController extends AbstractController
                         ->htmlTemplate('registration/confirmation_email.html.twig')
                 );
                 // do anything else you need here, like send an email
-                $this->addFlash('flash_success', 'Verify your email Click on link in your email box !');
+                $this->addFlash('flash_success', $translatorInterface->trans('email.send', [], 'register'));
                 return $this->redirectToRoute('register');
             }
         }
@@ -94,8 +95,6 @@ class RegistrationController extends AbstractController
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
-
         return $this->redirectToRoute('home');
     }
 }

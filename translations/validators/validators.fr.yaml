@@ -1,0 +1,9 @@
+# Register form error message
+emailNotBlank: Le champ de l'adresse e-mail ne peut pas être vide.
+emailFormat: L'adresse "{{ value }}" n'est pas une adresse e-mail valide.
+emailMinLength: Votre e-mail doit comporter au moins {{ limit }} caractères.
+emailMaxLength: Votre e-mail doit comporter au moins {{ limit }} caractères.
+passwordNotBlank: Le champ du mot de passe ne peut pas être vide.
+passwordMinLength: Votre mot de passe doit comporter au moins {{ limit }} caractères.
+passwordMaxLength: Votre mot de passe doit comporter au moins {{ limit }} caractères.
+passwordRepeatNotMatch: Les deux mots de passe doivent correspondre.

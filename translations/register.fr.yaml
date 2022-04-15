@@ -1,0 +1,9 @@
+title: S'inscrire
+formTitle: S'inscrire
+emailInput: Adresse E-mail
+passwordInput: Mot de passe
+passwordInputRepeat: Répéter mot de passe
+submitButton: S'inscrire
+email:
+  send: Vérifiez votre email. Cliquez sur le lien dans votre boîte mail !
+captcha: Le captcha est invalide.

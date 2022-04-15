@@ -20,21 +20,23 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
+                'translation_domain' => 'register',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Email field can\'t be empty'
+                        'message' => 'emailNotBlank'
                     ]),
                     new Email([
-                        'message' => 'The email "{{ value }}" is not a valid email.'
+                        'message' => 'emailFormat'
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your email should be at least {{ limit }} characters',
+                        'minMessage' => 'emailMinLength',
                         // max length allowed by Symfony for security reasons
                         'max' => 50,
-                        'maxMessage' => 'Your email should be at least {{ limit }} characters',
+                        'maxMessage' => 'emailMaxLength',
                     ])
                 ],
+                'label' => 'emailInput',
                 'label_attr' => [
                     'class' => 'text-white'
                 ],
@@ -43,9 +45,10 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('password', RepeatedType::class, [
+                'translation_domain' => 'register',
                 'type' => PasswordType::class,
                 'mapped' => false,
-                'invalid_message' => 'The password fields must match.',
+                'invalid_message' => 'passwordRepeatNotMatch',
                 'options' => [
                     'attr' => [
                         'class' => 'password-field'
@@ -59,32 +62,33 @@ class RegistrationFormType extends AbstractType
                 ],
                 'required' => true,
                 'first_options' => [
-                    'label' => 'Password',
+                    'label' => 'passwordInput',
                 ],
                 'second_options' => [
-                    'label' => 'Repeat Password',
+                    'label' => 'passwordInputRepeat',
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'passwordNotBlank',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'minMessage' => 'passwordMinLength',
                         // max length allowed by Symfony for security reasons
                         'max' => 16,
-                        'maxMessage' => 'Your password should be at least {{ limit }} characters'
+                        'maxMessage' => 'passwordMaxLength'
                     ])
                 ]
             ])
             ->add('save', SubmitType::class, [
+                'translation_domain' => 'register',
                 'attr' => [
                     'class' => 'g-recaptcha w-100 btn btn-lg btn-warning mb-2',
                     'data-sitekey' => $_ENV['GOOGLE_RECAPTCHAv3_SITE_KEY'],
                     'data-callback' => 'onSubmit',
                     'data-action' => 'submit'
                 ],
-                'label' => 'Register'
+                'label' => 'submitButton'
             ]);
     }
 

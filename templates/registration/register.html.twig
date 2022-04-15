@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}{{ 'title'|trans({}, 'register')}}{% endblock %}
 
 {% block body %}
 	{# Captcha submit #}
@@ -9,6 +9,7 @@
 			document.getElementById("registerForm").submit();
 		}
 	</script>
+
     {% for flash_error in app.flashes('flash_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
@@ -17,7 +18,7 @@
         <div class="alert alert-success" role="success">{{ flash_success }}</div>
     {% endfor %}
     
-    <h1 class="text-white">Register</h1>
+    <h1 class="text-white">{{ 'formTitle'|trans({}, 'register')}}</h1>
 
     {{ form_start(registrationForm, {'attr': {'id':'registerForm'}}) }}
         {{ form_row(registrationForm.email) }}
