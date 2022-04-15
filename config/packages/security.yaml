@@ -25,7 +25,11 @@ security:
                 path: logout
                 # where to redirect after logout
                 target: home
-
+        secured_area:
+            form_login:
+                login_path: login
+                check_path: login
+                enable_csrf: true
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 

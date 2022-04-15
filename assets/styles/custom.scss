@@ -1,5 +1,7 @@
 // background color
 $dark: #202020;
+// Warning custom color
+$warning: #FFBD0A;
 
 // Position custom value
 $position-values: (0: 0,
@@ -19,7 +21,8 @@ $spacers: (0: 0,
     4: $spacer * 1.5,
     5: $spacer * 3,
     6: $spacer * 6,
-    7: $spacer * 12,
+    7: $spacer * 8,
+    8: $spacer * 10,
 );
 
 // npm run watch or npm run build
