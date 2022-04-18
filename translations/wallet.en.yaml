@@ -1,0 +1,17 @@
+title: Wallet
+addWalletForm:
+  formTitle: Add new wallet
+  exchangeName: Chose your exchange
+  apiKey: Enter your api key
+  secretKey: Enter your secret key
+  passPhrase: Chose a pass phrase
+  submitButton: Add wallet
+  
+flashError:
+  showWallet: Can't show this wallet.
+  removeWallet: Can't remove wallet.
+
+flashSuccess:
+  addWallet: '%name% wallet successfully added.'
+  removeWallet: '%name% Wallet successfully removed.'
+  priceUpdate: Your wallet has been update.

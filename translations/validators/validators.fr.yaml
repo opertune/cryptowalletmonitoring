@@ -7,3 +7,9 @@ passwordNotBlank: Le champ du mot de passe ne peut pas être vide.
 passwordMinLength: Votre mot de passe doit comporter au moins {{ limit }} caractères.
 passwordMaxLength: Votre mot de passe doit comporter au moins {{ limit }} caractères.
 passwordRepeatNotMatch: Les deux mots de passe doivent correspondre.
+
+# Add wallet form error message
+nameNotBlank: Veuillez choisir une plateforme d'échange.
+apiKeyNotBlank: Vous devez saisir votre clé api.
+secretKeyNotBlank: Vous devez saisir votre clé secrète.
+passPhraseKeyNotBlank: Vous devez saisir votre phrase secrète.

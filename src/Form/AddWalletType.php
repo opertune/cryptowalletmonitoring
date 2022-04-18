@@ -12,7 +12,6 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\NotNull;
 
 class AddWalletType extends AbstractType
 {
@@ -20,8 +19,12 @@ class AddWalletType extends AbstractType
     {
         $builder
             ->add('name', ChoiceType::class, [
-                'label' => 'Exchange',
-                'placeholder' => 'Chose your exchange',
+                'translation_domain' => 'wallet',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'nameNotBlank'
+                    ]),
+                ],
                 'choices' => [
                     'Binance' => 'Binance', // Left (key) = Label, Right = value
                     'Gate.io' => 'Gate.io',
@@ -29,73 +32,70 @@ class AddWalletType extends AbstractType
                     'FTX' => 'FTX',
                     'Coinbase' => 'Coinbase',
                 ],
+                'required' => true,
+                'mapped' => false,
+                'multiple' => false,
+                'label' => 'addWalletForm.exchangeName',
                 'row_attr' => [
-                    'class' => 'text-danger'
+                    'class' => 'form-floating'
                 ],
-                'label_attr' => [
-                    'class' => 'text-white'
+                'placeholder' => 'addWalletForm.exchangeName',
+                'attr' => [
+                    'class' => 'form-control customInput mb-2',
                 ],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Pleace select an exchange.'
-                    ]),
-                    new NotNull([
-                        'message' => 'Please enter your secret key.'
-                    ])
-                ],
-                'required' => false,
-                'mapped' => false
             ])
             ->add('apiKey', TextType::class, [
-                'row_attr' => [
-                    'class' => 'text-danger',
-                ],
-                'label_attr' => [
-                    'class' => 'text-white'
-                ],
+                'translation_domain' => 'wallet',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter your api key.'
+                        'message' => 'apiKeyNotBlank'
                     ]),
-                    new NotNull([
-                        'message' => 'Please enter your secret key.'
-                    ])
                 ],
                 'required' => true,
                 'mapped' => false,
-                'attr' => ['autocomplete' => 'off']
+                'label' => 'addWalletForm.apiKey',
+                'row_attr' => [
+                    'class' => 'form-floating'
+                ],
+                'attr' => [
+                    'class' => 'form-control customInput mb-2',
+                    'placeholder' => 'addWalletForm.apiKey',
+                    'autocomplete' => 'off'
+                ],
             ])
             ->add('secretKey', TextType::class, [
-                'row_attr' => [
-                    'class' => 'text-danger',
-                    'id' => 'add_wallet_secretKey'
-                ],
-                'label_attr' => [
-                    'class' => 'text-white',
-                ],
+                'translation_domain' => 'wallet',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter your secret key.'
+                        'message' => 'secretKeyNotBlank'
                     ]),
-                    new NotNull([
-                        'message' => 'Please enter your secret key.'
-                    ])
                 ],
                 'required' => true,
                 'mapped' => false,
-                'attr' => ['autocomplete' => 'off']
+                'label' => 'addWalletForm.secretKey',
+                'row_attr' => [
+                    'class' => 'form-floating'
+                ],
+                'attr' => [
+                    'class' => 'form-control customInput mb-2',
+                    'placeholder' => 'addWalletForm.secretKey',
+                    'autocomplete' => 'off'
+                ],
             ])
             ->add('passPhrase', TextType::class, [
-                'row_attr' => [
-                    'class' => 'text-danger',
-                    'id' => 'add_wallet_passPhrase'
-                ],
-                'label_attr' => [
-                    'class' => 'text-white',
-                ],
+                'translation_domain' => 'wallet',
                 'required' => false,
                 'mapped' => false,
-                'attr' => ['autocomplete' => 'off']
+                'label' => 'addWalletForm.passPhrase',
+                'row_attr' => [
+                    'id' => 'passPhraseID',
+                    'class' => 'form-floating'
+                ],
+                'attr' => [
+                    'class' => 'form-control customInput mb-2',
+                    'placeholder' => 'addWalletForm.passPhrase',
+                    'autocomplete' => 'off'
+                ],
             ])
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
                 // Get all form field data
@@ -104,32 +104,36 @@ class AddWalletType extends AbstractType
 
                 if ($data['name'] == 'Kucoin') {
                     $form->add('passPhrase', TextType::class, [
-                        'row_attr' => [
-                            'class' => 'text-danger',
-                            'id' => 'add_wallet_passPhrase'
-                        ],
-                        'label_attr' => [
-                            'class' => 'text-white',
+                        'translation_domain' => 'wallet',
+                        'constraints' => [
+                            new NotBlank([
+                                'message' => 'passPhraseKeyNotBlank'
+                            ]),
                         ],
                         'required' => true,
                         'mapped' => false,
-                        'constraints' => [
-                            new NotBlank([
-                                'message' => 'Please enter your secret key.'
-                            ]),
-                            new NotNull([
-                                'message' => 'Please enter your secret key.'
-                            ])
+                        'label' => 'addWalletForm.passPhrase',
+                        'row_attr' => [
+                            'id' => 'passPhraseID',
+                            'class' => 'form-floating'
                         ],
-                        'attr' => ['autocomplete' => 'off']
+                        'attr' => [
+                            'class' => 'form-control customInput mb-2',
+                            'placeholder' => 'addWalletForm.passPhrase',
+                            'autocomplete' => 'off'
+                        ],
                     ]);
                 }
             })
             ->add('save', SubmitType::class, [
-                'attr' => [
-                    'class' => 'btn btn-primary'
+                'translation_domain' => 'wallet',
+                'row_attr' => [
+                    'class' => 'form-floating'
                 ],
-                'label' => 'Add wallet'
+                'attr' => [
+                    'class' => 'w-100 btn btn-lg btn-warning'
+                ],
+                'label' => 'addWalletForm.submitButton'
             ]);
     }
 

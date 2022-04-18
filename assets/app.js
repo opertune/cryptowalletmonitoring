@@ -16,3 +16,4 @@ import bootstrap from 'bootstrap';
 
 // Navbar style change
 import './controllers/navbar';
+import './controllers/wallet';

@@ -7,3 +7,9 @@ passwordNotBlank: Please enter a password
 passwordMinLength: Your password should be at least {{ limit }} characters
 passwordMaxLength: Your password should be at least {{ limit }} characters
 passwordRepeatNotMatch: The password fields must match.
+
+# Add wallet form error message
+nameNotBlank: Pleace select an exchange.
+apiKeyNotBlank: Please enter your api key.
+secretKeyNotBlank: Please enter your secret key.
+passPhraseKeyNotBlank: Please enter your secret key.

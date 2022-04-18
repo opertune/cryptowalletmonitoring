@@ -36,6 +36,7 @@ class RegistrationFormType extends AbstractType
                         'maxMessage' => 'emailMaxLength',
                     ])
                 ],
+                'required' => true,
                 'label' => 'emailInput',
                 'row_attr' => [
                     'class' => 'form-floating'
@@ -81,17 +82,18 @@ class RegistrationFormType extends AbstractType
                         'max' => 16,
                         'maxMessage' => 'passwordMaxLength'
                     ])
-                ]
+                ],
+                'required' => true,
             ])
             ->add('save', SubmitType::class, [
                 'translation_domain' => 'register',
                 'attr' => [
-                    'class' => 'g-recaptcha w-100 btn btn-lg btn-warning mb-2',
+                    'class' => 'g-recaptcha w-100 btn btn-lg btn-warning',
                     'data-sitekey' => $_ENV['GOOGLE_RECAPTCHAv3_SITE_KEY'],
                     'data-callback' => 'onSubmit',
                     'data-action' => 'submit'
                 ],
-                'label' => 'submitButton'
+                'label' => 'submitButton',
             ]);
     }
 

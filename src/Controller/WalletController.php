@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class WalletController extends AbstractController
 {
@@ -20,13 +21,20 @@ class WalletController extends AbstractController
     private PriceRepository $priceRepository;
     private UserRepository $userRepository;
     private WalletRepository $walletRepository;
+    private TranslatorInterface $translatorInterface;
 
-    public function __construct(EntityManagerInterface $entityManager, PriceRepository $priceRepository, UserRepository $userRepository, WalletRepository $walletRepository)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        PriceRepository $priceRepository,
+        UserRepository $userRepository,
+        WalletRepository $walletRepository,
+        TranslatorInterface $translatorInterface
+    ) {
         $this->entityManager = $entityManager;
         $this->priceRepository = $priceRepository;
         $this->userRepository = $userRepository;
         $this->walletRepository = $walletRepository;
+        $this->translatorInterface = $translatorInterface;
     }
 
     /**
@@ -98,7 +106,7 @@ class WalletController extends AbstractController
                 'wallet' => $wallet,
             ]);
         } else {
-            $this->addFlash('flash_error', 'Can\'t show this wallet');
+            $this->addFlash('flash_error', $this->translatorInterface->trans('flashError.showWallet', [], 'wallet'));
             return $this->redirectToRoute('wallet');
         }
     }
@@ -135,7 +143,7 @@ class WalletController extends AbstractController
 
         // Update new wallet with total value for each coin
         $name = $wallet->getName();
-        $this->addFlash('flash_success', "$name wallet successfully added");
+        $this->addFlash('flash_success', $this->translatorInterface->trans('flashSuccess.addWallet', ['%name%' => $name], 'wallet'));
     }
 
     /**
@@ -156,9 +164,9 @@ class WalletController extends AbstractController
             $this->entityManager->persist($wallet);
             $this->entityManager->flush();
 
-            $this->addFlash('flash_success', 'Wallet successfully removed');
+            $this->addFlash('flash_success', $this->translatorInterface->trans('flashSuccess.removeWallet', ['%name%' => $wallet->getName()], 'wallet'));
         } else {
-            $this->addFlash('flash_error', 'Can\'t remove wallet');
+            $this->addFlash('flash_error', $this->translatorInterface->trans('flashError.removeWallet', [], 'wallet'));
         }
 
         return $this->redirectToRoute('wallet');
@@ -192,7 +200,7 @@ class WalletController extends AbstractController
         $this->entityManager->clear();
 
         // redirect with success message
-        $this->addFlash('flash_success', 'Price updated successfully');
+        $this->addFlash('flash_success', $this->translatorInterface->trans('flashSuccess.priceUpdate', [], 'wallet'));
         return $this->redirectToRoute('wallet');
     }
 }

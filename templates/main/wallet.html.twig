@@ -1,63 +1,64 @@
 {% extends 'base.html.twig'%}
-{% block title %}Wallet{% endblock %}
-
-{# {% block stylesheets %} #}
-{# {{ encore_entry_link_tags('custom') }} #}
-{# {% endblock %} #}
+{% block title %}{{ 'title'|trans({}, 'wallet')}}{% endblock %}
 
 {% block body %}
-{% for flash_success in app.flashes('flash_success') %}
-    <div class="alert alert-success" role="success">{{ flash_success }}</div>
-{% endfor %}
-{% for flash_error in app.flashes('flash_error') %}
-    <div class="alert alert-danger" role="error">{{ flash_error }}</div>
-{% endfor %}
-
-{# Form for adding new wallet #}
-{{ form_start(AddWalletForm) }}
-    <h1 class="text-white">Add new wallet</h1>
-    {{ form_widget(AddWalletForm) }}
-{{ form_end(AddWalletForm) }}
-
-<a href="{{ path('updateWalletPrice')}}" class="btn btn-outline-info">Update wallet price</a>
-
-{# All wallet total value #}
-<h1 class="text-primary">All Wallet Total: {{allWalletTotal}}$</h1>
-{# Display all wallet name and data #}
-{% for key, wallets in data %}
-<div class="border">
-    {# Wallet name #}
-    <h3 class="text-danger">{{wallets['name']}}</h3>
-    <div class="text-success">
-        {# Wallet value #}
-        {% if eachWalletTotal[key] is defined %} <h3 class="text-warning">Total: {{eachWalletTotal[key]}}$</h3> {% endif %}
-        {# each coin symbol, quantity, value for each wallet #}
-        {% for d in data[key]['data'] %}
-            <p>Symbol: {{d.symbol}}
-            Quantity: {{d.quantity}}
-            {% if d.value != 0 %}
-                Value: {{d.value}}</p>
-            {% else %}
-                Value: Can't find value
-            {% endif %}
-
+    <div class="container mt-5 text-dark">
+        {% for flash_success in app.flashes('flash_success') %}
+            <div class="alert alert-success mb-2" role="success">{{ flash_success }}</div>
         {% endfor %}
-    </div>
-    {# Button for removing selected wallet #}
-    <a class="btn btn-danger" href="{{ path('removeWallet', {'id': data[key]['id'] }) }}">Remove wallet</a>
-</div>
-<br>
-{% endfor %}
+    
+        {% for flash_error in app.flashes('flash_error') %}
+            <div class="alert alert-danger mb-2" role="error">{{ flash_error }}</div>
+        {% endfor %}
+        
+        {# Form for adding new wallet #}
+        {{ form_start(AddWalletForm, {'attr' : {'class':'customForm'}}) }}
+            <fieldset class="mt-5 border rounded-3 p-3">
+                <legend class="h3 text-white float-none w-auto px-3">{{ 'addWalletForm.formTitle'|trans({}, 'wallet')}}</legend>
 
-<script>
-    $(document).ready(function () {
-        $('#add_wallet_name').change(function () {
-            if ($('#add_wallet_name').val() == 'Kucoin'){
-                $('#add_wallet_passPhrase').show();
-            }else{
-                $('#add_wallet_passPhrase').hide();
-            }
-        });
-    });
-</script>
+                {{ form_row(AddWalletForm.name) }}
+                {{ form_row(AddWalletForm.apiKey) }}
+                {{ form_row(AddWalletForm.secretKey) }}
+                {{ form_row(AddWalletForm.passPhrase) }}
+                {{ form_row(AddWalletForm.save) }}
+
+            </fieldset>
+        {{ form_end(AddWalletForm) }}
+    </div>
+
+
+
+
+
+
+    <br><br><br><br><br><br><br><br>
+
+
+    <a href="{{ path('updateWalletPrice')}}" class="btn btn-outline-info">Update wallet price</a>
+    {# All wallet total value #}
+    <h1 class="text-primary">All Wallet Total: {{allWalletTotal}}$</h1>
+    {# Display all wallet name and data #}
+    {% for key, wallets in data %}
+        <div class="border">
+            {# Wallet name #}
+            <h3 class="text-danger">{{wallets['name']}}</h3>
+            <div class="text-success">
+                {# Wallet value #}
+                {% if eachWalletTotal[key] is defined %} <h3 class="text-warning">Total: {{eachWalletTotal[key]}}$</h3> {% endif %}
+                {# each coin symbol, quantity, value for each wallet #}
+                {% for d in data[key]['data'] %}
+                    <p>Symbol: {{d.symbol}}
+                    Quantity: {{d.quantity}}
+                    {% if d.value != 0 %}
+                        Value: {{d.value}}</p>
+                    {% else %}
+                        Value: Can't find value
+                    {% endif %}
+
+                {% endfor %}
+            </div>
+            {# Button for removing selected wallet #}
+            <a class="btn btn-danger" href="{{ path('removeWallet', {'id': data[key]['id'] }) }}">Remove wallet</a>
+        </div>
+    {% endfor %}
 {% endblock %}

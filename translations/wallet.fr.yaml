@@ -1,0 +1,17 @@
+title: Portefeuille
+addWalletForm:
+  formTitle: Ajouter un portefeuille
+  exchangeName: Plateforme d'échange
+  apiKey: Votre clé api
+  secretKey: Votre clé secrète
+  passPhrase: Votre phrase secrète
+  submitButton: Ajouter le portefeuille
+
+flashError:
+  showWallet: Vous ne pouvez pas voir ce portefeuille.
+  removeWallet: Impossible de supprimer le portefeuille.
+
+flashSuccess:
+  addWallet: Portefeuille %name% ajouté avec succès.
+  removeWallet: Portefeuille %name% supprimé avec succès.
+  priceUpdate: Vos portefeuilles ont été mis à jour.
