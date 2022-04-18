@@ -37,11 +37,12 @@ class RegistrationFormType extends AbstractType
                     ])
                 ],
                 'label' => 'emailInput',
-                'label_attr' => [
-                    'class' => 'text-white'
-                ],
                 'row_attr' => [
-                    'class' => 'text-danger'
+                    'class' => 'form-floating'
+                ],
+                'attr' => [
+                    'class' => 'form-control customInput mb-2',
+                    'placeholder' => 'emailInput'
                 ],
             ])
             ->add('password', RepeatedType::class, [
@@ -50,22 +51,24 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'invalid_message' => 'passwordRepeatNotMatch',
                 'options' => [
-                    'attr' => [
-                        'class' => 'password-field'
-                    ],
                     'row_attr' => [
-                        'class' => 'text-danger'
-                    ],
-                    'label_attr' => [
-                        'class' => 'text-white'
+                        'class' => 'form-floating'
                     ],
                 ],
                 'required' => true,
                 'first_options' => [
                     'label' => 'passwordInput',
+                    'attr' => [
+                        'placeholder' => 'passwordInput',
+                        'class' => 'password-field form-control customInput mb-2'
+                    ],
                 ],
                 'second_options' => [
                     'label' => 'passwordInputRepeat',
+                    'attr' => [
+                        'placeholder' => 'passwordInputRepeat',
+                        'class' => 'password-field form-control customInput mb-2'
+                    ],
                 ],
                 'constraints' => [
                     new NotBlank([

@@ -1,0 +1,7 @@
+.customForm {
+    max-width: 358px;
+
+    .customInput:hover {
+        border: solid 3px $warning;
+    }
+}

@@ -1,5 +1,4 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}{{ 'title'|trans({}, 'register')}}{% endblock %}
 
 {% block body %}
@@ -10,19 +9,25 @@
 		}
 	</script>
 
-    {% for flash_error in app.flashes('flash_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
+    <div class="container mt-5 text-dark">
+        {{ form_start(registrationForm, {'attr' : {'id':'registerForm', 'class' : 'customForm'}}) }}
+            {% for flash_error in app.flashes('flash_error') %}
+                <div class="alert alert-danger mb-2" role="alert">{{ flash_error }}</div>
+            {% endfor %}
 
-    {% for flash_success in app.flashes('flash_success') %}
-        <div class="alert alert-success" role="success">{{ flash_success }}</div>
-    {% endfor %}
-    
-    <h1 class="text-white">{{ 'formTitle'|trans({}, 'register')}}</h1>
+            {% for flash_success in app.flashes('flash_success') %}
+                <div class="alert alert-success mb-2" role="success">{{ flash_success }}</div>
+            {% endfor %}
 
-    {{ form_start(registrationForm, {'attr': {'id':'registerForm'}}) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.password) }}
-        {{ form_row(registrationForm.save) }}
-    {{ form_end(registrationForm) }}
+            <h1 class="h3 mb-3 text-white">{{ 'formTitle'|trans({}, 'register')|raw}}</h1>
+
+            {{ form_row(registrationForm.email) }}
+            {{ form_row(registrationForm.password.first) }}
+            {{ form_row(registrationForm.password.second) }}
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            {{ form_row(registrationForm.save) }}
+
+        {{ form_end(registrationForm) }}
+    </div>
 {% endblock %}

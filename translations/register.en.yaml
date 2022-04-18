@@ -1,9 +1,9 @@
 title: Register
-formTitle: Register
+formTitle: <u>Register</u>
 emailInput: Email address
 passwordInput: Password
 passwordInputRepeat: Repeat Password
 submitButton: Register
 email:
-  send: Verify your email. Click on link in your email box !
+  send: Verify your email. Click on link in your email box ! Don't forget to check your spam.
 captcha: Captcha invalid.

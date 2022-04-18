@@ -1,9 +1,9 @@
 title: S'inscrire
-formTitle: S'inscrire
+formTitle: <u>S'inscrire</u>
 emailInput: Adresse E-mail
 passwordInput: Mot de passe
 passwordInputRepeat: Répéter mot de passe
 submitButton: S'inscrire
 email:
-  send: Vérifiez votre email. Cliquez sur le lien dans votre boîte mail !
+  send: Cliquez sur le lien de confirmation que vous avez reçu sur vôtre boite mail. Pensez à vérifier vos spams si ce n'est pas le cas.
 captcha: Le captcha est invalide.

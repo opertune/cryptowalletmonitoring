@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block title %}{{ 'title'|trans({}, 'login')}}{% endblock %}
+
 {% block body %}
 	{# Captcha submit #}
 	<script>
@@ -9,11 +10,11 @@
 	</script>
 	<div class="container mt-5">
 		<form method="post" class="customForm" id="loginForm">
-			<h1 class="h3 mb-3 text-white">{{ 'formTitle'|trans({}, 'login')|raw}}</h1>
-
 			{% if error %}
 				<div class="alert alert-danger mb-2">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 			{% endif %}
+
+			<h1 class="h3 mb-3 text-white">{{ 'formTitle'|trans({}, 'login')|raw}}</h1>
 
 			<div class="form-floating text-dark mb-2">
 				<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control customInput" 
