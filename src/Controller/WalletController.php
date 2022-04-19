@@ -90,28 +90,6 @@ class WalletController extends AbstractController
     }
 
     /**
-     * Page for showing more information from selected wallet by exchange
-     * @Route("/wallet/{id}", name="byexchange")
-     */
-    public function byExchange($id): Response
-    {
-        // Get current user
-        $user = $this->userRepository->findOneByEmail($this->getUser()->getUserIdentifier());
-        // Get selected wallet by id
-        $wallet = $this->walletRepository->find($id);
-
-        // Check if logged user has the selected wallet
-        if ($user->getWallet()->contains($wallet)) {
-            return $this->render('main/walletByExchange.html.twig', [
-                'wallet' => $wallet,
-            ]);
-        } else {
-            $this->addFlash('flash_error', $this->translatorInterface->trans('flashError.showWallet', [], 'wallet'));
-            return $this->redirectToRoute('wallet');
-        }
-    }
-
-    /**
      * Add new user wallet in database
      */
     public function addWallet($addWalletForm)

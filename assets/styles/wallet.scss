@@ -1,0 +1,15 @@
+.fieldsetMaxWidth {
+    max-width: 500px;
+    overflow-y: hidden;
+}
+
+.tableMaxHeight {
+    max-height: 200px;
+    overflow-y: hidden;
+    transition: all 0.7s ease-in-out;
+}
+
+// <property> <duration> <timing-function> <delay>
+.rotateSVG {
+    transition: all 0.2s ease-in-out 0s;
+}
