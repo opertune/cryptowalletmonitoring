@@ -6,3 +6,5 @@ editPassword:
   new: New password
   repeat: Repeat new password
   save: Save
+  success: Old password successfully edited.
+  error: Invalid old password.

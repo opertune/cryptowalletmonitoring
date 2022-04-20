@@ -3,7 +3,7 @@ total: Le total de tous vos portefeuilles
 updateButton: Mettre à jour la valeur de vos portefeuilles
 
 addWalletForm:
-  formTitle: Ajouter un portefeuille
+  formTitle: <u>Ajouter un portefeuille</u>
   exchangeName: Plateforme d'échange
   apiKey: Votre clé api
   secretKey: Votre clé secrète

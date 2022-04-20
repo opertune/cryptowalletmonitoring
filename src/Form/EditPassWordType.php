@@ -20,14 +20,14 @@ class EditPassWordType extends AbstractType
                 'translation_domain' => 'account',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'editPasswordOldNotBlank',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'minMessage' => 'editPasswordOldLengthMin',
                         // max length allowed by Symfony for security reasons
                         'max' => 16,
-                        'maxMessage' => 'Your password should be at least {{ limit }} characters'
+                        'maxMessage' => 'editPasswordOldLengthMax'
                     ]),
                 ],
                 'required' => true,
@@ -46,19 +46,19 @@ class EditPassWordType extends AbstractType
                 'type' => PasswordType::class,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'editPasswordNewNotBlank',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'minMessage' => 'editPasswordNewLengthMin',
                         // max length allowed by Symfony for security reasons
                         'max' => 16,
-                        'maxMessage' => 'Your password should be at least {{ limit }} characters'
+                        'maxMessage' => 'editPasswordNewLengthMax'
                     ])
                 ],
                 'mapped' => false,
                 'required' => true,
-                'invalid_message' => 'The password fields must match.',
+                'invalid_message' => 'editPasswordMatch',
                 'options' => [
                     'row_attr' => [
                         'class' => 'password-field form-floating text-dark'

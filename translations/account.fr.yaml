@@ -6,3 +6,5 @@ editPassword:
   new: Nouveau mot de passe
   repeat: Répeter nouveau mot de passe
   save: Sauvegarder
+  success: Ancien mot de passe modifié avec succès.
+  error: Ancien mot de passe invalide.

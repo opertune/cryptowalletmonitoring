@@ -13,3 +13,21 @@ nameNotBlank: Pleace select an exchange.
 apiKeyNotBlank: Please enter your api key.
 secretKeyNotBlank: Please enter your secret key.
 passPhraseKeyNotBlank: Please enter your secret key.
+
+# Reset password form error message
+resetPasswordNotBlank: Email field can't be empty.
+resetPasswordEmail: The email "{{ value }}" is not a valid email.
+resetPasswordLengthMin: Your email should be at least {{ limit }} characters.
+resetPasswordLengthMax: Your email should be at least {{ limit }} characters.
+
+# Edit password form error message
+editPasswordOldNotBlank: Please enter a password.
+editPasswordOldLengthMin: Your password should be at least {{ limit }} characters.
+editPasswordOldLengthMax: Your password should be at least {{ limit }} characters.
+editPasswordNewNotBlank: Please enter a password.
+editPasswordNewLengthMin: Your password should be at least {{ limit }} characters.
+editPasswordNewLengthMax: Your password should be at least {{ limit }} characters.
+editPasswordMatch: The password fields must match.
+
+# Reset password form
+resetPasswordFormMatch: The password fields must match.

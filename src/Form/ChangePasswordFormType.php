@@ -16,42 +16,42 @@ class ChangePasswordFormType extends AbstractType
     {
         $builder
             ->add('plainPassword', RepeatedType::class, [
+                'translation_domain' => 'resetPassword',
                 'type' => PasswordType::class,
-                'options' => [
-                    'attr' => [
-                        'class' => 'password-field'
-                    ],
-                    'row_attr' => [
-                        'class' => 'text-danger'
-                    ],
-                    'label_attr' => [
-                        'class' => 'text-white'
-                    ],
-                ],
-                'first_options' => [
-                    'attr' => ['autocomplete' => 'new-password'],
-                    'label' => 'New password',
-                ],
-                'second_options' => [
-                    'attr' => ['autocomplete' => 'new-password'],
-                    'label' => 'Repeat Password',
-                ],
-                'invalid_message' => 'The password fields must match.',
-                // Instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'editPasswordOldNotBlank',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'minMessage' => 'editPasswordNewLengthMin',
                         // max length allowed by Symfony for security reasons
                         'max' => 16,
-                        'maxMessage' => 'Your password should be at least {{ limit }} characters'
+                        'maxMessage' => 'editPasswordNewLengthMax'
                     ])
-                ]
+                ],
+                'mapped' => false,
+                'required' => true,
+                'invalid_message' => 'resetPasswordFormMatch',
+                'options' => [
+                    'row_attr' => [
+                        'class' => 'password-field form-floating text-dark'
+                    ],
+                ],
+                'first_options' => [
+                    'label' => 'resetForm.newPassword',
+                    'attr' => [
+                        'placeholder' => 'resetForm.newPassword',
+                        'class' => 'password-field form-control customInput mb-2'
+                    ],
+                ],
+                'second_options' => [
+                    'label' => 'resetForm.newPasswordRepeat',
+                    'attr' => [
+                        'placeholder' => 'resetForm.newPasswordRepeat',
+                        'class' => 'password-field form-control customInput mb-2'
+                    ],
+                ],
             ]);
     }
 

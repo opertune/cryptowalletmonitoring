@@ -6,10 +6,10 @@
 		<h3 class="text-white">{{ 'email'|trans({}, 'account')}} : {{ app.user.username }}</h3>
 
 		{% for flash_success in app.flashes('flash_success') %}
-			<div class="alert alert-success" role="success">{{ flash_success }}</div>
+			<div class="alert alert-success my-2" role="success">{{ flash_success }}</div>
 		{% endfor %}
 		{% for flash_error in app.flashes('flash_error') %}
-			<div class="alert alert-danger" role="error">{{ flash_error }}</div>
+			<div class="alert alert-danger my-2" role="error">{{ flash_error }}</div>
 		{% endfor %}
 
 		{{ form_start(formEditPW, {'attr' : {'id':'registerForm', 'class' : 'customForm'}}) }}

@@ -1,15 +1,17 @@
 {# Page with instructions after email sending #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Password Reset Email Sent
-{% endblock %}
+{% block title %}{{ 'checkEmail.title'|trans({}, 'resetPassword')}}{% endblock %}
 
 {% block body %}
-	<p class="text-white">
-		If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.
-				        This link will expire in
-		{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
-	</p>
-	<p class="text-white">If you don't receive an email please check your spam folder or
-		<a href="/{{app.request.locale}}/reset-password">try again</a>.</p>
+	<div class="mt-3 h4">
+		<p class="text-white">
+			{{ 'checkEmail.p1'|trans({}, 'resetPassword')}}
+			{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+		</p>
+		<p class="text-white">
+			{{ 'checkEmail.p2'|trans({}, 'resetPassword')}}
+			<a href="/{{app.request.locale}}/reset-password">{{ 'checkEmail.tryAgain'|trans({}, 'resetPassword')}}</a>.
+		</p>
+	</div>
 {% endblock %}

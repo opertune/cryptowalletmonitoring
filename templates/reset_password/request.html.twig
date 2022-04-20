@@ -1,23 +1,24 @@
 {# Page for password reseting request #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Reset your password{% endblock %}
+{% block title %}{{ 'title'|trans({}, 'resetPassword')}}{% endblock %}
 
 {% block body %}
-    {% for flash_error in app.flashes('reset_password_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
-    <h1 class="text-white">Reset your password</h1>
+    <div class="container mt-5">
+        {% for flash_error in app.flashes('reset_password_error') %}
+            <div class="alert alert-danger my-2" role="alert">{{ flash_error }}</div>
+        {% endfor %}
 
-    {{ form_start(requestForm) }}
-        {{ form_row(requestForm.email) }}
-        <div>
-            <small class="text-white">
-                Enter your email address and we will send you a
-                link to reset your password.
-            </small>
-        </div>
+        {{ form_start(requestForm, {'attr' : {'id':'registerForm', 'class' : 'customForm'}}) }}
+            <h3 class="text-white mt-3">{{ 'form.title'|trans({}, 'resetPassword')|raw}}</h1>
+            {{ form_row(requestForm.email) }}
+            <div class="my-2 h5">
+                <small class="text-white">
+                    {{ 'form.info'|trans({}, 'resetPassword')}}
+                </small>
+            </div>
 
-        <button class="btn btn-primary">Send password reset email</button>
-    {{ form_end(requestForm) }}
+            <button class="btn w-100 btn btn-lg btn-warning">{{ 'form.button'|trans({}, 'resetPassword')}}</button>
+        {{ form_end(requestForm) }}
+    </div>
 {% endblock %}

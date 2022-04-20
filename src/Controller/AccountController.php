@@ -11,13 +11,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AccountController extends AbstractController
 {
     /**
      * @Route("/account", name="account")
      */
-    public function index(Request $request, UserPasswordHasherInterface $hasher, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    public function index(Request $request, UserPasswordHasherInterface $hasher, UserRepository $userRepository, EntityManagerInterface $entityManager, TranslatorInterface $translatorInterface): Response
     {
         // Get current user by email
         $user = $userRepository->findOneByEmail($this->getUser()->getUserIdentifier());
@@ -38,9 +39,9 @@ class AccountController extends AbstractController
                 $user->setPassword($encodedPassword);
                 $entityManager->flush();
                 $entityManager->clear();
-                $this->addFlash('flash_success', 'Old password successfully edited');
+                $this->addFlash('flash_success', $translatorInterface->trans('editPassword.success', [], 'account'));
             } else {
-                $this->addFlash('flash_error', 'Invalid old password');
+                $this->addFlash('flash_error', $translatorInterface->trans('editPassword.error', [], 'account'));
             }
         }
 

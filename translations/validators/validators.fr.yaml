@@ -13,3 +13,21 @@ nameNotBlank: Veuillez choisir une plateforme d'échange.
 apiKeyNotBlank: Vous devez saisir votre clé api.
 secretKeyNotBlank: Vous devez saisir votre clé secrète.
 passPhraseKeyNotBlank: Vous devez saisir votre phrase secrète.
+
+# Reset password form error message
+resetPasswordNotBlank: Le champ de l'adresse e-mail ne peut pas être vide.
+resetPasswordEmail: L'adresse "{{ value }}" n'est pas une adresse e-mail valide.
+resetPasswordLengthMin: Votre e-mail doit comporter au moins {{ limit }} caractères.
+resetPasswordLengthMax: Votre e-mail doit comporter au moins {{ limit }} caractères.
+
+# Edit password form error message
+editPasswordOldNotBlank: Le champ du mot de passe ne peut pas être vide.
+editPasswordOldLengthMin: Votre mot de passe doit comporter au moins {{ limit }} caractères.
+editPasswordOldLengthMax: Votre mot de passe doit comporter au moins {{ limit }} caractères.
+editPasswordNewNotBlank: Le champ du mot de passe ne peut pas être vide.
+editPasswordNewLengthMin: Votre mot de passe doit comporter au moins {{ limit }} caractères.
+editPasswordNewLengthMax: Votre mot de passe doit comporter au moins {{ limit }} caractères.
+editPasswordMatch: Les deux mots de passe doivent correspondre.
+
+# Reset password form
+resetPasswordFormMatch: Les deux mots de passe doivent correspondre.

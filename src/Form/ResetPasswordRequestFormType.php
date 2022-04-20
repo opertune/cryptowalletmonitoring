@@ -16,27 +16,31 @@ class ResetPasswordRequestFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
+                'translation_domain' => 'resetPassword',
                 'attr' => ['autocomplete' => 'email'],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Email field can\'t be empty.'
+                        'message' => 'resetPasswordNotBlank'
                     ]),
                     new Email([
-                        'message' => 'The email "{{ value }}" is not a valid email.'
+                        'message' => 'resetPasswordEmail'
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your email should be at least {{ limit }} characters.',
+                        'minMessage' => 'resetPasswordLengthMin',
                         // max length allowed by Symfony for security reasons
                         'max' => 50,
-                        'maxMessage' => 'Your email should be at least {{ limit }} characters.',
+                        'maxMessage' => 'resetPasswordLengthMax',
                     ])
                 ],
+                'required' => true,
+                'label' => 'form.email',
                 'row_attr' => [
-                    'class' => 'text-danger'
+                    'class' => 'form-floating text-dark'
                 ],
-                'label_attr' => [
-                    'class' => 'text-white'
+                'attr' => [
+                    'class' => 'form-control customInput mb-2',
+                    'placeholder' => 'form.email'
                 ],
             ]);
     }

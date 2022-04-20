@@ -1,13 +1,14 @@
 {# Page for change password #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Reset your password{% endblock %}
+{% block title %}{{ 'title'|trans({}, 'resetPassword')}}{% endblock %}
 
 {% block body %}
-    <h1 class="text-white">Reset your password</h1>
-
-    {{ form_start(resetForm) }}
-        {{ form_row(resetForm.plainPassword) }}
-        <button class="btn btn-primary">Reset password</button>
-    {{ form_end(resetForm) }}
+    <div class="container mt-5">
+        {{ form_start(resetForm, {'attr' : {'id':'registerForm', 'class' : 'customForm'}}) }}
+            <h3 class="text-white">{{ 'resetForm.title'|trans({}, 'resetPassword')|raw}}</h1>
+            {{ form_row(resetForm.plainPassword) }}
+            <button class="btn w-100 btn btn-lg btn-warning">{{ 'resetForm.button'|trans({}, 'resetPassword')}}</button>
+        {{ form_end(resetForm) }}
+    </div>
 {% endblock %}
