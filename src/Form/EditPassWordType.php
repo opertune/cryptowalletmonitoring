@@ -17,7 +17,7 @@ class EditPassWordType extends AbstractType
     {
         $builder
             ->add("old_password", PasswordType::class, [
-                'mapped' => false,
+                'translation_domain' => 'account',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',
@@ -31,39 +31,19 @@ class EditPassWordType extends AbstractType
                     ]),
                 ],
                 'required' => true,
-                'attr' => [
-                    'class' => 'password-field'
-                ],
+                'mapped' => false,
+                'label' => 'editPassword.old',
                 'row_attr' => [
-                    'class' => 'text-danger'
+                    'class' => 'form-floating text-dark'
                 ],
-                'label_attr' => [
-                    'class' => 'text-white'
+                'attr' => [
+                    'class' => 'form-control customInput mb-2',
+                    'placeholder' => 'editPassword.old'
                 ],
-
             ])
             ->add("new_password", RepeatedType::class, [
+                'translation_domain' => 'account',
                 'type' => PasswordType::class,
-                'mapped' => false,
-                'invalid_message' => 'The password fields must match.',
-                'options' => [
-                    'attr' => [
-                        'class' => 'password-field'
-                    ],
-                    'row_attr' => [
-                        'class' => 'text-danger'
-                    ],
-                    'label_attr' => [
-                        'class' => 'text-white'
-                    ],
-                ],
-                'required' => true,
-                'first_options' => [
-                    'label' => 'New password',
-                ],
-                'second_options' => [
-                    'label' => 'Repeat new password',
-                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',
@@ -75,13 +55,36 @@ class EditPassWordType extends AbstractType
                         'max' => 16,
                         'maxMessage' => 'Your password should be at least {{ limit }} characters'
                     ])
-                ]
+                ],
+                'mapped' => false,
+                'required' => true,
+                'invalid_message' => 'The password fields must match.',
+                'options' => [
+                    'row_attr' => [
+                        'class' => 'password-field form-floating text-dark'
+                    ],
+                ],
+                'first_options' => [
+                    'label' => 'editPassword.new',
+                    'attr' => [
+                        'placeholder' => 'editPassword.new',
+                        'class' => 'password-field form-control customInput mb-2'
+                    ],
+                ],
+                'second_options' => [
+                    'label' => 'editPassword.repeat',
+                    'attr' => [
+                        'placeholder' => 'editPassword.repeat',
+                        'class' => 'password-field form-control customInput mb-2'
+                    ],
+                ],
             ])
             ->add("save", SubmitType::class, [
+                'translation_domain' => 'account',
                 'attr' => [
-                    'class' => 'btn btn-primary'
+                    'class' => 'btn w-100 btn btn-lg btn-warning'
                 ],
-                'label' => 'Save password'
+                'label' => 'editPassword.save'
             ]);
     }
 

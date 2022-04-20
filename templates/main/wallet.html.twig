@@ -3,11 +3,11 @@
 
 {% block body %}
 {% for flash_success in app.flashes('flash_success') %}
-<div class="alert alert-success mb-2" role="success">{{ flash_success }}</div>
+<div class="alert alert-success my-2" role="success">{{ flash_success }}</div>
 {% endfor %}
 
 {% for flash_error in app.flashes('flash_error') %}
-<div class="alert alert-danger mb-2" role="error">{{ flash_error }}</div>
+<div class="alert alert-danger my-2" role="error">{{ flash_error }}</div>
 {% endfor %}
 
 {# if user don't have wallet we do not display allwallettotal and update wallet button #}

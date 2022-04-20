@@ -1,0 +1,8 @@
+title: Account
+email: Current email address
+editPassword:
+  title: Edit my password
+  old: Old password
+  new: New password
+  repeat: Repeat new password
+  save: Save
