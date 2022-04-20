@@ -39,3 +39,8 @@ $('.customButton').on('mouseenter', function () {
     // Default background color on mouse leave
     $('#' + this.id).css("background-color", "transparent");
 });
+
+
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+});

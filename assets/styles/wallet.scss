@@ -1,8 +1,9 @@
-.fieldsetMaxWidth {
+.walletCustomFieldset {
     max-width: 500px;
 }
 
-.tableMaxHeight {
+.walletCustomTable {
+    min-height: 200px;
     max-height: 200px;
     overflow-y: hidden;
     transition: all 0.7s ease-in-out;
@@ -13,6 +14,6 @@
     transition: all 0.2s ease-in-out 0s;
 }
 
-#updateWalletDiv {
+#updateButton {
     max-width: 500px;
 }

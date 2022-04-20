@@ -12,91 +12,99 @@
 
 {# if user don't have wallet we do not display allwallettotal and update wallet button #}
 {% if data %}
-<div class="container mt-3" id="updateWalletDiv">
+<div class="container mt-4 text-center">
     {# All wallet total value #}
-    <h1 class="text-primary">All Wallet Total: {{allWalletTotal}}$</h1>
+    <h1 class="text-white">{{ 'total'|trans({}, 'wallet')}}: {{allWalletTotal}}$</h1>
     {# Update all wallet value #}
-    <a href="{{ path('updateWalletPrice')}}" class="btn btn-outline-info mt-2 w-100 btn-lg">Update wallet price</a>
+    <a href="{{ path('updateWalletPrice')}}" class="btn btn-outline-info mt-2 w-100 btn-lg" id="updateButton">
+        {{'updateButton'|trans({},'wallet')}}
+    </a>
 </div>
 {% endif %}
 
-<div class="container">
-    {# <div class="row row-cols-auto"> #}
-        <div class="row row-cols-xl-3">
-            <div class="col text-dark mb-5">
-                {# Form for adding new wallet #}
-                {{ form_start(AddWalletForm)}}
-                <fieldset class="border rounded-3 p-3">
-                    <legend class="h3 text-white float-none w-auto px-3">{{ 'addWalletForm.formTitle'|trans({},
-                        'wallet')}}
-                    </legend>
+<div class="container mt-5">
+    {# if screen width > 1200px 3 div are display #}
+    <div class="row row-cols-xl-3">
+        <div class="col text-dark mb-5">
+            {# Form for adding new wallet #}
+            {{ form_start(AddWalletForm)}}
+            <fieldset class="border rounded-3 p-3">
+                <legend class="h3 text-white float-none w-auto px-3">
+                    {{ 'addWalletForm.formTitle'|trans({},'wallet')}}
+                </legend>
 
-                    {{ form_row(AddWalletForm.name) }}
-                    {{ form_row(AddWalletForm.apiKey) }}
-                    {{ form_row(AddWalletForm.secretKey) }}
-                    {{ form_row(AddWalletForm.passPhrase) }}
-                    {{ form_row(AddWalletForm.save) }}
+                {{ form_row(AddWalletForm.name) }}
+                {{ form_row(AddWalletForm.apiKey) }}
+                {{ form_row(AddWalletForm.secretKey) }}
+                {{ form_row(AddWalletForm.passPhrase) }}
+                {{ form_row(AddWalletForm.save) }}
 
-                </fieldset>
-                {{ form_end(AddWalletForm) }}
-            </div>
-
-            {# Display all wallet name and data #}
-            {% for key, wallets in data %}
-            <div class="col mb-5">
-                <fieldset class="border rounded-3 p-3 fieldsetMaxWidth" id="fieldset{{key}}">
-                    {# Wallet name #}
-                    <legend class="h3 text-white float-none w-auto px-3">{{wallets['name']}}</legend>
-
-                    {# Wallet value #}
-                    {% if eachWalletTotal[key] is defined %}
-                    <h3 class="text-center mb-4"><u>Total: {{eachWalletTotal[key]}}$</u></h3>
-                    {% endif %}
-                    <div class="table-responsive tableMaxHeight" id="table{{key}}">
-                        <table class="table table-borderless table-sm text-white text-center">
-                            <thead class="h5">
-                                <tr>
-                                    <th scope="col">Symbol</th>
-                                    <th scope="col">Quantity</th>
-                                    <th scope="col">Value</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {# each coin symbol, quantity, value for each wallet #}
-                                {% for d in data[key]['data'] %}
-                                <tr>
-                                    <td>{{d.symbol}}</td>
-                                    <td>{{d.quantity}}</td>
-                                    <td>
-                                        {% if d.value != 0 %}
-                                        {{d.value}} $</p>
-                                        {% else %}
-                                        Can't find value
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-
-                    {# Button for removing selected wallet #}
-                    <div class="d-flex justify-content-end mt-3">
-                        <a class="btn btn-danger me-2" href="{{ path('removeWallet', {'id': data[key]['id'] }) }}"><span
-                                class="align-middle">Remove wallet</span></a>
-                        <button type="button" class="btn border-white customButton" id="{{key}}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="28" fill="white"
-                                class="bi bi-arrow-bar-left rotateSVG" viewBox="0 0 16 16" id="rotateSVG{{key}}">
-                                <path fill-rule="evenodd"
-                                    d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5zM10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5z">
-                                </path>
-                            </svg>
-                        </button>
-                    </div>
-                </fieldset>
-            </div>
-            {% endfor %}
+            </fieldset>
+            {{ form_end(AddWalletForm) }}
         </div>
 
+        {# Display all wallet name and data #}
+        {% for key, wallets in data %}
+        <div class="col mb-5">
+            <fieldset class="border rounded-3 p-3 walletCustomFieldset" id="fieldset{{key}}">
+                {# Wallet name #}
+                <legend class="h3 text-white float-none w-auto px-3">{{wallets['name']}}</legend>
+
+                {# Wallet value #}
+                {% if eachWalletTotal[key] is defined %}
+                <h3 class="text-center mb-4"><u>Total: {{eachWalletTotal[key]}}$</u></h3>
+                {% endif %}
+                <div class="table-responsive walletCustomTable" id="table{{key}}">
+                    <table class="table table-borderless table-sm text-white text-center">
+                        <thead class="h5">
+                            <tr>
+                                <th scope="col">{{ 'eachWallet.symbol'|trans({},'wallet')}}</th>
+                                <th scope="col">{{ 'eachWallet.quantity'|trans({},'wallet')}}</th>
+                                <th scope="col">{{ 'eachWallet.value'|trans({},'wallet')}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {# each coin symbol, quantity, value for each wallet #}
+                            {% for d in data[key]['data'] %}
+                            <tr>
+                                <td>{{d.symbol}}</td>
+                                <td>{{d.quantity}}</td>
+                                <td>
+                                    {% if d.value != 0 %}
+                                        {{d.value}} $
+                                    {% else %}
+                                        {{ 'eachWallet.valueNull'|trans({},'wallet')}}
+                                        <span data-toggle="tooltip" data-placement="top" title="{{ 'eachWallet.valueNullHelp'|trans({},'wallet')}}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-question-circle" viewBox="0 0 16 16">
+                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+                                                <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path>
+                                            </svg>
+                                        </span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                {# Button for removing selected wallet #}
+                <div class="d-flex justify-content-end mt-3">
+                    <a class="btn btn-danger me-2" href="{{ path('removeWallet', {'id': data[key]['id'] }) }}">
+                        <spanclass="align-middle">{{ 'eachWallet.removeWalletButton'|trans({},'wallet')}}</span>
+                    </a>
+                    <button type="button" class="btn border-white customButton" id="{{key}}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="28" fill="white"
+                            class="bi bi-arrow-bar-left rotateSVG" viewBox="0 0 16 16" id="rotateSVG{{key}}">
+                            <path fill-rule="evenodd"
+                                d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5zM10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5z">
+                            </path>
+                        </svg>
+                    </button>
+                </div>
+            </fieldset>
+        </div>
+        {% endfor %}
     </div>
-    {% endblock %}
+</div>
+{% endblock %}

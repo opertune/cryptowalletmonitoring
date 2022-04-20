@@ -1,4 +1,7 @@
 title: Portefeuille
+total: Le total de tous vos portefeuilles
+updateButton: Mettre à jour la valeur de vos portefeuilles
+
 addWalletForm:
   formTitle: Ajouter un portefeuille
   exchangeName: Plateforme d'échange
@@ -6,6 +9,14 @@ addWalletForm:
   secretKey: Votre clé secrète
   passPhrase: Votre phrase secrète
   submitButton: Ajouter le portefeuille
+
+eachWallet:
+  symbol: Symbole
+  quantity: Quantité
+  value: Valeur
+  removeWalletButton: Supprimer
+  valueNull: Valeur introuvable
+  valueNullHelp: Le prix provient de coingecko.com si la devise n’est pas listée ou si la capitalisation boursière est inférieure à 10000$ nous ne pouvons pas récupérer le prix pour calculer la valeur.
 
 flashError:
   showWallet: Vous ne pouvez pas voir ce portefeuille.

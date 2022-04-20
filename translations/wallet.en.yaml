@@ -1,4 +1,7 @@
 title: Wallet
+total: All wallet total
+updateButton: Update wallet value
+
 addWalletForm:
   formTitle: Add new wallet
   exchangeName: Chose your exchange
@@ -6,7 +9,15 @@ addWalletForm:
   secretKey: Enter your secret key
   passPhrase: Chose a pass phrase
   submitButton: Add wallet
-  
+
+eachWallet:
+  symbol: Symbol
+  quantity: Quantity
+  value: Value
+  removeWalletButton: Remove
+  valueNull: Can't find value
+  valueNullHelp: The price come from coingecko.com if currency is not listed or if the marketcap is less than 10000$ we can't retrieve the price for calculating the value.
+
 flashError:
   showWallet: Can't show this wallet.
   removeWallet: Can't remove wallet.
