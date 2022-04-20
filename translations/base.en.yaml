@@ -1,6 +1,7 @@
 footer: Website created by Romain with Symfony 5 and bootstrap 5.
 navbar:
   home: Home
+  question: Q&A
   wallet: Wallet
   account: My Account
   logout: Logout

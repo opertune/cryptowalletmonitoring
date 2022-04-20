@@ -17,3 +17,15 @@
 #updateButton {
     max-width: 500px;
 }
+
+// unblur icon after resizing
+.customIcon {
+    height: 32px;
+    width: 32px;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -o-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    -ms-interpolation-mode: nearest-neighbor;
+}

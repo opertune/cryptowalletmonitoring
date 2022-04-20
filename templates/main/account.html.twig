@@ -1,4 +1,7 @@
 {% extends 'base.html.twig' %}
+{% block head %}
+	<link rel="icon" href="{{asset('images/favicons/account.png')}}" type="image/x-icon">
+{% endblock %}
 {% block title %}{{ 'title'|trans({}, 'account')}}{% endblock %}
 
 {% block body %}

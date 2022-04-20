@@ -1,4 +1,7 @@
 {% extends 'base.html.twig' %}
+{% block head %}
+	<link rel="icon" href="{{asset('images/favicons/home.png')}}" type="image/x-icon">
+{% endblock %}
 {% block title %}
 	{{ 'title'|trans({}, 'home')}}
 {% endblock %}
@@ -14,19 +17,19 @@
 		<div class="container mt-7 mb-3">
 			<div class="row">
 				<div class="col d-flex justify-content-center">
-					<img class="responsiveMinSize img-fluid h-75" src="{{asset('images/icons/binance_logo.png')}}" alt="Binance-logo">
+					<img class="responsiveMinSize img-fluid h-75" src="{{asset('images/icons/logo-Binance.png')}}" alt="Binance-logo">
 				</div>
 				<div class="col d-flex justify-content-center">
-					<img class="responsiveMinSize img-fluid h-75" src="{{asset('images/icons/coinbase-logo.png')}}" alt="Coinbase-logo">
+					<img class="responsiveMinSize img-fluid h-75" src="{{asset('images/icons/logo-Coinbase.png')}}" alt="Coinbase-logo">
 				</div>
 				<div class="col d-flex justify-content-center">
-					<img class="responsiveMinSize img-fluid h-75" src="{{asset('images/icons/ftx-logo.png')}}" alt="FTX-logo">
+					<img class="responsiveMinSize img-fluid h-75" src="{{asset('images/icons/logo-FTX.png')}}" alt="FTX-logo">
 				</div>
 				<div class="col d-flex justify-content-center">
-					<img class="responsiveMinSize img-fluid h-75" src="{{asset('images/icons/kucoin-logo.png')}}" alt="Kucoin-logo">
+					<img class="responsiveMinSize img-fluid h-75" src="{{asset('images/icons/logo-Kucoin.png')}}" alt="Kucoin-logo">
 				</div>
 				<div class="col d-flex justify-content-center">
-					<img class="responsiveMinSize img-fluid h-75" src="{{asset('images/icons/gate-io-logo.png')}}" alt="Gate_io-logo">
+					<img class="responsiveMinSize img-fluid h-75" src="{{asset('images/icons/logo-Gate.io.png')}}" alt="Gate_io-logo">
 				</div>
 			</div>
 		</div>

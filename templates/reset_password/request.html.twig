@@ -1,4 +1,7 @@
 {# Page for password reseting request #}
+{% block head %}
+	<link rel="icon" href="{{asset('images/favicons/reset.png')}}" type="image/x-icon">
+{% endblock %}
 {% extends 'base.html.twig' %}
 
 {% block title %}{{ 'title'|trans({}, 'resetPassword')}}{% endblock %}
