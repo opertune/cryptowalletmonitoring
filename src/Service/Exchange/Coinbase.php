@@ -32,23 +32,29 @@ class Coinbase
             "CB-VERSION: 2015-04-08",
         );
 
+
         $datas = Utils::curlRequest($url, $headers);
-
         $coins = [];
-        foreach ($datas['data'] as $currency) {
-            if ($currency['balance']['amount'] > 0.000) {
-                $price = $priceRepository->findBySymbol(strtolower($currency['balance']['currency']));
-                $price != null ? $value = number_format($price->getPrice() * $currency['balance']['amount'], 2, '.', ',') : $value = 0;
+        if (isset($data)) {
+            foreach ($datas['data'] as $currency) {
+                if ($currency['balance']['amount'] > 0.000) {
+                    $price = $priceRepository->findBySymbol(strtolower($currency['balance']['currency']));
+                    $price != null ? $value = number_format($price->getPrice() * $currency['balance']['amount'], 2, '.', ',') : $value = 0;
 
-                array_push($coins, array(
-                    'symbol' => $currency['balance']['currency'],
-                    'quantity' => $currency['balance']['amount'],
-                    'value' => $value,
-                ));
+                    array_push($coins, array(
+                        'symbol' => $currency['balance']['currency'],
+                        'quantity' => $currency['balance']['amount'],
+                        'value' => $value,
+                    ));
+                }
             }
+            // Return sorted array in the value column with symbol, quantity and value
+            return Utils::sortArray($coins, 'value', SORT_DESC);
+        } else {
+            return array(
+                'errorID' => $datas['errors'][0]['id'],
+                'errorMessage' => $datas['errors'][0]['message'],
+            );
         }
-
-        // Return sorted array in the value column with symbol, quantity and value
-        return Utils::sortArray($coins, 'value', SORT_DESC);
     }
 }

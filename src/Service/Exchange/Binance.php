@@ -44,9 +44,8 @@ class Binance
         /**
          * Binance api request with curl
          */
-        try {
-            $datas = Utils::curlRequest($url, $headers);
-
+        $datas = Utils::curlRequest($url, $headers);
+        if (isset($data)) {
             // Put coins > 0 in array
             $coins = [];
             foreach ($datas['balances'] as $currency) {
@@ -68,8 +67,11 @@ class Binance
 
             // Return sorted array in the value column with symbol, quantity and value
             return Utils::sortArray($coins, 'value', SORT_DESC);
-        } catch (Exception $e) {
-            return $e;
+        } else {
+            return array(
+                'errorID' => $datas['code'],
+                'errorMessage' => $datas['msg'],
+            );
         }
     }
 }

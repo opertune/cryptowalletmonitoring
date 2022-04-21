@@ -26,3 +26,5 @@ flashSuccess:
   addWallet: Portefeuille %name% ajouté avec succès.
   removeWallet: Portefeuille %name% supprimé avec succès.
   priceUpdate: Vos portefeuilles ont été mis à jour.
+
+error: Clé api ou clé secrète incorrect.

@@ -2,5 +2,72 @@
 {% block head %}
 	<link rel="icon" href="{{asset('images/favicons/question.png')}}" type="image/x-icon">
 {% endblock %}
-{% block title %}Guide{% endblock %}
-{% block body %}{% endblock %}
+{% block title %}{{ 'title'|trans({}, 'question') }}{% endblock %}
+{% block body %}
+	{# Questions #}
+	<div class="container mt-5">
+		<div>
+			<h3>{{ 'question.utility'|trans({}, 'question') }}</h3>
+			<p>{{ 'question.answer1'|trans({}, 'question') }}</p>
+		</div>
+		<div>
+			<h3>{{ 'question.works'|trans({}, 'question') }}</h3>
+			<p>{{ 'question.answer2'|trans({}, 'question') }}</p>
+		</div>
+		<div>
+			<h3>{{ 'question.protection'|trans({}, 'question') }}</h3>
+			<p>{{ 'question.answer3'|trans({}, 'question') }}</p>
+		</div>
+		<div>
+			<h3>{{ 'question.whatPlatform'|trans({}, 'question') }}</h3>
+			<p>{{ 'question.answer4'|trans({}, 'question') }}</p>
+		</div>
+	</div>
+
+	{# Tutorial #}
+	<div class="container mt-5 w-100">
+		<h3 class="mb-3">{{ 'tutorial.title'|trans({}, 'question') }}</h3>
+		<div class="row row-cols-1">
+			<div class="col mb-3">
+				<fieldset class="border rounded-3 p-3">
+					<legend class="h3 text-white float-none w-auto px-3">
+						<select class="form-select">
+							<option value="Binance">Binance</option>
+							<option value="Coinbase">Coinbase</option>
+							<option value="FTX">FTX</option>
+							<option value="Kucoin">Kucoin</option>
+							<option value="Gate.io">Gate.io</option>
+						</select>
+					</legend>
+					{# Binance tutorial #}
+					<div class="row row-cols-1" id="binance">
+						<div class="col mb-2">
+							<h4>{{ 'tutorial.binance.browser'|trans({}, 'question') }}</h4>
+							<img src="{{asset('images/tutorial/binance/binance1.png')}}" alt="api management" class="wrappedImage">
+						</div>
+						<div class="col mb-2">
+							<h4>{{ 'tutorial.binance.mobile'|trans({}, 'question') }}</h4>
+							<img src="{{asset('images/tutorial/binance/binance1-mobile.png')}}" alt="api management mobile">
+						</div>
+						<div class="col mb-2">
+							<h4>{{ 'tutorial.binance.create'|trans({}, 'question') }}</h4>
+							<img src="{{asset('images/tutorial/binance/binance2.png')}}" alt="create api">
+						</div>
+						<div class="col mb-2">
+							<h4>{{ 'tutorial.binance.management'|trans({}, 'question') }}</h4>
+							<img src="{{asset('images/tutorial/binance/binance3.png')}}" alt="api list">
+						</div>
+					</div>
+					{# Coinbase tutorial #}
+					<div class="row row-cols-1" id="coinbase" hidden></div>
+					{# FTX tutorial #}
+					<div class="row row-cols-1" id="ftx" hidden></div>
+					{# Kucoin tutorial #}
+					<div class="row row-cols-1" id="kucoin" hidden></div>
+					{# Gate.io tutorial #}
+					<div class="row row-cols-1" id="gate" hidden></div>
+				</fieldset>
+			</div>
+		</div>
+	</div>
+{% endblock %}

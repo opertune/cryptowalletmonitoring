@@ -37,21 +37,26 @@ class Kucoin
         );
 
         $datas = Utils::curlRequest($url, $headers);
-        // Get coins with balance greater than 0 and put it in array
-        $coins = [];
-        foreach ($datas['data'] as $currency) {
-            if ($currency['balance'] > 00.00000000) {
-                $price = $priceRepository->findBySymbol(strtolower($currency['currency']));
-                $price != null ? $value = number_format($price->getPrice() * $currency['balance'], 2, '.', ',') : $value = 0;
-                array_push($coins, array(
-                    'symbol' => $currency['currency'],
-                    'quantity' => $currency['balance'],
-                    'value' => $value,
-                ));
+        if (isset($data)) {
+            $coins = [];
+            foreach ($datas['data'] as $currency) {
+                if ($currency['balance'] > 00.00000000) {
+                    $price = $priceRepository->findBySymbol(strtolower($currency['currency']));
+                    $price != null ? $value = number_format($price->getPrice() * $currency['balance'], 2, '.', ',') : $value = 0;
+                    array_push($coins, array(
+                        'symbol' => $currency['currency'],
+                        'quantity' => $currency['balance'],
+                        'value' => $value,
+                    ));
+                }
             }
+            // Return sorted array in the value column with symbol, quantity and value
+            return Utils::sortArray($coins, 'value', SORT_DESC);
+        } else {
+            return array(
+                'errorID' => $datas['code'],
+                'errorMessage' => $datas['msg'],
+            );
         }
-
-        // Return sorted array in the value column with symbol, quantity and value
-        return Utils::sortArray($coins, 'value', SORT_DESC);
     }
 }

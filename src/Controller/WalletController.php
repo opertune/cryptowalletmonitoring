@@ -9,6 +9,7 @@ use App\Repository\UserRepository;
 use App\Repository\WalletRepository;
 use App\Service\Utils;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,7 +42,7 @@ class WalletController extends AbstractController
      * Page for showing all wallet information
      * @Route("/wallet", name="wallet")
      */
-    public function index(Request $request): Response
+    public function index(Request $request, TranslatorInterface $translatorInterface): Response
     {
         // Get current user
         $user = $this->userRepository->findOneByEmail($this->getUser()->getUserIdentifier());
@@ -60,7 +61,7 @@ class WalletController extends AbstractController
         $eachWallet = [];
         $eachWalletTotal = [];
         $allWalletTotal = 0;
-
+        $error = [];
         foreach ($user->getWallet() as $wallet) {
             // decrypt each wallet data
             $decryptedData = Utils::decrypt($this->getParameter('encryption_key'), $this->getParameter('initialization_vector'), $wallet->getWalletData());
@@ -74,8 +75,12 @@ class WalletController extends AbstractController
             if ($decryptedData != null) {
                 $walletTotal = 0;
                 foreach ($decryptedData as $value) {
-                    $allWalletTotal += $value['value'];
-                    $walletTotal += $value['value'];
+                    if (!array_key_exists('errorID', $decryptedData)) {
+                        $allWalletTotal += $value['value'];
+                        $walletTotal += $value['value'];
+                    } else {
+                        $walletTotal = ['error' => $translatorInterface->trans('error', [], 'wallet')];
+                    };
                 }
                 array_push($eachWalletTotal, $walletTotal);
             }
@@ -86,6 +91,7 @@ class WalletController extends AbstractController
             'data' => $eachWallet,
             'allWalletTotal' => $allWalletTotal,
             'eachWalletTotal' => $eachWalletTotal,
+            'errors' => $error
         ]);
     }
 

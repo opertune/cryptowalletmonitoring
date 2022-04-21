@@ -36,26 +36,33 @@ class Ftx
 
         // Get coins with balance greater than 0 and put it in array
         $coins = [];
-        foreach ($datas['result'] as $currency) {
-            if ($currency['total'] > 0.0) {
-                // coingecko doesn't take usd
-                $price = $priceRepository->findBySymbol(strtolower($currency['coin']));
-                $price != null ? $value = number_format($price->getPrice() * $currency['total'], 2, '.', ',') : $value = 0;
+        if (isset($data)) {
+            foreach ($datas['result'] as $currency) {
+                if ($currency['total'] > 0.0) {
+                    // coingecko doesn't take usd
+                    $price = $priceRepository->findBySymbol(strtolower($currency['coin']));
+                    $price != null ? $value = number_format($price->getPrice() * $currency['total'], 2, '.', ',') : $value = 0;
 
-                // coingecko doesn't take usd
-                if ($currency['coin'] == 'USD') {
-                    $value = number_format($currency['total'], 2, '.', ',');
+                    // coingecko doesn't take usd
+                    if ($currency['coin'] == 'USD') {
+                        $value = number_format($currency['total'], 2, '.', ',');
+                    }
+
+                    array_push($coins, array(
+                        'symbol' => $currency['coin'],
+                        'quantity' => $currency['total'],
+                        'value' => $value,
+                    ));
                 }
-
-                array_push($coins, array(
-                    'symbol' => $currency['coin'],
-                    'quantity' => $currency['total'],
-                    'value' => $value,
-                ));
             }
-        }
 
-        // Return sorted array in the value column with symbol, quantity and value
-        return Utils::sortArray($coins, 'value', SORT_DESC);
+            // Return sorted array in the value column with symbol, quantity and value
+            return Utils::sortArray($coins, 'value', SORT_DESC);
+        } else {
+            return array(
+                'errorID' => $datas['success'],
+                'errorMessage' => $datas['error'],
+            );
+        }
     }
 }

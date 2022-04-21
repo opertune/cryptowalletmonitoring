@@ -44,17 +44,22 @@ class Gate
 
         $url = 'https://api.gateio.ws/api/v4/wallet/total_balance?currency=USDT';
         $datas = Utils::curlRequest($url, $headers);
-
-        $coins = [];
-        $price = $priceRepository->findBySymbol(strtolower($datas['total']['currency']));
-        $price != null ? $value = number_format($price->getPrice() * $datas['total']['amount'], 2, '.', ',') : $value = 0;
-        array_push($coins, array(
-            'symbol' => $datas['total']['currency'],
-            'quantity' => number_format($datas['total']['amount'], 2, '.', ','),
-            'value' => $value,
-        ));
-
-        // Return sorted array in the value column with symbol, quantity and value
-        return Utils::sortArray($coins, 'value', SORT_DESC);
+        if (isset($data)) {
+            $coins = [];
+            $price = $priceRepository->findBySymbol(strtolower($datas['total']['currency']));
+            $price != null ? $value = number_format($price->getPrice() * $datas['total']['amount'], 2, '.', ',') : $value = 0;
+            array_push($coins, array(
+                'symbol' => $datas['total']['currency'],
+                'quantity' => number_format($datas['total']['amount'], 2, '.', ','),
+                'value' => $value,
+            ));
+            // Return sorted array in the value column with symbol, quantity and value
+            return Utils::sortArray($coins, 'value', SORT_DESC);
+        } else {
+            return array(
+                'errorID' => $datas['label'],
+                'errorMessage' => $datas['message'],
+            );
+        }
     }
 }

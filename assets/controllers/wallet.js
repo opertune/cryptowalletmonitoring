@@ -6,6 +6,7 @@ $('#add_wallet_name').on('change', function () {
     }
 })
 
+// on click increase/decrease max height and set/unset overflow for expended div
 let expended = false;
 $('.customButton').on('click', function () {
     // extend div

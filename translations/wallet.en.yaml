@@ -26,3 +26,5 @@ flashSuccess:
   addWallet: '%name% wallet successfully added.'
   removeWallet: '%name% Wallet successfully removed.'
   priceUpdate: Your wallet has been update.
+
+error: Wrong api key or secret key.

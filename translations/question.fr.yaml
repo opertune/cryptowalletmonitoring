@@ -1,0 +1,31 @@
+title: FAQ
+question:
+  utility: À quoi ça sert ?
+  answer1: Crypto wallet monitoring est une application qui vous permet de visualiser le contenu ainsi que la valeur de chaque portefeuille ajouté sans devoir vous connecter à chaque fois sur chaque plateforme d'échange.
+  works: Comment ça fonctionne ?
+  answer2: Grâce aux API des plateformes d'échange vous pouvez retrouver le contenu de vos portefeuilles et donc calculer la valeur de chacun.
+  protection: Comment sont stockées les données ?
+  answer3: Toutes les données que nous récupérons sont cryptées et accessible uniquement pas vous.
+  whatPlatform: Quelles sont les plateforms d'échange supportées ?
+  answer4: Les plateformes que vous pouvez ajouter sont Binance, Coinbase, FTX, Kucoin, Gate.io. De nouvelles plateformes peuvent être ajouté dans le futur.
+
+tutorial:
+  title: Comment générer une clé api et une clé secrète ?
+  binance:
+    title: Binance
+    browser: Sur navigateur web.
+    mobile: Sur l'application mobile.
+    create: Donner un nom à votre api.
+    management: Ici vous avez vôtre clé api et clé secrète. Vérifier bien que la case Enable Reading est active (uniquement celle ci).
+  coinbase:
+    title: Coinbase
+    browser: Sur navigateur cliquer sur vôtre image de profil en haut à droite puis sur paramètre
+    mobile:
+    create:
+    management:
+  ftx:
+    title: FTX
+  kucoin:
+    title: Kucoin
+  gate:
+    title: Gate.io
