@@ -44,7 +44,7 @@ class Gate
 
         $url = 'https://api.gateio.ws/api/v4/wallet/total_balance?currency=USDT';
         $datas = Utils::curlRequest($url, $headers);
-        if (isset($data)) {
+        if (!array_key_exists('label', $datas)) {
             $coins = [];
             $price = $priceRepository->findBySymbol(strtolower($datas['total']['currency']));
             $price != null ? $value = number_format($price->getPrice() * $datas['total']['amount'], 2, '.', ',') : $value = 0;

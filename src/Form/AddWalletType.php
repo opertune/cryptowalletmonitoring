@@ -4,9 +4,11 @@ namespace App\Form;
 
 use App\Entity\Wallet;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -46,16 +48,12 @@ class AddWalletType extends AbstractType
             ])
             ->add('apiKey', TextType::class, [
                 'translation_domain' => 'wallet',
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'apiKeyNotBlank'
-                    ]),
-                ],
                 'required' => true,
                 'mapped' => false,
                 'label' => 'addWalletForm.apiKey',
                 'row_attr' => [
-                    'class' => 'form-floating'
+                    'id' => 'apiKey',
+                    'class' => 'form-floating',
                 ],
                 'attr' => [
                     'class' => 'form-control customInput mb-2',
@@ -65,16 +63,12 @@ class AddWalletType extends AbstractType
             ])
             ->add('secretKey', TextType::class, [
                 'translation_domain' => 'wallet',
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'secretKeyNotBlank'
-                    ]),
-                ],
                 'required' => true,
                 'mapped' => false,
                 'label' => 'addWalletForm.secretKey',
                 'row_attr' => [
-                    'class' => 'form-floating'
+                    'id' => 'secretKey',
+                    'class' => 'form-floating',
                 ],
                 'attr' => [
                     'class' => 'form-control customInput mb-2',
@@ -124,10 +118,54 @@ class AddWalletType extends AbstractType
                         ],
                     ]);
                 }
+
+                // if ($data['name'] != 'Coinbase') {
+                //     $form->add('secretKey', TextType::class, [
+                //         'translation_domain' => 'wallet',
+                //         'constraints' => [
+                //             new NotBlank([
+                //                 'message' => 'secretKeyNotBlank'
+                //             ]),
+                //         ],
+                //         'required' => true,
+                //         'mapped' => false,
+                //         'label' => 'addWalletForm.secretKey',
+                //         'row_attr' => [
+                //             'class' => 'form-floating',
+                //             'id' => 'secretKey',
+                //         ],
+                //         'attr' => [
+                //             'class' => 'form-control customInput mb-2',
+                //             'placeholder' => 'addWalletForm.secretKey',
+                //             'autocomplete' => 'off'
+                //         ],
+                //     ]);
+                //     $form->add('apiKey', TextType::class, [
+                //         'translation_domain' => 'wallet',
+                //         'constraints' => [
+                //             new NotBlank([
+                //                 'message' => 'apiKeyNotBlank'
+                //             ]),
+                //         ],
+                //         'required' => true,
+                //         'mapped' => false,
+                //         'label' => 'addWalletForm.apiKey',
+                //         'row_attr' => [
+                //             'class' => 'form-floating',
+                //             'id' => 'apiKey',
+                //         ],
+                //         'attr' => [
+                //             'class' => 'form-control customInput mb-2',
+                //             'placeholder' => 'addWalletForm.apiKey',
+                //             'autocomplete' => 'off'
+                //         ],
+                //     ]);
+                // }
             })
             ->add('save', SubmitType::class, [
                 'translation_domain' => 'wallet',
                 'row_attr' => [
+                    'id' => 'addWalletSubmit',
                     'class' => 'form-floating'
                 ],
                 'attr' => [

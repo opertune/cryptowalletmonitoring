@@ -45,7 +45,7 @@ class Binance
          * Binance api request with curl
          */
         $datas = Utils::curlRequest($url, $headers);
-        if (isset($data)) {
+        if (!array_key_exists('code', $datas)) {
             // Put coins > 0 in array
             $coins = [];
             foreach ($datas['balances'] as $currency) {

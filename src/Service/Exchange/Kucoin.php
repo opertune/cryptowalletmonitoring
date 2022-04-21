@@ -37,7 +37,7 @@ class Kucoin
         );
 
         $datas = Utils::curlRequest($url, $headers);
-        if (isset($data)) {
+        if (!array_key_exists('msg', $datas)) {
             $coins = [];
             foreach ($datas['data'] as $currency) {
                 if ($currency['balance'] > 00.00000000) {
@@ -53,6 +53,7 @@ class Kucoin
             // Return sorted array in the value column with symbol, quantity and value
             return Utils::sortArray($coins, 'value', SORT_DESC);
         } else {
+            // dd($datas);
             return array(
                 'errorID' => $datas['code'],
                 'errorMessage' => $datas['msg'],

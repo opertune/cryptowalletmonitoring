@@ -3,6 +3,7 @@ $('#add_wallet_name').on('change', function () {
         $('#passPhraseID').show();
     } else {
         $('#passPhraseID').hide();
+        $('#add_wallet_passPhrase').prop("required", false);
     }
 })
 

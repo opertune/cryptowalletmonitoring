@@ -29,13 +29,13 @@ class Coinbase
             "CB-ACCESS-KEY: $this->apiKey",
             "CB-ACCESS-SIGN: $signature",
             "CB-ACCESS-TIMESTAMP: $timestamp",
-            "CB-VERSION: 2015-04-08",
+            "CB-VERSION: 2022-03-28",
         );
 
 
         $datas = Utils::curlRequest($url, $headers);
         $coins = [];
-        if (isset($data)) {
+        if (!array_key_exists('errors', $datas)) {
             foreach ($datas['data'] as $currency) {
                 if ($currency['balance']['amount'] > 0.000) {
                     $price = $priceRepository->findBySymbol(strtolower($currency['balance']['currency']));

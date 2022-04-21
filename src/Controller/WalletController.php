@@ -9,7 +9,6 @@ use App\Repository\UserRepository;
 use App\Repository\WalletRepository;
 use App\Service\Utils;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +28,7 @@ class WalletController extends AbstractController
         PriceRepository $priceRepository,
         UserRepository $userRepository,
         WalletRepository $walletRepository,
-        TranslatorInterface $translatorInterface
+        TranslatorInterface $translatorInterface,
     ) {
         $this->entityManager = $entityManager;
         $this->priceRepository = $priceRepository;
@@ -91,7 +90,7 @@ class WalletController extends AbstractController
             'data' => $eachWallet,
             'allWalletTotal' => $allWalletTotal,
             'eachWalletTotal' => $eachWalletTotal,
-            'errors' => $error
+            'errors' => $error,
         ]);
     }
 

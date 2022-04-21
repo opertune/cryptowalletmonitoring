@@ -36,7 +36,7 @@ class Ftx
 
         // Get coins with balance greater than 0 and put it in array
         $coins = [];
-        if (isset($data)) {
+        if ($datas['success'] == true) {
             foreach ($datas['result'] as $currency) {
                 if ($currency['total'] > 0.0) {
                     // coingecko doesn't take usd
