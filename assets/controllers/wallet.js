@@ -42,6 +42,14 @@ $('.customButton').on('mouseenter', function () {
     $('#' + this.id).css("background-color", "transparent");
 });
 
+// Hide expand button when table have less than 3 rows
+jQuery(function ($) {
+    $('.walletCustomTable').each(function (index) {
+        if ($('#t' + index + ' tr').length <= 5) {
+            $('#' + index).hide();
+        }
+    })
+})
 
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();

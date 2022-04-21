@@ -59,7 +59,7 @@
                         {% else %}
                             <h3 class="text-center mb-4"><u>Total: {{eachWalletTotal[key]}}$</u></h3>
                             <div class="table-responsive walletCustomTable" id="table{{key}}">
-                                <table class="table table-borderless table-sm text-white text-center">
+                                <table class="table table-borderless table-sm text-white text-center" id="t{{key}}">
                                     <thead class="h5">
                                         <tr>
                                             <th scope="col">{{ 'eachWallet.symbol'|trans({},'wallet')}}</th>
