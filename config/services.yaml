@@ -7,6 +7,8 @@ parameters:
     # Key for apikey, secretkey, passphrase and datajson database encryption
     encryption_key: '%env(ENCRYPTION_KEY)%'
     initialization_vector: '%env(INITIALIZATION_VECTOR)%'
+    oauthcoinbase_key: '%env(OAUTHCOINBASE_KEY)%'
+    oauthcoinbase_secret: '%env(OAUTHCOINBASE_SECRET)%'
 
 services:
     # default configuration for services in *this* file

@@ -7,12 +7,14 @@ use App\Form\AddWalletType;
 use App\Repository\PriceRepository;
 use App\Repository\UserRepository;
 use App\Repository\WalletRepository;
+use App\Service\Exchange\CoinbaseOauth;
 use App\Service\Utils;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class WalletController extends AbstractController
@@ -22,19 +24,21 @@ class WalletController extends AbstractController
     private UserRepository $userRepository;
     private WalletRepository $walletRepository;
     private TranslatorInterface $translatorInterface;
-
+    private HttpClientInterface $httpClientInterface;
     public function __construct(
         EntityManagerInterface $entityManager,
         PriceRepository $priceRepository,
         UserRepository $userRepository,
         WalletRepository $walletRepository,
         TranslatorInterface $translatorInterface,
+        HttpClientInterface $httpClientInterface,
     ) {
         $this->entityManager = $entityManager;
         $this->priceRepository = $priceRepository;
         $this->userRepository = $userRepository;
         $this->walletRepository = $walletRepository;
         $this->translatorInterface = $translatorInterface;
+        $this->httpClientInterface = $httpClientInterface;
     }
 
     /**
@@ -52,8 +56,26 @@ class WalletController extends AbstractController
 
         // Add new wallet in db
         if ($addWalletForm->isSubmitted() && $addWalletForm->isValid()) {
-            $this->addWallet($addWalletForm, $this->priceRepository);
-            return $this->redirect($request->getUri());
+            if ($addWalletForm->get('name')->getData() == 'Coinbase') {
+                header("Location: https://www.coinbase.com/oauth/authorize?response_type=code&client_id=" . $this->getParameter('oauthcoinbase_key') . "&account=all&scope=wallet:accounts:read");
+                exit;
+            } else {
+                $this->addWallet($addWalletForm, $this->priceRepository);
+                return $this->redirect($request->getUri());
+            }
+        }
+
+        // Add coinbase wallet in database and encrypted data if user give authorisation
+        if (isset($_GET['code'])) {
+            $wallet = new Wallet();
+            $wallet->setAccount($this->getUser())
+                ->setName('Coinbase')
+                ->setSecretKey('null')
+                ->setPassPhrase('null');
+            $coinbase = new CoinbaseOauth($this->getParameter('encryption_key'), $this->getParameter('initialization_vector'), $wallet, $this->httpClientInterface, $this->priceRepository);
+            $wallet->setWalletData($coinbase->getBalance(false, $_GET['code'], $this->getParameter('oauthcoinbase_key'), $this->getParameter('oauthcoinbase_secret')));
+            $this->entityManager->persist($wallet);
+            $this->entityManager->flush();
         }
 
         // Decrypt all wallet data and get all wallet total value and each wallet total value
@@ -91,6 +113,7 @@ class WalletController extends AbstractController
             'allWalletTotal' => $allWalletTotal,
             'eachWalletTotal' => $eachWalletTotal,
             'errors' => $error,
+            // 'formCoinbase' => $formCoinbase->createView(),
         ]);
     }
 
@@ -164,17 +187,23 @@ class WalletController extends AbstractController
         $user = $this->userRepository->findOneByEmail($this->getUser()->getUserIdentifier());
         // Update user data column with total value for each coin
         foreach ($user->getWallet() as $wallet) {
-            $data = Utils::encrypt(
-                $this->getParameter('encryption_key'),
-                $this->getParameter('initialization_vector'),
-                Utils::apiCall(
-                    $wallet->getName(),
-                    Utils::decrypt($this->getParameter('encryption_key'), $this->getParameter('initialization_vector'), $wallet->getApiKey()),
-                    Utils::decrypt($this->getParameter('encryption_key'), $this->getParameter('initialization_vector'), $wallet->getSecretKey()),
-                    Utils::decrypt($this->getParameter('encryption_key'), $this->getParameter('initialization_vector'), $wallet->getPassPhrase()),
-                    $this->priceRepository
-                )
-            );
+            if ($wallet->getName() != 'Coinbase') {
+                $data = Utils::encrypt(
+                    $this->getParameter('encryption_key'),
+                    $this->getParameter('initialization_vector'),
+                    Utils::apiCall(
+                        $wallet->getName(),
+                        Utils::decrypt($this->getParameter('encryption_key'), $this->getParameter('initialization_vector'), $wallet->getApiKey()),
+                        Utils::decrypt($this->getParameter('encryption_key'), $this->getParameter('initialization_vector'), $wallet->getSecretKey()),
+                        Utils::decrypt($this->getParameter('encryption_key'), $this->getParameter('initialization_vector'), $wallet->getPassPhrase()),
+                        $this->priceRepository
+                    )
+                );
+            } else {
+                // If wallet == coinbase we need to recall a new access token and refresh token
+                $coinbase = new CoinbaseOauth($this->getParameter('encryption_key'), $this->getParameter('initialization_vector'), $wallet, $this->httpClientInterface, $this->priceRepository);
+                $data = $coinbase->getBalance(true, '', $this->getParameter('oauthcoinbase_key'), $this->getParameter('oauthcoinbase_secret'));
+            }
 
             $wallet->setWalletData($data);
             $this->entityManager->persist($wallet);

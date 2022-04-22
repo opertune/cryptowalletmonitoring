@@ -4,11 +4,9 @@ namespace App\Form;
 
 use App\Entity\Wallet;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -34,7 +32,7 @@ class AddWalletType extends AbstractType
                     'FTX' => 'FTX',
                     'Coinbase' => 'Coinbase',
                 ],
-                'required' => true,
+                'required' => false,
                 'mapped' => false,
                 'multiple' => false,
                 'label' => 'addWalletForm.exchangeName',
@@ -96,6 +94,7 @@ class AddWalletType extends AbstractType
                 $data = $event->getData();
                 $form = $event->getForm();
 
+                // If selected exchange is kucoin we need to add constraints
                 if ($data['name'] == 'Kucoin') {
                     $form->add('passPhrase', TextType::class, [
                         'translation_domain' => 'wallet',
@@ -119,48 +118,49 @@ class AddWalletType extends AbstractType
                     ]);
                 }
 
-                // if ($data['name'] != 'Coinbase') {
-                //     $form->add('secretKey', TextType::class, [
-                //         'translation_domain' => 'wallet',
-                //         'constraints' => [
-                //             new NotBlank([
-                //                 'message' => 'secretKeyNotBlank'
-                //             ]),
-                //         ],
-                //         'required' => true,
-                //         'mapped' => false,
-                //         'label' => 'addWalletForm.secretKey',
-                //         'row_attr' => [
-                //             'class' => 'form-floating',
-                //             'id' => 'secretKey',
-                //         ],
-                //         'attr' => [
-                //             'class' => 'form-control customInput mb-2',
-                //             'placeholder' => 'addWalletForm.secretKey',
-                //             'autocomplete' => 'off'
-                //         ],
-                //     ]);
-                //     $form->add('apiKey', TextType::class, [
-                //         'translation_domain' => 'wallet',
-                //         'constraints' => [
-                //             new NotBlank([
-                //                 'message' => 'apiKeyNotBlank'
-                //             ]),
-                //         ],
-                //         'required' => true,
-                //         'mapped' => false,
-                //         'label' => 'addWalletForm.apiKey',
-                //         'row_attr' => [
-                //             'class' => 'form-floating',
-                //             'id' => 'apiKey',
-                //         ],
-                //         'attr' => [
-                //             'class' => 'form-control customInput mb-2',
-                //             'placeholder' => 'addWalletForm.apiKey',
-                //             'autocomplete' => 'off'
-                //         ],
-                //     ]);
-                // }
+                // If selected exchange is not Coinbase we need to add constraints
+                if ($data['name'] != 'Coinbase') {
+                    $form->add('secretKey', TextType::class, [
+                        'translation_domain' => 'wallet',
+                        'constraints' => [
+                            new NotBlank([
+                                'message' => 'secretKeyNotBlank'
+                            ]),
+                        ],
+                        'required' => true,
+                        'mapped' => false,
+                        'label' => 'addWalletForm.secretKey',
+                        'row_attr' => [
+                            'class' => 'form-floating',
+                            'id' => 'secretKey',
+                        ],
+                        'attr' => [
+                            'class' => 'form-control customInput mb-2',
+                            'placeholder' => 'addWalletForm.secretKey',
+                            'autocomplete' => 'off'
+                        ],
+                    ]);
+                    $form->add('apiKey', TextType::class, [
+                        'translation_domain' => 'wallet',
+                        'constraints' => [
+                            new NotBlank([
+                                'message' => 'apiKeyNotBlank'
+                            ]),
+                        ],
+                        'required' => true,
+                        'mapped' => false,
+                        'label' => 'addWalletForm.apiKey',
+                        'row_attr' => [
+                            'class' => 'form-floating',
+                            'id' => 'apiKey',
+                        ],
+                        'attr' => [
+                            'class' => 'form-control customInput mb-2',
+                            'placeholder' => 'addWalletForm.apiKey',
+                            'autocomplete' => 'off'
+                        ],
+                    ]);
+                }
             })
             ->add('save', SubmitType::class, [
                 'translation_domain' => 'wallet',

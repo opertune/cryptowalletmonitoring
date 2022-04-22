@@ -2,8 +2,20 @@ $('#add_wallet_name').on('change', function () {
     if ($('#add_wallet_name').val() == 'Kucoin') {
         $('#passPhraseID').show();
     } else {
+        $('#apiKey').show();
+        $('#secretKey').show();
         $('#passPhraseID').hide();
         $('#add_wallet_passPhrase').prop("required", false);
+    }
+
+    if ($('#add_wallet_name').val() == 'Coinbase') {
+        $('#coinbaseOauth').show();
+        $('#apiKey').hide();
+        $('#secretKey').hide();
+        $('#add_wallet_apiKey').prop("required", false);
+        $('#add_wallet_secretKey').prop("required", false);
+    } else {
+        $('#coinbaseOauth').hide();
     }
 })
 

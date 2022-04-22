@@ -57,9 +57,6 @@ class Utils
             case 'FTX':
                 $coinArray = new Ftx($apiKey, $secretKey);
                 break;
-            case 'Coinbase':
-                $coinArray = new Coinbase($apiKey, $secretKey);
-                break;
         }
 
         return $coinArray->getBalance($priceRepository);
