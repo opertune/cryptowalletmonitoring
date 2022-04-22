@@ -39,8 +39,6 @@ class CoinbaseOauth
                 'POST',
                 "https://api.coinbase.com/oauth/token?grant_type=authorization_code&code=$code&client_id=$oauthcoinbaseKey&client_secret=$oauthcoinbaseSecret&redirect_uri=https://127.0.0.1:8000/en/wallet"
             );
-            $cont = json_decode($rep->getContent(), true);
-            $this->wallet->setApiKey(Utils::encrypt($this->encryptionKey, $this->initializationVector, $cont["refresh_token"]));
         }
 
         $cont = json_decode($rep->getContent(), true);
