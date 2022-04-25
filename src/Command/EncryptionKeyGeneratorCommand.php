@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Service\Utils;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -15,12 +16,12 @@ class EncryptionKeyGeneratorCommand extends Command
     }
 
     /**
-     * Generate encryption key (32 bytes) and Initialization vector (26 bytes) for open_ssl encrypt and decrypt
+     * Generate encryption key (32 bytes) and Initialization vector (16 bytes) for open_ssl encrypt and decrypt
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $encryptionKey = $this->randomChar(32);
-        $initializationVector = $this->randomChar(16);
+        $encryptionKey = Utils::randomChar(32);
+        $initializationVector = Utils::randomChar(16);
 
         $output->writeln([
             "Encryption Key: <bg=green>$encryptionKey</>",
@@ -28,16 +29,5 @@ class EncryptionKeyGeneratorCommand extends Command
         ]);
 
         return Command::SUCCESS;
-    }
-
-    private function randomChar(int $bytes)
-    {
-        $string = '1234567890abcdefghijklmnopqrstuvxyz!@#$%^&*()_+:;.,<>/?\|{[]}';
-        $randomString = '';
-        for ($i = 0; $i < $bytes; $i++) {
-            $randomString .= $string[rand(0, 60)];
-        }
-
-        return $randomString;
     }
 }

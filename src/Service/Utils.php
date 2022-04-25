@@ -77,4 +77,18 @@ class Utils
     {
         return unserialize(openssl_decrypt($data, 'AES-256-CBC', $encryptionKey, 0, $initializationVector));
     }
+
+    /**
+     * Generate au key with random char
+     */
+    public static function randomChar(int $bytes)
+    {
+        $string = '1234567890abcdefghijklmnopqrstuvxyz!@#$%^&*()_+:;.,<>/?\|{[]}';
+        $randomString = '';
+        for ($i = 0; $i < $bytes; $i++) {
+            $randomString .= $string[rand(0, 60)];
+        }
+
+        return $randomString;
+    }
 }

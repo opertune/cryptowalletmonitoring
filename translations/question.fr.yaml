@@ -12,20 +12,26 @@ question:
 tutorial:
   title: Comment générer une clé api et une clé secrète ?
   binance:
-    title: Binance
     browser: Sur navigateur web.
     mobile: Sur l'application mobile.
     create: Donner un nom à votre api.
     management: Ici vous avez vôtre clé api et clé secrète. Vérifier bien que la case Enable Reading est active (uniquement celle ci).
   coinbase:
-    title: Coinbase
-    browser: Sur navigateur cliquer sur vôtre image de profil en haut à droite puis sur paramètre
-    mobile:
-    create:
-    management:
+    info: Coinbase propose d'utilise OAuth 2.0 qui est beaucoup plus sécurisé. Cela évite de devoir générer une clé api et une clé secrète.
+    add: Après avoir choisi Coinbase vous devez cliquer sur le bouton ajouter le portefeuille.
+    login: Vous allez être rediriger vers le site de coinbase pour vous identifier.
+    authorize: Il ne vous reste plus qu'à cliquer sur authoriser.
   ftx:
-    title: FTX
+    where: Sur navigateur web.
+    generate: Cliquer sur créer une clé api en lecture seule.
+    exit: Après avoir copié collé votre clé api et clé secrète il vous suffit de quitter la page.
   kucoin:
-    title: Kucoin
+    where: Sur navigateur web.
+    create: Après avoir cliqué sur le bouton créer il vous faut renseigner un nom et une phrase secrète.
+    email: Ensuite un email vous sera envoyé pour activer vôtre api.
+    exit: Une fois activé vous aurez accès à vôtre clé api et clé secrète.
   gate:
-    title: Gate.io
+    where: Sur navigateur web.
+    create: Sélectionner API v4 puis cliquer sur le bouton créer une clé api.
+    input: Renseigner un nom pour votre clé api puis sélectionner wallet et lecture seule.
+    exit: Après avoir copié collé votre clé api et clé secrète il vous suffit de cliquer sur ok.

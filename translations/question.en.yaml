@@ -13,20 +13,26 @@ question:
 tutorial:
   title: how to generate an api key and a secret key ?
   binance:
-    title: Binance
     browser: On web navigator.
     mobile: On the mobile app.
     create: Give a name to your API.
     management: Here you have your api key and secret key. Check that the Enable Reading box is active (only this one).
   coinbase:
-    title: Coinbase
-    browser: 
-    mobile:
-    create:
-    management:
+    info: Coinbase offers to use OAuth 2.0 which is much more secure. This avoids having to generate an api key and a secret key.
+    add: After choosing Coinbase you must click on the add portfolio button.
+    login: You will be redirected to the coinbase site to identify yourself.
+    authorize: All you have to do is click on authoriser.
   ftx:
-    title: FTX
+    where: On web navigator.
+    generate: Click on create Read-Only API Key.
+    exit: After copying pasted your api key and secret key you just have to exit the page.
   kucoin:
-    title: Kucoin
+    where: On web navigator.
+    create: After clicking on the create button you must enter a name and secret phrase.
+    email: Then an email will be sent to you to activate your API.
+    exit: Once activated you will have access to your API key and secret key.
   gate:
-    title: Gate.io
+    where: On web navigator.
+    create: Select API v4 and click on the button to create an api key.
+    input: Enter a name for your api key and select wallet and read-only.
+    exit: After copying-pasted your api key and secret key you can click on the ok button.
