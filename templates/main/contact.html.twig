@@ -5,17 +5,26 @@
 
 {% block stylesheets %}
 	{{ parent() }}
-	{{ encore_entry_link_tags('form') }}
+	{{ encore_entry_link_tags('contact') }}
 {% endblock %}
 
 {% block title %}Contact{% endblock %}
 
 {% block body %}
-	<div class="text-dark mt-5">
-	{{ form_start(form, {'attr' : {'id' : 'contactForm'}}) }}
-		{{ form_row(form.email) }}
-		{{ form_row(form.message) }}
-		{{ form_row(form.send) }}
-	{{ form_end(form) }}
+	<script>
+		function onSubmit(token) {
+			document.getElementById("contactForm").submit();
+		}
+	</script>
+	<div class="container text-dark mt-5">
+		{{ form_start(form, {'attr' : {'id' : 'contactForm'}}) }}
+			{% for flash_success in app.flashes('flash_success') %}
+				<div class="alert alert-success my-2" role="success">{{ flash_success }}</div>
+			{% endfor %}
+			<h3 class="mb-2 text-white text-center">{{ 'titleForm'|trans({}, 'contact')}}</h3>
+			{{ form_row(form.email) }}
+			{{ form_row(form.message) }}
+			{{ form_row(form.send) }}
+		{{ form_end(form) }}
 	</div>
 {% endblock %}

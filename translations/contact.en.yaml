@@ -1,3 +1,5 @@
+titleForm: Send a message to the site administrators.
 emailInput: Email address
 messageInput: Your message
 submitButton: Send
+success: Message sent successfully !
