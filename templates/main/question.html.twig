@@ -31,16 +31,16 @@
 			<div class="col mb-3">
 				<fieldset class="border rounded-3 p-3">
 					<legend class="h3 text-white float-none w-auto px-3">
-						<select class="form-select">
+						<select class="form-select" id="selectExchange">
 							<option value="Binance">Binance</option>
 							<option value="Coinbase">Coinbase</option>
 							<option value="FTX">FTX</option>
 							<option value="Kucoin">Kucoin</option>
-							<option value="Gate.io">Gate.io</option>
+							<option value="Gate">Gate</option>
 						</select>
 					</legend>
 					{# Binance tutorial #}
-					<div class="row row-cols-1" id="binance" hidden>
+					<div class="row row-cols-1" id="binance">
 						<div class="col mb-2">
 							<h4>{{ 'tutorial.binance.browser'|trans({}, 'question') }}</h4>
 							<img src="{{asset('images/tutorial/binance/binance1.png')}}" alt="api management">
@@ -108,7 +108,7 @@
 						</div>
 					</div>
 					{# Gate.io tutorial #}
-					<div class="row row-cols-1" id="gate">
+					<div class="row row-cols-1" id="gate" hidden>
 						<div class="col mb-2">
 							<h4>{{ 'tutorial.gate.where'|trans({}, 'question') }}</h4>
 							<img src="{{asset('images/tutorial/gate/gate1.png')}}" alt="where">

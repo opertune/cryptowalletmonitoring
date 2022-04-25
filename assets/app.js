@@ -14,6 +14,7 @@ import './bootstrap';
 // import bootstrap javascript
 import bootstrap from 'bootstrap';
 
-// Navbar style change
+// Custom js
 import './controllers/navbar';
 import './controllers/wallet';
+import './controllers/question';
