@@ -2,6 +2,18 @@
 {% block head %}
 	<link rel="icon" href="{{asset('images/favicons/wallet.png')}}" type="image/x-icon">
 {% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('form') }}
+	{{ encore_entry_link_tags('wallet_scss') }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('wallet') }}
+{% endblock %}
+
 {% block title %}{{ 'title'|trans({}, 'wallet')}}{% endblock %}
 
 {% block body %}

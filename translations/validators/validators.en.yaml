@@ -31,3 +31,7 @@ editPasswordMatch: The password fields must match.
 
 # Reset password form
 resetPasswordFormMatch: The password fields must match.
+
+# Contact form
+contactMessageNotBlank: Message field can't be empty.
+contactMessageMinLenght: Your message should be at least {{ limit }} characters.

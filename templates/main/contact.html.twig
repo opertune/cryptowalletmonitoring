@@ -2,8 +2,20 @@
 {% block head %}
 	<link rel="icon" href="{{asset('images/favicons/contact.png')}}" type="image/x-icon">
 {% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('form') }}
+{% endblock %}
+
 {% block title %}Contact{% endblock %}
 
 {% block body %}
-	{# {{form(formCoinbase)}} #}
+	<div class="text-dark mt-5">
+	{{ form_start(form, {'attr' : {'id' : 'contactForm'}}) }}
+		{{ form_row(form.email) }}
+		{{ form_row(form.message) }}
+		{{ form_row(form.send) }}
+	{{ form_end(form) }}
+	</div>
 {% endblock %}

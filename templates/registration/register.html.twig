@@ -2,6 +2,12 @@
 {% block head %}
 	<link rel="icon" href="{{asset('images/favicons/register.png')}}" type="image/x-icon">
 {% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('form') }}
+{% endblock %}
+
 {% block title %}{{ 'title'|trans({}, 'register')}}{% endblock %}
 
 {% block body %}

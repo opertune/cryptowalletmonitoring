@@ -2,6 +2,12 @@
 {% block head %}
 	<link rel="icon" href="{{asset('images/favicons/login.png')}}" type="image/x-icon">
 {% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('form') }}
+{% endblock %}
+
 {% block title %}{{ 'title'|trans({}, 'login')}}{% endblock %}
 
 {% block body %}

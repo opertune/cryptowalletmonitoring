@@ -2,6 +2,12 @@
 {% block head %}
 	<link rel="icon" href="{{asset('images/favicons/question.png')}}" type="image/x-icon">
 {% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('question') }}
+{% endblock %}
+
 {% block title %}{{ 'title'|trans({}, 'question') }}{% endblock %}
 {% block body %}
 	{# Questions #}

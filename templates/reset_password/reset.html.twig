@@ -1,6 +1,11 @@
 {# Page for change password #}
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('form') }}
+{% endblock %}
+
 {% block title %}{{ 'title'|trans({}, 'resetPassword')}}{% endblock %}
 
 {% block body %}

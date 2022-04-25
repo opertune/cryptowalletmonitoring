@@ -2,9 +2,13 @@
 {% block head %}
 	<link rel="icon" href="{{asset('images/favicons/home.png')}}" type="image/x-icon">
 {% endblock %}
-{% block title %}
-	{{ 'title'|trans({}, 'home')}}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('home') }}
 {% endblock %}
+
+{% block title %}{{ 'title'|trans({}, 'home')}}{% endblock %}
 
 {% block body %}
 	<div class="container-fluid">
