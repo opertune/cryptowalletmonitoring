@@ -1,5 +1,5 @@
 titleForm: Envoyer un message aux administrateurs du site.
-emailInput: Adresse E-mail
+emailInput: Votre adresse E-mail
 messageInput: Votre message
 submitButton: Envoyer
 success: Message envoyé avec succès !
