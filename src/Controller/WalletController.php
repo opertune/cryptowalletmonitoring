@@ -53,7 +53,6 @@ class WalletController extends AbstractController
         // Create add wallet form
         $addWalletForm = $this->createForm(AddWalletType::class);
         $addWalletForm->handleRequest($request);
-
         // Add new wallet in db
         if ($addWalletForm->isSubmitted() && $addWalletForm->isValid()) {
             if ($addWalletForm->get('name')->getData() == 'Coinbase') {
@@ -73,9 +72,12 @@ class WalletController extends AbstractController
                 ->setSecretKey('null')
                 ->setPassPhrase('null');
             $coinbase = new CoinbaseOauth($this->getParameter('encryption_key'), $this->getParameter('initialization_vector'), $wallet, $this->httpClientInterface, $this->priceRepository);
-            $wallet->setWalletData($coinbase->getBalance(false, $_GET['code'], $this->getParameter('oauthcoinbase_key'), $this->getParameter('oauthcoinbase_secret')));
+            $wallet->setWalletData($coinbase->getBalance($this->getParameter('oauthcoinbase_key'), $this->getParameter('oauthcoinbase_secret'), false, $_GET['code']));
             $this->entityManager->persist($wallet);
             $this->entityManager->flush();
+
+            $this->addFlash('flash_success', $this->translatorInterface->trans('flashSuccess.addWallet', ['%name%' => $wallet->getName()], 'wallet'));
+            return $this->redirectToRoute('wallet');
         }
 
         // Decrypt all wallet data and get all wallet total value and each wallet total value
@@ -202,7 +204,7 @@ class WalletController extends AbstractController
             } else {
                 // If wallet == coinbase we need to recall a new access token and refresh token
                 $coinbase = new CoinbaseOauth($this->getParameter('encryption_key'), $this->getParameter('initialization_vector'), $wallet, $this->httpClientInterface, $this->priceRepository);
-                $data = $coinbase->getBalance(true, '', $this->getParameter('oauthcoinbase_key'), $this->getParameter('oauthcoinbase_secret'));
+                $data = $coinbase->getBalance($this->getParameter('oauthcoinbase_key'), $this->getParameter('oauthcoinbase_secret'), true, '');
             }
 
             $wallet->setWalletData($data);

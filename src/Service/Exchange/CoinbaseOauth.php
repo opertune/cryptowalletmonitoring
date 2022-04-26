@@ -24,7 +24,7 @@ class CoinbaseOauth
         $this->priceRepository = $priceRepository;
     }
 
-    public function getBalance($refresh = false, $code = '', string $oauthcoinbaseKey, string $oauthcoinbaseSecret)
+    public function getBalance(string $oauthcoinbaseKey, string $oauthcoinbaseSecret, $refresh = false, $code = '')
     {
         // Refresh access token for update
         if ($refresh) {
