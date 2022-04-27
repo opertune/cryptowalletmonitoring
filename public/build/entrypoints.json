@@ -1,0 +1,62 @@
+{
+  "entrypoints": {
+    "app": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_bootstrap_dist_js_boo-da594f.js",
+        "/build/app.js"
+      ],
+      "css": [
+        "/build/app.css"
+      ]
+    },
+    "question": {
+      "js": [
+        "/build/runtime.js",
+        "/build/question.js"
+      ]
+    },
+    "wallet": {
+      "js": [
+        "/build/runtime.js",
+        "/build/wallet.js"
+      ]
+    },
+    "form": {
+      "js": [
+        "/build/runtime.js",
+        "/build/form.js"
+      ],
+      "css": [
+        "/build/form.css"
+      ]
+    },
+    "home": {
+      "js": [
+        "/build/runtime.js",
+        "/build/home.js"
+      ],
+      "css": [
+        "/build/home.css"
+      ]
+    },
+    "wallet_scss": {
+      "js": [
+        "/build/runtime.js",
+        "/build/wallet_scss.js"
+      ],
+      "css": [
+        "/build/wallet_scss.css"
+      ]
+    },
+    "contact": {
+      "js": [
+        "/build/runtime.js",
+        "/build/contact.js"
+      ],
+      "css": [
+        "/build/contact.css"
+      ]
+    }
+  }
+}

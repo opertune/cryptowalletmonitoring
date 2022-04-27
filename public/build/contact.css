@@ -1,0 +1,14 @@
+#contactForm {
+  max-width: 500px;
+}
+#contactForm .customInput:hover {
+  border: solid 3px #FFBD0A;
+}
+
+#contact_message {
+  height: 400px;
+  min-height: 200px;
+  max-height: 600px;
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY29udGFjdC5jc3MiLCJtYXBwaW5ncyI6IkFBQUE7RUFDSTtBQUNKO0FBQ0k7RUFDSTtBQUNSOztBQUdBO0VBQ0k7RUFDQTtFQUNBO0FBQUosQyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL2NvbnRhY3Quc2NzcyJdLCJzb3VyY2VzQ29udGVudCI6WyIjY29udGFjdEZvcm0ge1xyXG4gICAgbWF4LXdpZHRoOiA1MDBweDtcclxuXHJcbiAgICAuY3VzdG9tSW5wdXQ6aG92ZXIge1xyXG4gICAgICAgIGJvcmRlcjogc29saWQgM3B4ICNGRkJEMEE7XHJcbiAgICB9XHJcbn1cclxuXHJcbiNjb250YWN0X21lc3NhZ2Uge1xyXG4gICAgaGVpZ2h0OiA0MDBweDtcclxuICAgIG1pbi1oZWlnaHQ6IDIwMHB4O1xyXG4gICAgbWF4LWhlaWdodDogNjAwcHg7XHJcbn0iXSwibmFtZXMiOltdLCJzb3VyY2VSb290IjoiIn0=*/
