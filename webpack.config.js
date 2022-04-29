@@ -24,10 +24,10 @@ Encore
     .addEntry('question', './assets/controllers/question.js')
     .addEntry('wallet', './assets/controllers/wallet.js')
 
-    .addEntry('form', './assets/styles/form.scss')
-    .addEntry('home', './assets/styles/home.scss')
-    .addEntry('wallet_scss', './assets/styles/wallet.scss')
-    .addEntry('contact', './assets/styles/contact.scss')
+    .addStyleEntry('form', './assets/styles/form.scss')
+    .addStyleEntry('home', './assets/styles/home.scss')
+    .addStyleEntry('wallet_scss', './assets/styles/wallet.scss')
+    .addStyleEntry('contact', './assets/styles/contact.scss')
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
 
@@ -49,7 +49,7 @@ Encore
     .enableBuildNotifications()
     .enableSourceMaps(!Encore.isProduction())
     // enables hashed filenames (e.g. app.abc123.css)
-    .enableVersioning(Encore.isProduction())
+    // .enableVersioning(Encore.isProduction())
 
     .configureBabel((config) => {
         config.plugins.push('@babel/plugin-proposal-class-properties');
