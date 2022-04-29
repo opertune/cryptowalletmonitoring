@@ -62,7 +62,7 @@ class RegistrationController extends AbstractController
                     'app_verify_email',
                     $user,
                     (new TemplatedEmail())
-                        ->from(new Address('cwmvalidator@gmail.com', 'cwm validator bot'))
+                        ->from(new Address('cwm@cryptowalletmonitoring.com', 'cwm validator bot'))
                         ->to($user->getEmail())
                         ->subject('Please Confirm your Email')
                         ->htmlTemplate('registration/confirmation_email.html.twig')

@@ -19,7 +19,7 @@ class LocaleSubscriber implements EventSubscriberInterface
     {
         $request = $event->getRequest();
 
-        $locale = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+        $locale = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '', 0, 2);
         // if browser is not in english or in french set locale in english
         if ($locale == 'en' || $locale == 'fr') {
             $request->setLocale($locale);

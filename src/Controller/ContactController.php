@@ -28,7 +28,7 @@ class ContactController extends AbstractController
             if ($captcha->captchaIsValid()) {
                 $email = (new Email())
                     ->from(new Address($form->get('email')->getData(), $form->get('email')->getData()))
-                    ->to('cwmvalidator@gmail.com')
+                    ->to('cwm@cryptowalletmonitoring.com')
                     ->subject('Contact form new message')
                     ->text($form->get('message')->getData());
                 $mailerInterface->send($email);
