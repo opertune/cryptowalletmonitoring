@@ -4,7 +4,6 @@ namespace App\Service;
 
 use App\Repository\PriceRepository;
 use App\Service\Exchange\Binance;
-use App\Service\Exchange\Coinbase;
 use App\Service\Exchange\Ftx;
 use App\Service\Exchange\Gate;
 use App\Service\Exchange\Kucoin;
@@ -45,7 +44,6 @@ class Utils
     {
         switch ($walletName) {
             case 'Binance':
-                // get binance balances and set it in wallet entity
                 $coinArray = new Binance($apiKey, $secretKey);
                 break;
             case 'Gate.io':
@@ -83,10 +81,10 @@ class Utils
      */
     public static function randomChar(int $bytes)
     {
-        $string = '1234567890abcdefghijklmnopqrstuvxyz!@#$%^&*()_+:;.,<>/?\|{[]}';
+        $string = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+:;.,<>/?\|{[]}';
         $randomString = '';
         for ($i = 0; $i < $bytes; $i++) {
-            $randomString .= $string[rand(0, 60)];
+            $randomString .= $string[rand(0, strlen($string) - 1)];
         }
 
         return $randomString;
