@@ -16,5 +16,3 @@ import bootstrap from 'bootstrap';
 
 // Custom js
 import './controllers/navbar';
-import './controllers/question';
-import './controllers/wallet';
