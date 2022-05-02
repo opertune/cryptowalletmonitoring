@@ -42,7 +42,8 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/(en|fr)/wallet, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/(en|fr)/account, roles: IS_AUTHENTICATED_FULLY }
-
+        - { path: '^/(en|fr)', requires_channel: https }
+        - { path: '^/', requires_channel: https }
 when@test:
     security:
         password_hashers:
