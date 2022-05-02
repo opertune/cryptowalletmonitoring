@@ -39,11 +39,9 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/(en|fr)/wallet, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/(en|fr)/account, roles: IS_AUTHENTICATED_FULLY }
-        - { path: '^/(en|fr)', requires_channel: https }
         - { path: '^/', requires_channel: https }
+        - { path: ^/(en|fr)/wallet, roles: IS_AUTHENTICATED_FULLY, requires_channel: https }
+        - { path: ^/(en|fr)/account, roles: IS_AUTHENTICATED_FULLY, requires_channel: https }
 when@test:
     security:
         password_hashers:
