@@ -11,3 +11,8 @@ resetPasswordRequest:
   path: /reset-password
   controller: App\Controller\ResetPasswordController::request
   prefix: /_locale
+
+sitemap:
+  path: /sitemap
+  controller: App\Controller\SitemapController::index
+  prefix: /_locale
