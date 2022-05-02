@@ -56,6 +56,10 @@ DirectoryIndex index.php
     # Otherwise rewrite all other queries to the front controller.
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ %{ENV:BASE}/index.php [L]
+
+    # https and www redirect
+    RewriteCond %{HTTP_HOST} ^cryptowalletmonitoring.com
+    RewriteRule (.*) https://www.cryptowalletmonitoring.com/$1 [R=301,L]
 </IfModule>
 
 <IfModule !mod_rewrite.c>
@@ -65,3 +69,8 @@ DirectoryIndex index.php
         RedirectMatch 307 ^/$ /index.php/
     </IfModule>
 </IfModule>
+
+# cache control css, js and scss
+<FilesMatch "\.(css|js|scss)$">
+    Header set Cache-Control "max-age=172800, public, must-revalidate"
+</FilesMatch>
