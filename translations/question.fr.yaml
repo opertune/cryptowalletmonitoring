@@ -35,3 +35,4 @@ tutorial:
     create: Sélectionner API v4 puis cliquer sur le bouton créer une clé api.
     input: Renseigner un nom pour votre clé api puis sélectionner wallet et lecture seule.
     exit: Après avoir copié collé votre clé api et clé secrète il vous suffit de cliquer sur ok.
+meta: Sur la page Question vous pouvez trouver un tutoriel qui vous explique comment utiliser le site ainsi que quelques questions.

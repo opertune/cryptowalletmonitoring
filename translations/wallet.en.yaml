@@ -28,3 +28,4 @@ flashSuccess:
   priceUpdate: Your wallet has been update.
 
 error: Wrong api key or secret key.
+meta: Here you can add new wallet and show his content

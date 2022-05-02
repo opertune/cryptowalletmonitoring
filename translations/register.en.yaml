@@ -7,3 +7,4 @@ submitButton: Register
 email:
   send: Verify your email. Click on link in your email box ! Don't forget to check your spam.
 captcha: Captcha invalid.
+meta: On register webpage you can create a new account.

@@ -5,7 +5,9 @@
 	{{ parent() }}
 	{{ encore_entry_link_tags('form') }}
 {% endblock %}
-
+{% block head %}
+	<meta name="description" content="Here you can set your new password">
+{% endblock %}
 {% block title %}{{ 'title'|trans({}, 'resetPassword')}}{% endblock %}
 
 {% block body %}

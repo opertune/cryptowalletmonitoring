@@ -36,3 +36,4 @@ tutorial:
     create: Select API v4 and click on the button to create an api key.
     input: Enter a name for your api key and select wallet and read-only.
     exit: After copying-pasted your api key and secret key you can click on the ok button.
+meta: On question webpage you can see a little tutorial and some questions.

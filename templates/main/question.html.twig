@@ -1,7 +1,7 @@
 {% extends 'base.html.twig'%}
 {% block head %}
 	<link rel="icon" href="{{asset('images/favicons/question.png')}}" type="image/x-icon">
-	<meta name="description" content="Here you can see a little tutorial and some questions">
+	<meta name="description" content="{{ 'meta'|trans({}, 'question') }}">
 {% endblock %}
 
 {% block javascripts %}

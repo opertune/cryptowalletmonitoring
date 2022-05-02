@@ -28,3 +28,4 @@ flashSuccess:
   priceUpdate: Vos portefeuilles ont été mis à jour.
 
 error: Clé api ou clé secrète incorrect.
+meta: Ici vous pouvez ajouter des portefeuilles et voir leurs contenus.

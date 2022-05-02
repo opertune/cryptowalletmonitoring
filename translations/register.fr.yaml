@@ -7,3 +7,4 @@ submitButton: S'inscrire
 email:
   send: Cliquez sur le lien de confirmation que vous avez reçu sur vôtre boite mail. Pensez à vérifier vos spams si ce n'est pas le cas.
 captcha: Le captcha est invalide.
+meta: Sur la page inscription vous pouvez créer un nouveau compte.
