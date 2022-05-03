@@ -6,35 +6,35 @@
 
 {% block stylesheets %}
 	{{ parent() }}
-	{{ encore_entry_link_tags('app') }}
+	{{ encore_entry_link_tags('home') }}
 {% endblock %}
 
 {% block title %}{{ 'title'|trans({}, 'home')}}{% endblock %}
 
 {% block body %}
 	<div class="container-fluid">
-		<h1 class="text-white text-center pt-6">{{ 'welcomeMessage'|trans({}, 'home')}} Crypto Wallet Monitoring !</h1>
+		<h1 class="text-white text-center pt-5">{{ 'welcomeMessage'|trans({}, 'home')}} Crypto Wallet Monitoring !</h1>
 
-		<div class="container d-flex justify-content-center w-50 text-center">
-			<p class="display-6 fs-2 mt-5">{{ 'description'|trans({}, 'home')}}</p>
+		<div class="container d-flex justify-content-center text-center">
+			<p class="display-6 fs-2 mt-4">{{ 'description'|trans({}, 'home')}}</p>
 		</div>
 		
-		<div class="container mt-7 mb-3">
+		<div class="container mt-5 d-flex justify-content-center">
 			<div class="row">
 				<div class="col d-flex justify-content-center">
-					<img class="responsiveMinSize img-fluid h-75" src="{{asset('images/icons/logo-Binance.png')}}" alt="Binance-logo">
+					<img class="responsiveMinSize img-fluid" src="{{asset('images/icons/logo-Binance.png')}}" alt="Binance-logo">
 				</div>
 				<div class="col d-flex justify-content-center">
-					<img class="responsiveMinSize img-fluid h-75" src="{{asset('images/icons/logo-Coinbase.png')}}" alt="Coinbase-logo">
+					<img class="responsiveMinSize img-fluid" src="{{asset('images/icons/logo-Coinbase.png')}}" alt="Coinbase-logo">
 				</div>
 				<div class="col d-flex justify-content-center">
-					<img class="responsiveMinSize img-fluid h-75" src="{{asset('images/icons/logo-FTX.png')}}" alt="FTX-logo">
+					<img class="responsiveMinSize img-fluid" src="{{asset('images/icons/logo-FTX.png')}}" alt="FTX-logo">
 				</div>
 				<div class="col d-flex justify-content-center">
-					<img class="responsiveMinSize img-fluid h-75" src="{{asset('images/icons/logo-Kucoin.png')}}" alt="Kucoin-logo">
+					<img class="responsiveMinSize img-fluid" src="{{asset('images/icons/logo-Kucoin.png')}}" alt="Kucoin-logo">
 				</div>
 				<div class="col d-flex justify-content-center">
-					<img class="responsiveMinSize img-fluid h-75" src="{{asset('images/icons/logo-Gate.io.png')}}" alt="Gate_io-logo">
+					<img class="responsiveMinSize img-fluid" src="{{asset('images/icons/logo-Gate.io.png')}}" alt="Gate_io-logo">
 				</div>
 			</div>
 		</div>

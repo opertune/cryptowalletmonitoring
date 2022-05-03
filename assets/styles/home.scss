@@ -1,5 +1,17 @@
-// image min size
+// image min-max size
 .responsiveMinSize {
-    min-height: 50;
+    min-height: 50px;
     min-width: 50px;
+    max-height: 140px;
+    max-width: 140px;
+}
+
+// image min-max size on mobile
+@media only screen and (max-width: 992px) {
+    .responsiveMinSize {
+        min-height: 50px;
+        min-width: 50px;
+        max-height: 90px;
+        max-width: 90px;
+    }
 }
