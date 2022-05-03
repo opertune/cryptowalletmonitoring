@@ -86,10 +86,11 @@
 			{% block body %}{% endblock %}
 		</main>
 		<footer class="footer mt-auto border-top pt-2">
-			<div class="container">
-				<p>
-					{{ 'footer'|trans({}, 'base')}}
-				</p>
+			<div class="container d-flex justify-content-between">
+				<p>{{ 'footer'|trans({}, 'base')}}</p>
+				<a href="https://twitter.com/intent/tweet?text=Monitor%20your%20crypto%20wallet%20content%20here%20{{ url('home') }}">
+					<img class="img-fluid" src="" alt="" srcset="{{asset('images/footer/twitter-share-button.png')}}" height="40px" width="100px">
+				</a>
 			</div>
 		</footer>
 	</div>
