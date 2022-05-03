@@ -1,0 +1,4 @@
+error404:
+  title: Error 404
+  h1: Page not found
+  description: couldn't be located. Checkout for any URL misspelling or <a href="%link%">return to the homepage</a>.

@@ -1,10 +1,9 @@
 {% extends 'base.html.twig' %}
-{% block title %}Error 404{% endblock %}
+{% block title %}{{ 'error404.title'|trans({}, 'error')}}{% endblock %}
 {% block body %}
-    <h1>Page not found</h1>
+    <h1>{{ 'error404.h1'|trans({}, 'error')}}</h1>
 
     <p>
-        {{ app.request.uri }} couldn't be located. Checkout for any URL
-        misspelling or <a href="{{ path('home') }}">return to the homepage</a>.
+        {{ app.request.uri }} {{ 'error404.description'|trans({'%link%' : url('home')}, 'error')|raw}}
     </p>
 {% endblock %}
