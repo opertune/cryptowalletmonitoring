@@ -64,7 +64,7 @@
                 <div class="col mb-5">
                     <fieldset class="border rounded-3 p-3 walletCustomFieldset">
                         {# Wallet name #}
-                        <legend class="h3 text-white float-none w-auto px-3">{{wallets['name']}} <img class="customIcon" srcset="{{asset('images/icons/logo-' ~ wallets['name'] ~ '.png')}}"></legend>
+                        <legend class="h3 text-white float-none w-auto px-3">{{wallets['name']}} <img class="customIcon img-fluid" srcset="{{asset('images/icons/logo-' ~ wallets['name'] ~ '.png')}}"></legend>
 
                         {# Wallet value #}
                         {% if eachWalletTotal[key]['error'] is defined %}
