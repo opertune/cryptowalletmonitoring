@@ -1,5 +1,7 @@
 // image min-max size
-.responsiveMinSize {
+.imageSize {
+    height: 100%;
+    width: 100%;
     min-height: 50px;
     min-width: 50px;
     max-height: 140px;
@@ -8,7 +10,7 @@
 
 // image min-max size on mobile
 @media only screen and (max-width: 992px) {
-    .responsiveMinSize {
+    .imageSize {
         min-height: 50px;
         min-width: 50px;
         max-height: 90px;
