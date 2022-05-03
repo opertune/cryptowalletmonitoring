@@ -71,6 +71,6 @@ DirectoryIndex index.php
 </IfModule>
 
 # cache control css, js and scss
-<FilesMatch "\.(css|js|scss)$">
+<FilesMatch "\.(css|js|scss|png)$">
     Header set Cache-Control "max-age=172800, public, must-revalidate"
 </FilesMatch>
