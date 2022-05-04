@@ -24,7 +24,6 @@ class SitemapController extends AbstractController
             ['loc' => $this->generateUrl('register')],
             ['loc' => $this->generateUrl('login')],
         ];
-
         $response = new Response(
             $this->renderView('main/sitemap.html.twig', [
                 'urls' => $urls,
