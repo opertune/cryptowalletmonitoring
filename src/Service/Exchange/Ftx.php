@@ -39,6 +39,7 @@ class Ftx
         if ($datas['success'] == true) {
             foreach ($datas['result'] as $currency) {
                 if ($currency['total'] > 0.0) {
+                    // coingecko doesn't take usd
                     $price = $priceRepository->findBySymbol(strtolower($currency['coin']));
                     $price != null ? $value = number_format($price->getPrice() * $currency['total'], 2, '.', ',') : $value = 0;
 

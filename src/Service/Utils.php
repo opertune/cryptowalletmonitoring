@@ -4,7 +4,6 @@ namespace App\Service;
 
 use App\Repository\PriceRepository;
 use App\Service\Exchange\Binance;
-use App\Service\Exchange\Coinbase;
 use App\Service\Exchange\Ftx;
 use App\Service\Exchange\Gate;
 use App\Service\Exchange\Kucoin;
@@ -79,7 +78,7 @@ class Utils
     }
 
     /**
-     * Generate key with random char
+     * Generate au key with random char
      */
     public static function randomChar(int $bytes)
     {
