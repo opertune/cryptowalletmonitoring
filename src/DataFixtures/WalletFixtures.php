@@ -49,9 +49,14 @@ class WalletFixtures extends Fixture
             for ($j = 0; $j < 5; $j++) {
                 // Fake data array
                 $fakeData = [];
-                for ($k = 0; $k < rand(5, 10); $k++) {
+                for ($k = 0; $k < rand(5, 25); $k++) {
+                    $letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                    $symbol = '';
+                    for ($l = 0; $l < rand(2, 4); $l++) {
+                        $symbol .= $letters[rand(0, strlen($letters) - 1)];
+                    }
                     array_push($fakeData, array(
-                        'symbol' => $faker->tld(),
+                        'symbol' => $symbol,
                         'quantity' => rand(1, 5),
                         'value' => rand(1, 100)
                     ));

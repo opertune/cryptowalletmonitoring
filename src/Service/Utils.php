@@ -79,7 +79,7 @@ class Utils
     }
 
     /**
-     * Generate au key with random char
+     * Generate key with random char
      */
     public static function randomChar(int $bytes)
     {

@@ -59,7 +59,7 @@ class WalletController extends AbstractController
                 header("Location: https://www.coinbase.com/oauth/authorize?response_type=code&client_id=" . $this->getParameter('oauthcoinbase_key') . "&account=all&scope=wallet:accounts:read");
                 exit;
             } else {
-                $this->addWallet($addWalletForm, $this->priceRepository);
+                $this->addWallet($addWalletForm);
                 return $this->redirect($request->getUri());
             }
         }
@@ -115,7 +115,6 @@ class WalletController extends AbstractController
             'allWalletTotal' => $allWalletTotal,
             'eachWalletTotal' => $eachWalletTotal,
             'errors' => $error,
-            // 'formCoinbase' => $formCoinbase->createView(),
         ]);
     }
 
