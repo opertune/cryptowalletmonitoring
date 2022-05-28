@@ -12,7 +12,7 @@ class WalletControllerTest extends WebTestCase
     public function testWalletAccessWhileNotLoggedIn(): void
     {
         $client = static::createClient();
-        $client->request('GET', 'en/wallet');
+        $client->request('GET', '/en/wallet');
         $this->assertResponseStatusCodeSame(302);
         $this->assertResponseRedirects('/en/login');
     }

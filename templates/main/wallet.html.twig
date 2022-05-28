@@ -41,22 +41,22 @@
     <div class="container mt-5">
         {# if screen width > 1200px 3 div are display #}
         <div class="row row-cols-xl-3">
-            <div class="col text-dark mb-5">
+            {# Add wallet div #}
+            <div class="col mb-5 text-dark">
                 {# Form for adding new wallet #}
-                {{ form_start(AddWalletForm, {'attr' : {'id':'registerForm', 'class' : 'customForm'}})}}
-                <fieldset class="border rounded-3 p-3">
+                <fieldset class="border rounded-3 p-3 walletCustomFieldset">
                     <legend class="h3 text-white float-none w-auto px-3">
                         {{ 'addWalletForm.formTitle'|trans({},'wallet')|raw}}
                     </legend>
-
-                    {{ form_row(AddWalletForm.name) }}
-                    {{ form_row(AddWalletForm.apiKey) }}
-                    {{ form_row(AddWalletForm.secretKey) }}
-                    {{ form_row(AddWalletForm.passPhrase) }}
-                    {{ form_row(AddWalletForm.save) }}
-
+                    {{ form_start(AddWalletForm, {'attr' : {'id':'registerForm', 'class' : 'customForm'}})}}
+                        {{ form_row(AddWalletForm.name) }}
+                        {{ form_row(AddWalletForm.apiKey) }}
+                        {{ form_row(AddWalletForm.secretKey) }}
+                        {{ form_row(AddWalletForm.passPhrase) }}
+                        {{ form_row(AddWalletForm.save) }}
+                    {{ form_end(AddWalletForm) }}
                 </fieldset>
-                {{ form_end(AddWalletForm) }}
+                
             </div>
 
             {# Display all wallet name and data #}
