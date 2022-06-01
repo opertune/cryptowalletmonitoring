@@ -9,3 +9,4 @@ editPassword:
   success: Ancien mot de passe modifié avec succès.
   error: Ancien mot de passe invalide.
 meta: Sur la page compte vous pouvez voir l'adresse de votre compte et changer votre mot de passe.
+delete: Supprimer mon compte

@@ -28,5 +28,9 @@
 			{{ form_row(formEditPW.new_password) }}
 			{{ form_row(formEditPW.save) }}
 		{{ form_end(formEditPW) }}
+		{{ form_start(formDeleteAccount) }}
+			{{ form_row(formDeleteAccount.submit, {'label' : 'delete'|trans({}, 'account'), 'attr' : {'class' : 'btn btn-danger'}})}}
+		{{ form_end(formDeleteAccount)}}
+		
 	</div>
 {% endblock %}

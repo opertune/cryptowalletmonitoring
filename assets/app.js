@@ -16,3 +16,4 @@ import bootstrap from 'bootstrap';
 
 // Custom js
 import './controllers/navbar';
+import './controllers/cookieConsent';

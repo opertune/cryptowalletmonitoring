@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -84,6 +85,14 @@ class RegistrationFormType extends AbstractType
                     ])
                 ],
                 'required' => true,
+            ])
+            ->add('privacyPolicy', CheckboxType::class, [
+                'required' => true,
+                'mapped' => false,
+                'row_attr' => [
+                    'class' => 'text-white',
+                ],
+                'label_html' => true,
             ])
             ->add('save', SubmitType::class, [
                 'translation_domain' => 'register',

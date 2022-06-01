@@ -2,13 +2,14 @@
 
 namespace App\Controller;
 
-use App\Form\EditEmailType;
 use App\Form\EditPassWordType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -26,6 +27,12 @@ class AccountController extends AbstractController
         // Form for edit password
         $formEditPW = $this->createForm(EditPassWordType::class);
         $formEditPW->handleRequest($request);
+
+        // Form for delete account
+        $formDeleteAccount = $this->createFormBuilder()
+        ->add('submit', SubmitType::class)
+        ->getForm();
+        $formDeleteAccount->handleRequest($request);
 
         // Edit password account
         if ($formEditPW->isSubmitted() && $formEditPW->isValid()) {
@@ -45,8 +52,19 @@ class AccountController extends AbstractController
             }
         }
 
+        // Remove user account
+        if($formDeleteAccount->isSubmitted()){
+            $session = new Session();
+            $session->invalidate();
+            $userRepository->remove($this->getUser());
+            return $this->redirectToRoute('logout');
+        }
+
         return $this->render('main/account.html.twig', [
             'formEditPW' => $formEditPW->createView(),
+            'formDeleteAccount' => $formDeleteAccount->createView(),
         ]);
     }
+
+
 }

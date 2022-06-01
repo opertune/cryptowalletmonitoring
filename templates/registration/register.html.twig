@@ -33,6 +33,7 @@
             {{ form_row(registrationForm.email) }}
             {{ form_row(registrationForm.password.first) }}
             {{ form_row(registrationForm.password.second) }}
+            {{ form_row(registrationForm.privacyPolicy, {'label' : 'register.seeMore'|trans({'%link%' : path('privacyPolicy')}, 'privacyPolicy')|raw}) }}
 
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             {{ form_row(registrationForm.save) }}

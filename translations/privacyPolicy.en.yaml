@@ -1,0 +1,9 @@
+meta: Privacy policy on the collection of user data.
+title: Privacy Policy
+body:
+  title: collecting personal information
+  p:    <p>The automated processing of realigned nominative data from the website "www.cryptowalletmonitoring.com" was processed in accordance with the requirements of Law 78-17 of 6 January 1978, as amended, relating to data processing, files and freedoms.</p>
+        <p>In particular, the user is informed that he has a right of access, interrogation and rectification which allows him, where appropriate, to have his personal data corrected, supplemented, updated or deleted.</p>
+        <p>The user also has the right to object to the processing of his data for legitimate reasons.</p>
+register:
+  seeMore: <a href="%link%" target="_blank">Read privacy policy</a>

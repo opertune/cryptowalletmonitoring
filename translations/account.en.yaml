@@ -9,3 +9,4 @@ editPassword:
   success: Old password successfully edited.
   error: Invalid old password.
 meta: On account webpage you can see your account email and change your password
+delete: Delete my account

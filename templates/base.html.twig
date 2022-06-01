@@ -84,6 +84,15 @@
 			</div>
 		</header>
 		<main>
+			{% if app.request.cookies.get('cookie-consent') != true %}
+				<div id="cookieConsent" class="cookie-consent">
+					<span>{{ 'title'|trans({}, 'cookieConsent')}} <a href="https://www.cnil.fr/fr/definition/cookie" class="ml-1 text-decoration-none" target="_blank">{{ 'link'|trans({}, 'cookieConsent')}}</a> </span>
+					<div class="mt-2 d-flex align-items-center justify-content-center g-2">
+						<button class="allow-button me-1" id="allowCookie">{{ 'accept'|trans({}, 'cookieConsent')}}</button>
+						<button class="allow-button" id="cancelCookie">{{ 'cancel'|trans({}, 'cookieConsent')}}</button>
+					</div>
+        		</div>
+			{% endif %}
 			{% block body %}{% endblock %}
 		</main>
 		<footer class="footer mt-auto border-top pt-2">

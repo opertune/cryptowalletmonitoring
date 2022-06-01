@@ -1,0 +1,9 @@
+meta: Politique de confidentialité sur la collecte des données de l'utilisateur.
+title: Politique de confidentialité
+body:
+  title: Collecte des informations personnelles
+  p:    <p>Les traitements automatisées de données nominatives réallisés à partir du site web "www.cryptowalletmonitoring.com" ont été traités en conformité avec les exigences de la loi 78-17 du 6 janvier 1978 modifiée, relative à l'informatique aux fichiers et aux libertés.</p>
+        <p>L'utilisateur est notamment informé qu'il dispose d'un droit d'accès, d'interrogation et de rectification qui lui permet, le cas échéant, de faire rectifier, comple'ter, mettre a jour ou effacer les données personnelles le concernant.</p>
+        <p>L'utilisateur dispose également d'un droit d'opposition au traitement de ses données pour des motifs légitimes.</p>
+register:
+  seeMore: <a href="%link%" target="_blank>Lire la politique de confidentialité</a>
