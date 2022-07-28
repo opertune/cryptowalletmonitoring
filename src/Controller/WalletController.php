@@ -60,7 +60,7 @@ class WalletController extends AbstractController
                 exit;
             } else {
                 $this->addWallet($addWalletForm);
-                return $this->redirect($request->getUri());
+                // return $this->redirect($request->getUri());
             }
         }
 
@@ -151,7 +151,6 @@ class WalletController extends AbstractController
         // Update new wallet with total value for each coin
         $name = $wallet->getName();
         $this->addFlash('flash_success', $this->translatorInterface->trans('flashSuccess.addWallet', ['%name%' => $name], 'wallet'));
-        dump($data);
     }
 
     /**
