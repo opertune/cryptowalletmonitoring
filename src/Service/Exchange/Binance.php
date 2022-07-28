@@ -25,8 +25,8 @@ class Binance
          * The signature is a keyed HMAC SHA 256 and secretKey.
          * SecretKey is key and params is value for hmac operation.
          */
-        // -3000
-        $timestamp = round(microtime(true) * 1000);
+
+        $timestamp = round(microtime(true) * 1000); // -3000
         $recvWindow = 60000;
         $params = http_build_query([
             'timestamp' => $timestamp,
