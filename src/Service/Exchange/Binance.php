@@ -26,7 +26,7 @@ class Binance
          * SecretKey is key and params is value for hmac operation.
          */
 
-        $timestamp = round(microtime(true) * 1000); // -3000
+        $timestamp = round(microtime(true) * 1000) - 3000; // Remove -3000 on dev env
         $recvWindow = 60000;
         $params = http_build_query([
             'timestamp' => $timestamp,
