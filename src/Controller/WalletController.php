@@ -151,6 +151,7 @@ class WalletController extends AbstractController
         // Update new wallet with total value for each coin
         $name = $wallet->getName();
         $this->addFlash('flash_success', $this->translatorInterface->trans('flashSuccess.addWallet', ['%name%' => $name], 'wallet'));
+        dump($data);
     }
 
     /**
