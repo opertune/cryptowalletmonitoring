@@ -26,7 +26,7 @@ class Binance
          */
         $binanceServerTime = Utils::curlRequest('https://api.binance.com/api/v3/time', []);
         $dif = (round(microtime(true) * 1000) - $binanceServerTime['serverTime']);
-        $timestamp = round(microtime(true) * 1000) - $dif; // Remove -3000 on dev env
+        $timestamp = round(microtime(true) * 1000) - $dif;
         $recvWindow = 60000;
         $params = http_build_query([
             'timestamp' => $timestamp,
